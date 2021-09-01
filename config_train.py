@@ -122,6 +122,7 @@ if 'cifar' in C.dataset:
     C.eval_only = False
 
     C.efficiency_metric = 'latency'
+    C.hw_platform_path = 'fbnet/edgegpu/'
 
 elif 'imagenet' in C.dataset:
     """Data Dir and Weight Dir"""
@@ -199,6 +200,7 @@ elif 'imagenet' in C.dataset:
     C.eval_only = False
 
     C.efficiency_metric = 'latency'
+    C.hw_platform_path = 'fbnet/edgegpu/'
 
 else:
     print('Wrong dataset.')

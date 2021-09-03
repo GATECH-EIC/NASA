@@ -173,8 +173,8 @@ class MixedOp(nn.Module):
         # print(alpha)
         print("op_id:",op_id)
         flops, size_out = self._ops[op_id].forward_flops(size)
-        print("flops",flops)
-        print(alpha[op_id])
+        # print("flops",flops)
+        # print(alpha[op_id])
         result = alpha[op_id] * flops
 
         return result, size_out

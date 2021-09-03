@@ -104,7 +104,7 @@ class FBNet_Infer(nn.Module):
         self.num_channel_list = config.num_channel_list
         self.stride_list = config.stride_list
 
-#        self.num_bits_list = config.num_bits_list
+        # self.num_bits_list = config.num_bits_list
 
         self.stem_channel = config.stem_channel
         self.header_channel = config.header_channel
@@ -163,9 +163,11 @@ class FBNet_Infer(nn.Module):
 
         out = self.stem(input)
         middle_out = []
+        feature = []
 
         for i, cell in enumerate(self.cells):
             out = cell(out)
+            feature.append(out)
             if i == 4 or i == 8 or i == 12 or i == 16 or i == 20:
                 middle_out.append(out)
 

@@ -36,7 +36,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 from architect import Architect
-from model_search import FBNet as Network
+from model_search_ws import FBNet as Network
 from model_infer import FBNet_Infer
 
 from lr import LambdaLR
@@ -513,10 +513,10 @@ def main_worker(gpu, ngpus_per_node, config):
             #     full_channel = False
             # TODO:
             # ###### channel-wise weight sharing #########
-            # if epoch < 60:
-            #     full_channel = True
-            # else:
-            #     full_channel = False
+            if epoch < 30:
+                full_channel = True
+            else:
+                full_channel = False
 
         else:
             model.module.set_search_mode(mode=config.mode, act_num=config.act_num)
@@ -596,10 +596,10 @@ def main_worker(gpu, ngpus_per_node, config):
 
                 else:
                     # TODO:
-                    if config.efficiency_metric != None:
-                        acc, metric = infer(epoch, model, test_loader, logger, temp=temp, finalize=True)
-                    else:
-                        acc = infer(epoch, model, test_loader, logger, temp=temp, finalize=False)
+                    # if config.efficiency_metric != None:
+                    acc, metric = infer(epoch, model, test_loader, logger, temp=temp, finalize=True)
+                    # else:
+                    #     acc = infer(epoch, model, test_loader, logger, temp=temp, finalize=False)
 
                     # if config.distributed:
                     #     acc = reduce_tensor(acc, config.world_size)
@@ -611,10 +611,10 @@ def main_worker(gpu, ngpus_per_node, config):
                         
                         state = {}
                         # TODO：
-                        if config.efficiency_metric == 'flops':
-                            logger.add_scalar('flops/val', metric, epoch)
-                            logging.info("Epoch %d: FLOPs %.3f"%(epoch, metric))
-                            state['flops'] = metric
+                        # if config.efficiency_metric == 'flops':
+                        logger.add_scalar('flops/val', metric, epoch)
+                        logging.info("Epoch %d: FLOPs %.3f"%(epoch, metric))
+                        state['flops'] = metric
 
                         # # For latency aware search, the returned metris FPS
                         # if config.efficiency_metric == 'latency':
@@ -794,15 +794,15 @@ def infer(epoch, model, test_loader, logger, temp=1, finalize=False):
 
     if finalize:
         model_infer = FBNet_Infer(getattr(model.module, 'alpha'), config=config)
-        if config.efficiency_metric == 'flops':
-            flops = model_infer.forward_flops((3, config.image_height, config.image_width))
-            return acc, flops
-        elif config.efficiency_metric == 'latency':
-            latency = model_infer.forward_latency([3, config.image_height, config.image_width])
-            fps = 1000 / latency
+        # if config.efficiency_metric == 'flops':
+        flops = model_infer.forward_flops((3, config.image_height, config.image_width))
+        return acc, flops
+        # elif config.efficiency_metric == 'latency':
+        #     latency = model_infer.forward_latency([3, config.image_height, config.image_width])
+        #     fps = 1000 / latency
 
 
-            return acc, fps
+            # return acc, fps
     else:
         return acc
 

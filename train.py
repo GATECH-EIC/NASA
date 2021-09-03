@@ -70,6 +70,8 @@ parser.add_argument('--lr', type=float, default=None,
                     help='the learning rate')
 parser.add_argument('--nepochs', type=int, default=None,
                     help='training epochs')
+parser.add_argument('--transfer_epoch', type=int, default=None,
+                    help='the epoch to transfer the weight of teacher to the student')
 parser.add_argument('--load_epoch', type=int, default=None,
                     help='which epoch to load')
 parser.add_argument('--gpu', type=str, default='0', 
@@ -111,6 +113,8 @@ def main():
         config.nepochs = args.nepochs
     if args.load_epoch is not None:
         config.load_epoch = args.load_epoch
+    if args.transfer_epoch is not None:
+        config.transfer_epoch = args.load_epoch
     if args.header_channel is not None:
         config.header_channel = args.header_channel
     if args.spos is not None:
@@ -269,21 +273,6 @@ def main_worker(gpu, ngpus_per_node, config):
             model_teacher = FBNet_Infer(alpha=alpha, config=config, flag=True, cand=None)
             # print(model_teacher)
 
-
-    # if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
-    #     flops, params = profile(model, inputs=(torch.randn(1, 3, config.image_height, config.image_width),))
-    #     bitops = model.forward_bitops(size=(3, config.image_height, config.image_width))
-        
-    #     logging.info("params = %fM, FLOPs = %fM, BitOPs = %fG", params / 1e6, flops / 1e6, bitops / 1e9)
-
-
-    #     if config.efficiency_metric == 'latency':
-    #         latency = model.forward_latency([3, 32,32])
-    #         fps = 1000 / latency
-
-    #         logging.info("FPS of Searched Arch:" + str(fps))
-
-
     print('config.gpu:', config.gpu)
     if config.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor
@@ -316,6 +305,20 @@ def main_worker(gpu, ngpus_per_node, config):
         if config.distillation == True:
             model_teacher = torch.nn.DataParallel(model_teacher).cuda()
 
+
+    # model_other_params = []
+    # model_add_params = []
+
+    # for name, param in model.named_parameters():
+    #     if(name.endswith(".shift")):
+    #         model_add_params.append(param)
+    #     else:
+    #         model_other_params.append(param)
+    
+    # params_dict = [
+    # {"params": model_other_params},
+    # {"params": model_add_params, 'lr': config.lr_add if config.lr_add is not None else config.lr, 'weight_decay': 0},
+    # ]
 
 
     if config.opt == 'Adam':
@@ -387,6 +390,7 @@ def main_worker(gpu, ngpus_per_node, config):
         optimizer.load_state_dict(pretrained_model['optimizer'])
         lr_policy.load_state_dict(pretrained_model['lr_scheduler'])
         start_epoch = pretrained_model['epoch'] + 1
+        # start_epoch = 0
         # architect.optimizer.load_state_dict(pretrain_arch['arch_optimizer'])
 
         best_acc = pretrained_model['best_acc']
@@ -497,6 +501,7 @@ def main_worker(gpu, ngpus_per_node, config):
         #     train_sampler.set_epoch(epoch)
 
         if config.distillation == True:
+            
             train(train_loader, model, optimizer, lr_policy, logger, epoch, config, model_teacher, optimizer_teacher)
             torch.cuda.empty_cache()
             lr_policy.step()
@@ -556,7 +561,7 @@ def main_worker(gpu, ngpus_per_node, config):
             if config.distillation == True:
                 logging.info("Teacher model: Epoch:%d Acc:%.3f Best Acc:%.3f Best Epoch:%d" % (epoch, acc_teacher, best_acc_teacher, best_epoch_teacher))
 
-        # if (epoch+1) % eval_epoch == 0:
+        # if (epoch+1) == 200 or (epoch+1) == 400:
         #     state = {}
         #     state['state_dict'] = model.state_dict()
         #     state['optimizer'] = optimizer.state_dict()
@@ -565,9 +570,8 @@ def main_worker(gpu, ngpus_per_node, config):
         #     state['acc'] = acc
         #     state['best_acc'] = best_acc
         #     state['best_epoch'] = best_epoch
-
-        #     torch.save(state, os.path.join(config.save, 'weights_%d.pth'%epoch))
-        #         torch.save(state, os.path.join(config.save, 'weights_latest.pth'))
+        #     torch.save(state, os.path.join(config.save, 'weights_%d.pth'%(epoch+1)))
+        
 
 
     if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):

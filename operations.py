@@ -24,6 +24,7 @@ flops_lookup_table = {}
 flops_file_name = osp.join(config.hw_platform_path, "flops_lookup_table.npy")
 if osp.isfile(flops_file_name):
     flops_lookup_table = np.load(flops_file_name, allow_pickle=True).item()
+print('config.hw_platform_path: ',config.hw_platform_path)
 
 energy_lookup_table = {}
 energy_file_name = osp.join(config.hw_platform_path, "energy_lookup_table.npy")

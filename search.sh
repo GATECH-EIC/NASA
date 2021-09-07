@@ -69,13 +69,13 @@ CUDA_VISIBLE_DEVICES=6 nohup python -u search.py \
 --dataset cifar100 \
 --search_space AddShift \
 --dataset_path /Datadisk/datasets/CIFAR100 \
---pretrain_epoch 60 \
---act_num 3 \
---flops_weight 1e-10 \
+--pretrain_epoch 40 \
+--act_num 2 \
+--flops_weight 0.5e-10 \
 --efficiency_metric flops \
 --flops_max 1e8 \
---flops_min 4e7 \
+--flops_min 5e7 \
 --lr 0.05 \
 --batch_size 128 \
---pretrain /Datadisk/shihh/NAS/baseline/CIFAR100_AddShift_3_1e-10 \
---gpu 0 > baseline/CIFAR100_AddShift_3_1e-10 2>&1 &
+--pretrain /Datadisk/shihh/NAS/baseline/CIFAR100_AddShift_2_0.5e-10 \
+--gpu 0 > baseline/CIFAR100_AddShift_2_0.5e-10 2>&1 &

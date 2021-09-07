@@ -513,7 +513,7 @@ def main_worker(gpu, ngpus_per_node, config):
             #     full_channel = False
             # TODO:
             # ###### channel-wise weight sharing #########
-            if epoch < 30:
+            if epoch < 20:
                 full_channel = True
             else:
                 full_channel = False

@@ -45,7 +45,7 @@ from lr import LambdaLR
 
 from thop import profile
 # from thop.count_hooks import count_convNd
-
+from resnet20_add import resnet20_add
 
 import argparse
 
@@ -268,6 +268,7 @@ def main_worker(gpu, ngpus_per_node, config):
         model = FBNet_Infer(alpha=alpha, config=config, cand=None)
         flops = model.forward_flops((3, config.image_height, config.image_width))
         print('FLOPs: ', flops)
+        # model = resnet20_add(num_classes=100, quantize=False, weight_bits=8, quantize_v='sbm')
         if config.distillation == True:
             print('Distillation !!!!!!!!!!!!!!')
             model_teacher = FBNet_Infer(alpha=alpha, config=config, flag=True, cand=None)
@@ -604,7 +605,6 @@ def train(train_loader, model, optimizer, lr_policy, logger, epoch, config, mode
         model_tearcher.train()
 
     MSE = nn.MSELoss()
-
     for step, (input, target) in enumerate(train_loader):
         optimizer.zero_grad()
         if config.distillation == True:
@@ -618,6 +618,7 @@ def train(train_loader, model, optimizer, lr_policy, logger, epoch, config, mode
         data_time = time.time() - start_time
 
         out_student, middel_student = model(input)
+        # out_student = model(input)
         if config.distillation == True:
             out_teacher, middle_teacher = model_tearcher(input)
             loss_teacher = model.module._criterion(out_teacher, target)
@@ -645,6 +646,7 @@ def train(train_loader, model, optimizer, lr_policy, logger, epoch, config, mode
             distillation_loss.backward(retain_graph=True)
 
         loss = model.module._criterion(out_student, target)
+        # loss = F.cross_entropy(out_student, target)
         loss.backward()
 
         nn.utils.clip_grad_norm_(model.parameters(), config.grad_clip)
@@ -673,6 +675,7 @@ def infer(epoch, model, test_loader, logger):
             target_var = Variable(target).cuda()
 
             output, middle = model(input_var)
+            # output = model(input_var)
             prec1, = accuracy(output.data, target_var, topk=(1,))
             prec1_list.append(prec1)
 

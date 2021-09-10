@@ -1,0 +1,86 @@
+Unable to import CPU and/or CUDA bit-wise shift kernels
+Using /tmp/torch_extensions as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /tmp/torch_extensions/adder_cuda/build.ninja...
+Building extension module adder_cuda...
+ninja: no work to do.
+Loading extension module adder_cuda...
+config.hw_platform_path:  fbnet/edgegpu/
+gpu [0]
+Use GPU: [0] for training
+09/09 03:36:02 PM args = {'seed': 2, 'repo_name': 'DNA', 'world_size': 1, 'multiprocessing_distributed': False, 'rank': 0, 'dist_backend': 'nccl', 'dist_url': 'tcp://eic-2019gpu5.ece.rice.edu:10001', 'gpu': [0], 'dataset': 'cifar100', 'dataset_path': '/media/shared-corpus/CIFAR100', 'num_train_imgs': 50000, 'num_eval_imgs': 10000, 'bn_eps': 1e-05, 'bn_momentum': 0.1, 'opt': 'Sgd', 'momentum': 0.9, 'weight_decay': 0.0001, 'betas': [0.5, 0.999], 'num_workers': 4, 'grad_clip': 5, 'pretrain': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddAdd_0.1_scratch_wd1e-4', 'search_space': 'AddAdd', 'num_layer_list': [1, 4, 4, 4, 4, 4, 1], 'num_channel_list': [16, 24, 32, 64, 112, 184, 352], 'stride_list': [1, 1, 2, 2, 1, 2, 1], 'stem_channel': 16, 'header_channel': 1504, 'use_hswish': False, 'use_se': False, 'batch_size': 196, 'niters_per_epoch': 255, 'image_height': 32, 'image_width': 32, 'save': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddAdd_0.1_scratch_wd1e-4', 'nepochs': 650, 'eval_epoch': 100, 'lr_schedule': 'cosine', 'lr': 0.1, 'decay_epoch': 100, 'lr_decay': 0.97, 'milestones': [80, 120, 160], 'gamma': 0.1, 'learning_rate_min': 0.001, 'load_path': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddAdd', 'eval_only': False, 'efficiency_metric': 'latency', 'hw_platform_path': 'fbnet/edgegpu/', 'load_epoch': 240, 'spos': False, 'distillation': False, 'port': '10001', 'distributed': False, 'local_rank': 0, 'num_classes': 100, 'ngpus_per_node': 1}
+239
+k5_e3
+k3_e6
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k3_e3
+k5_e3
+k3_e6
+add_k5_e6
+add_k5_e6
+k3_e6
+k3_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+skip
+config.gpu: [0]
+No checkpoint. Train from scratch.
+09/09 03:36:41 PM [Epoch 1/650] lr=0.100000
+09/09 03:36:54 PM [Epoch 1/650][Step 1/256] Loss=4.605 Time=9.997 Data Time=0.000
+09/09 03:37:01 PM [Epoch 1/650][Step 21/256] Loss=4.586 Time=0.333 Data Time=0.000
+09/09 03:37:08 PM [Epoch 1/650][Step 41/256] Loss=4.540 Time=0.347 Data Time=0.000
+09/09 03:37:15 PM [Epoch 1/650][Step 61/256] Loss=4.534 Time=0.339 Data Time=0.000
+09/09 03:37:23 PM [Epoch 1/650][Step 81/256] Loss=4.595 Time=0.333 Data Time=0.000
+09/09 03:37:30 PM [Epoch 1/650][Step 101/256] Loss=4.497 Time=0.332 Data Time=0.000
+09/09 03:37:36 PM [Epoch 1/650][Step 121/256] Loss=4.426 Time=0.332 Data Time=0.000
+09/09 03:37:43 PM [Epoch 1/650][Step 141/256] Loss=4.418 Time=0.345 Data Time=0.000
+09/09 03:37:50 PM [Epoch 1/650][Step 161/256] Loss=4.385 Time=0.331 Data Time=0.000
+09/09 03:37:57 PM [Epoch 1/650][Step 181/256] Loss=4.384 Time=0.331 Data Time=0.000
+09/09 03:38:03 PM [Epoch 1/650][Step 201/256] Loss=4.363 Time=0.334 Data Time=0.000
+09/09 03:38:10 PM [Epoch 1/650][Step 221/256] Loss=4.290 Time=0.332 Data Time=0.000
+09/09 03:38:17 PM [Epoch 1/650][Step 241/256] Loss=4.342 Time=0.332 Data Time=0.000
+09/09 03:38:32 PM Epoch:0 Acc:2.630 Best Acc:2.630 Best Epoch:0
+09/09 03:38:32 PM [Epoch 2/650] lr=0.099999
+09/09 03:38:33 PM [Epoch 2/650][Step 1/256] Loss=4.326 Time=0.391 Data Time=0.000
+09/09 03:38:40 PM [Epoch 2/650][Step 21/256] Loss=4.405 Time=0.332 Data Time=0.000
+09/09 03:38:46 PM [Epoch 2/650][Step 41/256] Loss=4.252 Time=0.332 Data Time=0.000
+09/09 03:38:53 PM [Epoch 2/650][Step 61/256] Loss=4.339 Time=0.332 Data Time=0.000
+09/09 03:39:00 PM [Epoch 2/650][Step 81/256] Loss=4.214 Time=0.332 Data Time=0.000
+09/09 03:39:07 PM [Epoch 2/650][Step 101/256] Loss=4.260 Time=0.332 Data Time=0.000
+09/09 03:39:13 PM [Epoch 2/650][Step 121/256] Loss=4.219 Time=0.331 Data Time=0.000
+09/09 03:39:20 PM [Epoch 2/650][Step 141/256] Loss=4.163 Time=0.332 Data Time=0.000
+09/09 03:39:27 PM [Epoch 2/650][Step 161/256] Loss=4.209 Time=0.333 Data Time=0.000
+09/09 03:39:33 PM [Epoch 2/650][Step 181/256] Loss=4.270 Time=0.331 Data Time=0.000
+09/09 03:39:40 PM [Epoch 2/650][Step 201/256] Loss=4.212 Time=0.331 Data Time=0.000
+09/09 03:39:47 PM [Epoch 2/650][Step 221/256] Loss=4.170 Time=0.335 Data Time=0.000
+09/09 03:39:54 PM [Epoch 2/650][Step 241/256] Loss=4.298 Time=0.332 Data Time=0.000
+09/09 03:40:09 PM Epoch:1 Acc:5.583 Best Acc:5.583 Best Epoch:1
+09/09 03:40:09 PM [Epoch 3/650] lr=0.099998
+09/09 03:40:10 PM [Epoch 3/650][Step 1/256] Loss=4.153 Time=1.180 Data Time=0.000
+09/09 03:40:17 PM [Epoch 3/650][Step 21/256] Loss=4.139 Time=0.332 Data Time=0.000
+09/09 03:40:24 PM [Epoch 3/650][Step 41/256] Loss=4.050 Time=0.339 Data Time=0.000
+09/09 03:40:30 PM [Epoch 3/650][Step 61/256] Loss=4.045 Time=0.331 Data Time=0.000
+09/09 03:40:37 PM [Epoch 3/650][Step 81/256] Loss=4.041 Time=0.331 Data Time=0.000
+09/09 03:40:44 PM [Epoch 3/650][Step 101/256] Loss=4.081 Time=0.331 Data Time=0.000
+09/09 03:40:50 PM [Epoch 3/650][Step 121/256] Loss=4.093 Time=0.333 Data Time=0.000
+09/09 03:40:57 PM [Epoch 3/650][Step 141/256] Loss=3.925 Time=0.333 Data Time=0.000
+09/09 03:41:04 PM [Epoch 3/650][Step 161/256] Loss=4.039 Time=0.331 Data Time=0.000
+09/09 03:41:11 PM [Epoch 3/650][Step 181/256] Loss=3.999 Time=0.331 Data Time=0.000
+09/09 03:41:17 PM [Epoch 3/650][Step 201/256] Loss=4.068 Time=0.333 Data Time=0.000
+09/09 03:41:24 PM [Epoch 3/650][Step 221/256] Loss=4.157 Time=0.331 Data Time=0.000
+09/09 03:41:31 PM [Epoch 3/650][Step 241/256] Loss=3.989 Time=0.332 Data Time=0.000
+09/09 03:41:47 PM Epoch:2 Acc:7.535 Best Acc:7.535 Best Epoch:2
+09/09 03:41:47 PM [Epoch 4/650] lr=0.099995
+09/09 03:41:48 PM [Epoch 4/650][Step 1/256] Loss=3.977 Time=1.117 Data Time=0.000
+09/09 03:41:55 PM [Epoch 4/650][Step 21/256] Loss=4.033 Time=0.332 Data Time=0.000
+09/09 03:42:02 PM [Epoch 4/650][Step 41/256] Loss=3.902 Time=0.333 Data Time=0.000
+09/09 03:42:08 PM [Epoch 4/650][Step 61/256] Loss=3.910 Time=0.333 Data Time=0.000

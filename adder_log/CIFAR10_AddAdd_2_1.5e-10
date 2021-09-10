@@ -1,0 +1,3584 @@
+Unable to import CPU and/or CUDA bit-wise shift kernels
+Using /tmp/torch_extensions as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /tmp/torch_extensions/adder_cuda/build.ninja...
+Building extension module adder_cuda...
+ninja: no work to do.
+Loading extension module adder_cuda...
+config.hw_platform_path:  fbnet/edgegpu/
+gpu [0]
+Use GPU: [0] for training
+09/08 03:55:40 PM args = {'seed': 2, 'repo_name': 'DNA', 'world_size': 2, 'multiprocessing_distributed': False, 'rank': 0, 'dist_backend': 'nccl', 'dist_url': 'tcp://eic-2019gpu5.ece.rice.edu:10001', 'gpu': [0], 'dataset': 'cifar10', 'dataset_path': '/media/shared-corpus/CIFAR10', 'num_train_imgs': 50000, 'num_eval_imgs': 10000, 'bn_eps': 1e-05, 'bn_momentum': 0.1, 'opt': 'Sgd', 'momentum': 0.9, 'weight_decay': 0.0005, 'betas': [0.5, 0.999], 'num_workers': 16, 'grad_clip': 5, 'pretrain': '/media/shared-corpus/shh/NAS/baseline/CIFAR10_AddAdd_2_1.5e-10', 'num_layer_list': [1, 4, 4, 4, 4, 4, 1], 'num_channel_list': [16, 24, 32, 64, 112, 184, 352], 'stride_list': [1, 1, 2, 2, 1, 2, 1], 'stem_channel': 16, 'header_channel': 1504, 'enable_skip': True, 'perturb_alpha': False, 'epsilon_alpha': 0.3, 'sample_func': 'gumbel_softmax', 'temp_init': 5, 'temp_decay': 0.975, 'mode': 'proxy_hard', 'hard': True, 'offset': True, 'act_num': 2, 'pretrain_epoch': 60, 'search_space': 'AddAdd', 'pretrain_aline': True, 'pretrain_mode': 'proxy_hard', 'pretrain_act_num': 2, 'arch_one_hot_loss_weight': None, 'arch_mse_loss_weight': None, 'num_sample': 10, 'update_hw_freq': 5, 'batch_size': 128, 'niters_per_epoch': 781, 'image_height': 32, 'image_width': 32, 'eval_epoch': 1, 'lr_schedule': 'cosine', 'lr': 0.05, 'decay_epoch': 20, 'lr_decay': 0.97, 'milestones': [50, 100, 200], 'gamma': 0.1, 'learning_rate_min': 0.001, 'train_portion': 0.5, 'unrolled': False, 'arch_learning_rate': 0.0003, 'arch_update_frec': 1, 'efficiency_metric': 'flops', 'hw_platform_path': 'fbnet/edgegpu/', 'alpha_weight': 1, 'latency_weight': 1e-10, 'fps_max': 100, 'fps_min': 90, 'flops_mode': 'single_path', 'flops_weight': 1.5e-10, 'flops_max': 100000000.0, 'flops_min': 50000000.0, 'flops_decouple': False, 'port': '4657', 'distributed': False, 'local_rank': 0, 'num_classes': 10, 'nepochs': 150, 'save': '/media/shared-corpus/shh/NAS/baseline/CIFAR10_AddAdd_2_1.5e-10'}
+config.gpu: [0]
+architect initialized!
+No checkpoint. Search from scratch.
+09/08 03:55:56 PM Temperature: 5.0
+09/08 03:55:56 PM [Epoch 1/150] lr=0.050000
+09/08 03:55:56 PM update arch: False
+09/08 03:56:31 PM [Epoch 1/150][Step 30/195] Loss=2.297 Time=0.609 Data Time=0.001
+09/08 03:56:49 PM [Epoch 1/150][Step 60/195] Loss=2.304 Time=0.548 Data Time=0.002
+09/08 03:57:06 PM [Epoch 1/150][Step 90/195] Loss=2.302 Time=0.563 Data Time=0.002
+09/08 03:57:25 PM [Epoch 1/150][Step 120/195] Loss=2.281 Time=0.672 Data Time=0.002
+09/08 03:57:43 PM [Epoch 1/150][Step 150/195] Loss=2.271 Time=0.601 Data Time=0.002
+09/08 03:58:01 PM [Epoch 1/150][Step 180/195] Loss=2.310 Time=0.754 Data Time=0.001
+09/08 03:58:11 PM Temperature: 4.875
+09/08 03:58:11 PM [Epoch 2/150] lr=0.049995
+09/08 03:58:11 PM update arch: False
+09/08 03:58:33 PM [Epoch 2/150][Step 30/195] Loss=2.296 Time=0.595 Data Time=0.001
+09/08 03:58:51 PM [Epoch 2/150][Step 60/195] Loss=2.278 Time=0.531 Data Time=0.003
+09/08 03:59:09 PM [Epoch 2/150][Step 90/195] Loss=2.310 Time=0.640 Data Time=0.002
+09/08 03:59:28 PM [Epoch 2/150][Step 120/195] Loss=2.302 Time=0.634 Data Time=0.002
+09/08 03:59:46 PM [Epoch 2/150][Step 150/195] Loss=2.264 Time=0.657 Data Time=0.002
+09/08 04:00:05 PM [Epoch 2/150][Step 180/195] Loss=2.265 Time=0.467 Data Time=0.001
+09/08 04:00:28 PM Epoch 1: acc 10.206
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:00:28 PM Temperature: 4.753125
+09/08 04:00:28 PM [Epoch 3/150] lr=0.049979
+09/08 04:00:28 PM update arch: False
+09/08 04:00:52 PM [Epoch 3/150][Step 30/195] Loss=2.266 Time=0.580 Data Time=0.001
+09/08 04:01:11 PM [Epoch 3/150][Step 60/195] Loss=2.267 Time=0.702 Data Time=0.002
+09/08 04:01:29 PM [Epoch 3/150][Step 90/195] Loss=2.289 Time=0.682 Data Time=0.002
+09/08 04:01:48 PM [Epoch 3/150][Step 120/195] Loss=2.253 Time=0.685 Data Time=0.002
+09/08 04:02:07 PM [Epoch 3/150][Step 150/195] Loss=2.268 Time=0.598 Data Time=0.002
+09/08 04:02:26 PM [Epoch 3/150][Step 180/195] Loss=2.248 Time=0.685 Data Time=0.002
+09/08 04:02:49 PM Epoch 2: acc 9.949
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:02:49 PM Temperature: 4.6342968749999995
+09/08 04:02:49 PM [Epoch 4/150] lr=0.049952
+09/08 04:02:49 PM update arch: False
+09/08 04:03:11 PM [Epoch 4/150][Step 30/195] Loss=2.280 Time=0.632 Data Time=0.005
+09/08 04:03:30 PM [Epoch 4/150][Step 60/195] Loss=2.276 Time=0.796 Data Time=0.002
+09/08 04:03:48 PM [Epoch 4/150][Step 90/195] Loss=2.234 Time=0.596 Data Time=0.002
+09/08 04:04:06 PM [Epoch 4/150][Step 120/195] Loss=2.233 Time=0.579 Data Time=0.002
+09/08 04:04:25 PM [Epoch 4/150][Step 150/195] Loss=2.277 Time=0.473 Data Time=0.002
+09/08 04:04:43 PM [Epoch 4/150][Step 180/195] Loss=2.308 Time=0.736 Data Time=0.001
+09/08 04:05:06 PM Epoch 3: acc 9.899
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:05:06 PM Temperature: 4.518439453125
+09/08 04:05:06 PM [Epoch 5/150] lr=0.049914
+09/08 04:05:06 PM update arch: False
+09/08 04:05:29 PM [Epoch 5/150][Step 30/195] Loss=2.282 Time=0.562 Data Time=0.001
+09/08 04:05:47 PM [Epoch 5/150][Step 60/195] Loss=2.249 Time=0.681 Data Time=0.003
+09/08 04:06:05 PM [Epoch 5/150][Step 90/195] Loss=2.273 Time=0.480 Data Time=0.002
+09/08 04:06:23 PM [Epoch 5/150][Step 120/195] Loss=2.229 Time=0.777 Data Time=0.003
+09/08 04:06:42 PM [Epoch 5/150][Step 150/195] Loss=2.281 Time=0.677 Data Time=0.002
+09/08 04:07:00 PM [Epoch 5/150][Step 180/195] Loss=2.277 Time=0.601 Data Time=0.002
+09/08 04:07:21 PM Epoch 4: acc 9.721
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:07:21 PM Temperature: 4.4054784667968745
+09/08 04:07:21 PM [Epoch 6/150] lr=0.049866
+09/08 04:07:21 PM update arch: False
+09/08 04:07:43 PM [Epoch 6/150][Step 30/195] Loss=2.248 Time=0.532 Data Time=0.003
+09/08 04:08:02 PM [Epoch 6/150][Step 60/195] Loss=2.257 Time=0.566 Data Time=0.002
+09/08 04:08:20 PM [Epoch 6/150][Step 90/195] Loss=2.320 Time=0.615 Data Time=0.002
+09/08 04:08:39 PM [Epoch 6/150][Step 120/195] Loss=2.284 Time=0.627 Data Time=0.002
+09/08 04:08:58 PM [Epoch 6/150][Step 150/195] Loss=2.307 Time=0.461 Data Time=0.002
+09/08 04:09:16 PM [Epoch 6/150][Step 180/195] Loss=2.239 Time=0.616 Data Time=0.002
+09/08 04:09:38 PM Epoch 5: acc 9.721
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:09:38 PM Temperature: 4.295341505126952
+09/08 04:09:38 PM [Epoch 7/150] lr=0.049807
+09/08 04:09:38 PM update arch: False
+09/08 04:09:59 PM [Epoch 7/150][Step 30/195] Loss=2.230 Time=0.652 Data Time=0.003
+09/08 04:10:18 PM [Epoch 7/150][Step 60/195] Loss=2.222 Time=0.620 Data Time=0.002
+09/08 04:10:37 PM [Epoch 7/150][Step 90/195] Loss=2.263 Time=0.504 Data Time=0.002
+09/08 04:10:55 PM [Epoch 7/150][Step 120/195] Loss=2.275 Time=0.624 Data Time=0.002
+09/08 04:11:14 PM [Epoch 7/150][Step 150/195] Loss=2.244 Time=0.610 Data Time=0.002
+09/08 04:11:32 PM [Epoch 7/150][Step 180/195] Loss=2.243 Time=0.604 Data Time=0.001
+09/08 04:11:53 PM Epoch 6: acc 10.038
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:11:53 PM Temperature: 4.187957967498779
+09/08 04:11:53 PM [Epoch 8/150] lr=0.049737
+09/08 04:11:53 PM update arch: False
+09/08 04:12:17 PM [Epoch 8/150][Step 30/195] Loss=2.342 Time=0.694 Data Time=0.001
+09/08 04:12:35 PM [Epoch 8/150][Step 60/195] Loss=2.237 Time=0.675 Data Time=0.002
+09/08 04:12:54 PM [Epoch 8/150][Step 90/195] Loss=2.174 Time=0.733 Data Time=0.002
+09/08 04:13:13 PM [Epoch 8/150][Step 120/195] Loss=2.250 Time=0.637 Data Time=0.002
+09/08 04:13:31 PM [Epoch 8/150][Step 150/195] Loss=2.332 Time=0.685 Data Time=0.002
+09/08 04:13:50 PM [Epoch 8/150][Step 180/195] Loss=2.250 Time=0.534 Data Time=0.001
+09/08 04:14:11 PM Epoch 7: acc 9.751
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:14:11 PM Temperature: 4.08325901831131
+09/08 04:14:11 PM [Epoch 9/150] lr=0.049657
+09/08 04:14:11 PM update arch: False
+09/08 04:14:35 PM [Epoch 9/150][Step 30/195] Loss=2.238 Time=0.666 Data Time=0.001
+09/08 04:14:53 PM [Epoch 9/150][Step 60/195] Loss=2.198 Time=0.589 Data Time=0.002
+09/08 04:15:12 PM [Epoch 9/150][Step 90/195] Loss=2.235 Time=0.639 Data Time=0.002
+09/08 04:15:31 PM [Epoch 9/150][Step 120/195] Loss=2.224 Time=0.636 Data Time=0.002
+09/08 04:15:51 PM [Epoch 9/150][Step 150/195] Loss=2.210 Time=0.645 Data Time=0.002
+09/08 04:16:10 PM [Epoch 9/150][Step 180/195] Loss=2.292 Time=0.777 Data Time=0.002
+09/08 04:16:31 PM Epoch 8: acc 10.057
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:16:31 PM Temperature: 3.9811775428535263
+09/08 04:16:31 PM [Epoch 10/150] lr=0.049566
+09/08 04:16:31 PM update arch: False
+09/08 04:16:55 PM [Epoch 10/150][Step 30/195] Loss=2.229 Time=0.552 Data Time=0.001
+09/08 04:17:14 PM [Epoch 10/150][Step 60/195] Loss=2.206 Time=0.863 Data Time=0.002
+09/08 04:17:33 PM [Epoch 10/150][Step 90/195] Loss=2.220 Time=0.690 Data Time=0.002
+09/08 04:17:52 PM [Epoch 10/150][Step 120/195] Loss=2.290 Time=0.747 Data Time=0.002
+09/08 04:18:11 PM [Epoch 10/150][Step 150/195] Loss=2.270 Time=0.527 Data Time=0.002
+09/08 04:18:29 PM [Epoch 10/150][Step 180/195] Loss=2.223 Time=0.496 Data Time=0.001
+09/08 04:18:51 PM Epoch 9: acc 10.186
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:18:51 PM Temperature: 3.8816481042821884
+09/08 04:18:51 PM [Epoch 11/150] lr=0.049465
+09/08 04:18:51 PM update arch: False
+09/08 04:19:14 PM [Epoch 11/150][Step 30/195] Loss=2.230 Time=0.685 Data Time=0.001
+09/08 04:19:32 PM [Epoch 11/150][Step 60/195] Loss=2.252 Time=0.567 Data Time=0.002
+09/08 04:19:52 PM [Epoch 11/150][Step 90/195] Loss=2.243 Time=0.604 Data Time=0.002
+09/08 04:20:10 PM [Epoch 11/150][Step 120/195] Loss=2.242 Time=0.522 Data Time=0.002
+09/08 04:20:28 PM [Epoch 11/150][Step 150/195] Loss=2.199 Time=0.626 Data Time=0.002
+09/08 04:20:47 PM [Epoch 11/150][Step 180/195] Loss=2.220 Time=0.535 Data Time=0.001
+09/08 04:21:06 PM Epoch 10: acc 9.602
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:21:06 PM Temperature: 3.7846069016751334
+09/08 04:21:06 PM [Epoch 12/150] lr=0.049353
+09/08 04:21:06 PM update arch: False
+09/08 04:21:27 PM [Epoch 12/150][Step 30/195] Loss=2.166 Time=0.565 Data Time=0.003
+09/08 04:21:45 PM [Epoch 12/150][Step 60/195] Loss=2.259 Time=0.531 Data Time=0.009
+09/08 04:22:03 PM [Epoch 12/150][Step 90/195] Loss=2.237 Time=0.557 Data Time=0.001
+09/08 04:22:22 PM [Epoch 12/150][Step 120/195] Loss=2.202 Time=0.591 Data Time=0.002
+09/08 04:22:41 PM [Epoch 12/150][Step 150/195] Loss=2.209 Time=0.575 Data Time=0.002
+09/08 04:23:00 PM [Epoch 12/150][Step 180/195] Loss=2.313 Time=0.589 Data Time=0.001
+09/08 04:23:20 PM Epoch 11: acc 10.028
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:23:20 PM Temperature: 3.6899917291332547
+09/08 04:23:20 PM [Epoch 13/150] lr=0.049230
+09/08 04:23:20 PM update arch: False
+09/08 04:23:41 PM [Epoch 13/150][Step 30/195] Loss=2.271 Time=0.760 Data Time=0.001
+09/08 04:24:00 PM [Epoch 13/150][Step 60/195] Loss=2.256 Time=0.560 Data Time=0.002
+09/08 04:24:19 PM [Epoch 13/150][Step 90/195] Loss=2.245 Time=0.632 Data Time=0.002
+09/08 04:24:37 PM [Epoch 13/150][Step 120/195] Loss=2.255 Time=0.525 Data Time=0.002
+09/08 04:24:56 PM [Epoch 13/150][Step 150/195] Loss=2.266 Time=0.732 Data Time=0.002
+09/08 04:25:14 PM [Epoch 13/150][Step 180/195] Loss=2.282 Time=0.692 Data Time=0.001
+09/08 04:25:35 PM Epoch 12: acc 9.988
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:25:35 PM Temperature: 3.5977419359049234
+09/08 04:25:35 PM [Epoch 14/150] lr=0.049097
+09/08 04:25:35 PM update arch: False
+09/08 04:25:56 PM [Epoch 14/150][Step 30/195] Loss=2.253 Time=0.676 Data Time=0.001
+09/08 04:26:14 PM [Epoch 14/150][Step 60/195] Loss=2.239 Time=0.593 Data Time=0.002
+09/08 04:26:34 PM [Epoch 14/150][Step 90/195] Loss=2.229 Time=0.530 Data Time=0.002
+09/08 04:26:52 PM [Epoch 14/150][Step 120/195] Loss=2.200 Time=0.754 Data Time=0.002
+09/08 04:27:11 PM [Epoch 14/150][Step 150/195] Loss=2.178 Time=0.714 Data Time=0.002
+09/08 04:27:30 PM [Epoch 14/150][Step 180/195] Loss=2.248 Time=0.644 Data Time=0.002
+09/08 04:27:50 PM Epoch 13: acc 10.324
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:27:50 PM Temperature: 3.5077983875073
+09/08 04:27:50 PM [Epoch 15/150] lr=0.048954
+09/08 04:27:50 PM update arch: False
+09/08 04:28:11 PM [Epoch 15/150][Step 30/195] Loss=2.287 Time=0.565 Data Time=0.001
+09/08 04:28:30 PM [Epoch 15/150][Step 60/195] Loss=2.158 Time=0.666 Data Time=0.002
+09/08 04:28:49 PM [Epoch 15/150][Step 90/195] Loss=2.257 Time=0.687 Data Time=0.002
+09/08 04:29:08 PM [Epoch 15/150][Step 120/195] Loss=2.201 Time=0.667 Data Time=0.002
+09/08 04:29:27 PM [Epoch 15/150][Step 150/195] Loss=2.272 Time=0.517 Data Time=0.002
+09/08 04:29:46 PM [Epoch 15/150][Step 180/195] Loss=2.225 Time=0.702 Data Time=0.001
+09/08 04:30:06 PM Epoch 14: acc 10.077
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:30:06 PM Temperature: 3.420103427819617
+09/08 04:30:06 PM [Epoch 16/150] lr=0.048801
+09/08 04:30:06 PM update arch: False
+09/08 04:30:26 PM [Epoch 16/150][Step 30/195] Loss=2.268 Time=0.531 Data Time=0.001
+09/08 04:30:45 PM [Epoch 16/150][Step 60/195] Loss=2.275 Time=0.551 Data Time=0.002
+09/08 04:31:04 PM [Epoch 16/150][Step 90/195] Loss=2.182 Time=0.644 Data Time=0.002
+09/08 04:31:23 PM [Epoch 16/150][Step 120/195] Loss=2.201 Time=0.483 Data Time=0.004
+09/08 04:31:42 PM [Epoch 16/150][Step 150/195] Loss=2.129 Time=0.581 Data Time=0.002
+09/08 04:32:00 PM [Epoch 16/150][Step 180/195] Loss=2.139 Time=0.645 Data Time=0.002
+09/08 04:32:21 PM Epoch 15: acc 10.008
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:32:21 PM Temperature: 3.334600842124127
+09/08 04:32:21 PM [Epoch 17/150] lr=0.048637
+09/08 04:32:21 PM update arch: False
+09/08 04:32:41 PM [Epoch 17/150][Step 30/195] Loss=2.174 Time=0.607 Data Time=0.002
+09/08 04:33:00 PM [Epoch 17/150][Step 60/195] Loss=2.263 Time=0.639 Data Time=0.002
+09/08 04:33:18 PM [Epoch 17/150][Step 90/195] Loss=2.184 Time=0.708 Data Time=0.002
+09/08 04:33:37 PM [Epoch 17/150][Step 120/195] Loss=2.269 Time=0.473 Data Time=0.002
+09/08 04:33:56 PM [Epoch 17/150][Step 150/195] Loss=2.185 Time=0.849 Data Time=0.002
+09/08 04:34:15 PM [Epoch 17/150][Step 180/195] Loss=2.179 Time=0.699 Data Time=0.001
+09/08 04:34:35 PM Epoch 16: acc 9.889
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:34:35 PM Temperature: 3.251235821071024
+09/08 04:34:35 PM [Epoch 18/150] lr=0.048463
+09/08 04:34:35 PM update arch: False
+09/08 04:34:55 PM [Epoch 18/150][Step 30/195] Loss=2.244 Time=0.643 Data Time=0.001
+09/08 04:35:13 PM [Epoch 18/150][Step 60/195] Loss=2.184 Time=0.707 Data Time=0.003
+09/08 04:35:33 PM [Epoch 18/150][Step 90/195] Loss=2.168 Time=0.750 Data Time=0.002
+09/08 04:35:52 PM [Epoch 18/150][Step 120/195] Loss=2.235 Time=0.697 Data Time=0.002
+09/08 04:36:10 PM [Epoch 18/150][Step 150/195] Loss=2.243 Time=0.734 Data Time=0.002
+09/08 04:36:29 PM [Epoch 18/150][Step 180/195] Loss=2.178 Time=0.584 Data Time=0.004
+09/08 04:36:49 PM Epoch 17: acc 10.146
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:36:49 PM Temperature: 3.169954925544248
+09/08 04:36:49 PM [Epoch 19/150] lr=0.048280
+09/08 04:36:49 PM update arch: False
+09/08 04:37:10 PM [Epoch 19/150][Step 30/195] Loss=2.248 Time=0.654 Data Time=0.004
+09/08 04:37:29 PM [Epoch 19/150][Step 60/195] Loss=2.270 Time=0.670 Data Time=0.002
+09/08 04:37:49 PM [Epoch 19/150][Step 90/195] Loss=2.236 Time=0.664 Data Time=0.002
+09/08 04:38:08 PM [Epoch 19/150][Step 120/195] Loss=2.135 Time=0.685 Data Time=0.002
+09/08 04:38:26 PM [Epoch 19/150][Step 150/195] Loss=2.197 Time=0.667 Data Time=0.002
+09/08 04:38:45 PM [Epoch 19/150][Step 180/195] Loss=2.138 Time=0.598 Data Time=0.001
+09/08 04:39:05 PM Epoch 18: acc 10.057
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:39:05 PM Temperature: 3.0907060524056416
+09/08 04:39:05 PM [Epoch 20/150] lr=0.048086
+09/08 04:39:05 PM update arch: False
+09/08 04:39:25 PM [Epoch 20/150][Step 30/195] Loss=2.207 Time=0.511 Data Time=0.001
+09/08 04:39:44 PM [Epoch 20/150][Step 60/195] Loss=2.177 Time=0.753 Data Time=0.002
+09/08 04:40:04 PM [Epoch 20/150][Step 90/195] Loss=2.198 Time=0.469 Data Time=0.002
+09/08 04:40:23 PM [Epoch 20/150][Step 120/195] Loss=2.183 Time=0.641 Data Time=0.002
+09/08 04:40:41 PM [Epoch 20/150][Step 150/195] Loss=2.128 Time=0.576 Data Time=0.003
+09/08 04:41:00 PM [Epoch 20/150][Step 180/195] Loss=2.174 Time=0.626 Data Time=0.001
+09/08 04:41:20 PM Epoch 19: acc 9.652
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:41:20 PM Temperature: 3.0134384010955007
+09/08 04:41:20 PM [Epoch 21/150] lr=0.047882
+09/08 04:41:20 PM update arch: False
+09/08 04:41:41 PM [Epoch 21/150][Step 30/195] Loss=2.209 Time=0.526 Data Time=0.001
+09/08 04:42:00 PM [Epoch 21/150][Step 60/195] Loss=2.127 Time=0.690 Data Time=0.002
+09/08 04:42:19 PM [Epoch 21/150][Step 90/195] Loss=2.209 Time=0.589 Data Time=0.003
+09/08 04:42:37 PM [Epoch 21/150][Step 120/195] Loss=2.205 Time=0.584 Data Time=0.002
+09/08 04:42:56 PM [Epoch 21/150][Step 150/195] Loss=2.126 Time=0.644 Data Time=0.002
+09/08 04:43:14 PM [Epoch 21/150][Step 180/195] Loss=2.219 Time=0.574 Data Time=0.001
+09/08 04:43:33 PM Epoch 20: acc 10.018
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:43:33 PM Temperature: 2.9381024410681134
+09/08 04:43:33 PM [Epoch 22/150] lr=0.047668
+09/08 04:43:33 PM update arch: False
+09/08 04:43:53 PM [Epoch 22/150][Step 30/195] Loss=2.179 Time=0.676 Data Time=0.001
+09/08 04:44:11 PM [Epoch 22/150][Step 60/195] Loss=2.187 Time=0.727 Data Time=0.002
+09/08 04:44:30 PM [Epoch 22/150][Step 90/195] Loss=2.122 Time=0.478 Data Time=0.002
+09/08 04:44:48 PM [Epoch 22/150][Step 120/195] Loss=2.270 Time=0.601 Data Time=0.002
+09/08 04:45:06 PM [Epoch 22/150][Step 150/195] Loss=2.246 Time=0.621 Data Time=0.002
+09/08 04:45:24 PM [Epoch 22/150][Step 180/195] Loss=2.122 Time=0.577 Data Time=0.001
+09/08 04:45:45 PM Epoch 21: acc 10.413
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:45:45 PM Temperature: 2.8646498800414104
+09/08 04:45:45 PM [Epoch 23/150] lr=0.047445
+09/08 04:45:45 PM update arch: False
+09/08 04:46:05 PM [Epoch 23/150][Step 30/195] Loss=2.157 Time=0.711 Data Time=0.001
+09/08 04:46:24 PM [Epoch 23/150][Step 60/195] Loss=2.225 Time=0.684 Data Time=0.002
+09/08 04:46:43 PM [Epoch 23/150][Step 90/195] Loss=2.149 Time=0.583 Data Time=0.002
+09/08 04:47:00 PM [Epoch 23/150][Step 120/195] Loss=2.066 Time=0.573 Data Time=0.002
+09/08 04:47:19 PM [Epoch 23/150][Step 150/195] Loss=2.180 Time=0.916 Data Time=0.002
+09/08 04:47:38 PM [Epoch 23/150][Step 180/195] Loss=2.138 Time=0.622 Data Time=0.001
+09/08 04:47:58 PM Epoch 22: acc 10.057
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:47:58 PM Temperature: 2.793033633040375
+09/08 04:47:58 PM [Epoch 24/150] lr=0.047212
+09/08 04:47:58 PM update arch: False
+09/08 04:48:18 PM [Epoch 24/150][Step 30/195] Loss=2.133 Time=0.622 Data Time=0.001
+09/08 04:48:36 PM [Epoch 24/150][Step 60/195] Loss=2.191 Time=0.569 Data Time=0.002
+09/08 04:48:54 PM [Epoch 24/150][Step 90/195] Loss=2.093 Time=0.517 Data Time=0.002
+09/08 04:49:12 PM [Epoch 24/150][Step 120/195] Loss=2.122 Time=0.564 Data Time=0.002
+09/08 04:49:31 PM [Epoch 24/150][Step 150/195] Loss=2.178 Time=0.600 Data Time=0.002
+09/08 04:49:49 PM [Epoch 24/150][Step 180/195] Loss=2.315 Time=0.648 Data Time=0.001
+09/08 04:50:09 PM Epoch 23: acc 10.077
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:50:09 PM Temperature: 2.7232077922143656
+09/08 04:50:09 PM [Epoch 25/150] lr=0.046970
+09/08 04:50:09 PM update arch: False
+09/08 04:50:29 PM [Epoch 25/150][Step 30/195] Loss=2.107 Time=0.577 Data Time=0.003
+09/08 04:50:48 PM [Epoch 25/150][Step 60/195] Loss=2.094 Time=0.663 Data Time=0.002
+09/08 04:51:05 PM [Epoch 25/150][Step 90/195] Loss=2.124 Time=0.665 Data Time=0.002
+09/08 04:51:24 PM [Epoch 25/150][Step 120/195] Loss=2.156 Time=0.606 Data Time=0.002
+09/08 04:51:41 PM [Epoch 25/150][Step 150/195] Loss=2.106 Time=0.743 Data Time=0.002
+09/08 04:51:58 PM [Epoch 25/150][Step 180/195] Loss=2.047 Time=0.568 Data Time=0.001
+09/08 04:52:19 PM Epoch 24: acc 9.860
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:52:19 PM Temperature: 2.6551275974090065
+09/08 04:52:19 PM [Epoch 26/150] lr=0.046718
+09/08 04:52:19 PM update arch: False
+09/08 04:52:40 PM [Epoch 26/150][Step 30/195] Loss=2.044 Time=0.612 Data Time=0.001
+09/08 04:52:58 PM [Epoch 26/150][Step 60/195] Loss=2.082 Time=0.629 Data Time=0.002
+09/08 04:53:16 PM [Epoch 26/150][Step 90/195] Loss=2.110 Time=0.720 Data Time=0.002
+09/08 04:53:34 PM [Epoch 26/150][Step 120/195] Loss=2.093 Time=0.562 Data Time=0.002
+09/08 04:53:52 PM [Epoch 26/150][Step 150/195] Loss=2.041 Time=0.569 Data Time=0.002
+09/08 04:54:11 PM [Epoch 26/150][Step 180/195] Loss=2.026 Time=0.558 Data Time=0.001
+09/08 04:54:30 PM Epoch 25: acc 9.860
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:54:30 PM Temperature: 2.588749407473781
+09/08 04:54:30 PM [Epoch 27/150] lr=0.046456
+09/08 04:54:30 PM update arch: False
+09/08 04:54:51 PM [Epoch 27/150][Step 30/195] Loss=2.057 Time=0.643 Data Time=0.002
+09/08 04:55:09 PM [Epoch 27/150][Step 60/195] Loss=2.149 Time=0.648 Data Time=0.002
+09/08 04:55:27 PM [Epoch 27/150][Step 90/195] Loss=2.052 Time=0.553 Data Time=0.002
+09/08 04:55:45 PM [Epoch 27/150][Step 120/195] Loss=2.088 Time=0.551 Data Time=0.002
+09/08 04:56:03 PM [Epoch 27/150][Step 150/195] Loss=2.070 Time=0.624 Data Time=0.002
+09/08 04:56:21 PM [Epoch 27/150][Step 180/195] Loss=2.072 Time=0.572 Data Time=0.001
+09/08 04:56:41 PM Epoch 26: acc 10.097
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:56:41 PM Temperature: 2.5240306722869366
+09/08 04:56:41 PM [Epoch 28/150] lr=0.046186
+09/08 04:56:41 PM update arch: False
+09/08 04:57:01 PM [Epoch 28/150][Step 30/195] Loss=1.977 Time=0.628 Data Time=0.003
+09/08 04:57:19 PM [Epoch 28/150][Step 60/195] Loss=1.956 Time=0.669 Data Time=0.002
+09/08 04:57:37 PM [Epoch 28/150][Step 90/195] Loss=2.003 Time=0.438 Data Time=0.002
+09/08 04:57:56 PM [Epoch 28/150][Step 120/195] Loss=1.966 Time=0.689 Data Time=0.002
+09/08 04:58:14 PM [Epoch 28/150][Step 150/195] Loss=1.973 Time=0.623 Data Time=0.002
+09/08 04:58:32 PM [Epoch 28/150][Step 180/195] Loss=1.979 Time=0.582 Data Time=0.001
+09/08 04:58:52 PM Epoch 27: acc 9.840
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 04:58:52 PM Temperature: 2.4609299054797633
+09/08 04:58:52 PM [Epoch 29/150] lr=0.045907
+09/08 04:58:52 PM update arch: False
+09/08 04:59:12 PM [Epoch 29/150][Step 30/195] Loss=2.049 Time=0.661 Data Time=0.002
+09/08 04:59:30 PM [Epoch 29/150][Step 60/195] Loss=2.011 Time=0.730 Data Time=0.002
+09/08 04:59:48 PM [Epoch 29/150][Step 90/195] Loss=2.004 Time=0.550 Data Time=0.002
+09/08 05:00:06 PM [Epoch 29/150][Step 120/195] Loss=1.975 Time=0.505 Data Time=0.002
+09/08 05:00:25 PM [Epoch 29/150][Step 150/195] Loss=1.981 Time=0.634 Data Time=0.002
+09/08 05:00:43 PM [Epoch 29/150][Step 180/195] Loss=1.982 Time=0.526 Data Time=0.001
+09/08 05:01:03 PM Epoch 28: acc 9.899
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:01:03 PM Temperature: 2.399406657842769
+09/08 05:01:03 PM [Epoch 30/150] lr=0.045618
+09/08 05:01:03 PM update arch: False
+09/08 05:01:23 PM [Epoch 30/150][Step 30/195] Loss=1.972 Time=0.644 Data Time=0.003
+09/08 05:01:41 PM [Epoch 30/150][Step 60/195] Loss=1.977 Time=0.618 Data Time=0.002
+09/08 05:01:59 PM [Epoch 30/150][Step 90/195] Loss=1.978 Time=0.595 Data Time=0.002
+09/08 05:02:17 PM [Epoch 30/150][Step 120/195] Loss=1.965 Time=0.592 Data Time=0.002
+09/08 05:02:35 PM [Epoch 30/150][Step 150/195] Loss=1.977 Time=0.600 Data Time=0.002
+09/08 05:02:52 PM [Epoch 30/150][Step 180/195] Loss=1.910 Time=0.534 Data Time=0.001
+09/08 05:03:11 PM Epoch 29: acc 10.324
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:03:11 PM Temperature: 2.3394214913966995
+09/08 05:03:11 PM [Epoch 31/150] lr=0.045321
+09/08 05:03:11 PM update arch: False
+09/08 05:03:32 PM [Epoch 31/150][Step 30/195] Loss=2.133 Time=0.513 Data Time=0.001
+09/08 05:03:48 PM [Epoch 31/150][Step 60/195] Loss=2.212 Time=0.522 Data Time=0.002
+09/08 05:04:05 PM [Epoch 31/150][Step 90/195] Loss=2.044 Time=0.512 Data Time=0.002
+09/08 05:04:22 PM [Epoch 31/150][Step 120/195] Loss=2.231 Time=0.628 Data Time=0.002
+09/08 05:04:38 PM [Epoch 31/150][Step 150/195] Loss=2.113 Time=0.434 Data Time=0.002
+09/08 05:04:55 PM [Epoch 31/150][Step 180/195] Loss=2.024 Time=0.605 Data Time=0.001
+09/08 05:05:13 PM Epoch 30: acc 9.929
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:05:13 PM Temperature: 2.280935954111782
+09/08 05:05:13 PM [Epoch 32/150] lr=0.045015
+09/08 05:05:13 PM update arch: False
+09/08 05:05:32 PM [Epoch 32/150][Step 30/195] Loss=1.976 Time=0.543 Data Time=0.001
+09/08 05:05:48 PM [Epoch 32/150][Step 60/195] Loss=2.107 Time=0.479 Data Time=0.002
+09/08 05:06:05 PM [Epoch 32/150][Step 90/195] Loss=2.075 Time=0.485 Data Time=0.002
+09/08 05:06:22 PM [Epoch 32/150][Step 120/195] Loss=2.118 Time=0.641 Data Time=0.002
+09/08 05:06:39 PM [Epoch 32/150][Step 150/195] Loss=1.972 Time=0.546 Data Time=0.002
+09/08 05:06:55 PM [Epoch 32/150][Step 180/195] Loss=2.033 Time=0.475 Data Time=0.001
+09/08 05:07:14 PM Epoch 31: acc 10.374
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:07:14 PM Temperature: 2.2239125552589876
+09/08 05:07:14 PM [Epoch 33/150] lr=0.044700
+09/08 05:07:14 PM update arch: False
+09/08 05:07:33 PM [Epoch 33/150][Step 30/195] Loss=2.024 Time=0.554 Data Time=0.002
+09/08 05:07:49 PM [Epoch 33/150][Step 60/195] Loss=2.057 Time=0.495 Data Time=0.002
+09/08 05:08:06 PM [Epoch 33/150][Step 90/195] Loss=2.011 Time=0.500 Data Time=0.002
+09/08 05:08:23 PM [Epoch 33/150][Step 120/195] Loss=2.007 Time=0.592 Data Time=0.002
+09/08 05:08:39 PM [Epoch 33/150][Step 150/195] Loss=2.092 Time=0.536 Data Time=0.002
+09/08 05:08:56 PM [Epoch 33/150][Step 180/195] Loss=2.075 Time=0.716 Data Time=0.001
+09/08 05:09:15 PM Epoch 32: acc 10.314
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:09:15 PM Temperature: 2.168314741377513
+09/08 05:09:15 PM [Epoch 34/150] lr=0.044378
+09/08 05:09:15 PM update arch: False
+09/08 05:09:33 PM [Epoch 34/150][Step 30/195] Loss=2.090 Time=0.588 Data Time=0.001
+09/08 05:09:50 PM [Epoch 34/150][Step 60/195] Loss=2.016 Time=0.567 Data Time=0.002
+09/08 05:10:05 PM [Epoch 34/150][Step 90/195] Loss=1.962 Time=0.477 Data Time=0.002
+09/08 05:10:22 PM [Epoch 34/150][Step 120/195] Loss=2.129 Time=0.531 Data Time=0.002
+09/08 05:10:38 PM [Epoch 34/150][Step 150/195] Loss=2.034 Time=0.513 Data Time=0.002
+09/08 05:10:54 PM [Epoch 34/150][Step 180/195] Loss=1.987 Time=0.544 Data Time=0.001
+09/08 05:11:13 PM Epoch 33: acc 9.919
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:11:13 PM Temperature: 2.1141068728430747
+09/08 05:11:13 PM [Epoch 35/150] lr=0.044046
+09/08 05:11:13 PM update arch: False
+09/08 05:11:32 PM [Epoch 35/150][Step 30/195] Loss=2.066 Time=0.487 Data Time=0.001
+09/08 05:11:49 PM [Epoch 35/150][Step 60/195] Loss=2.110 Time=0.474 Data Time=0.002
+09/08 05:12:05 PM [Epoch 35/150][Step 90/195] Loss=2.042 Time=0.630 Data Time=0.002
+09/08 05:12:21 PM [Epoch 35/150][Step 120/195] Loss=2.055 Time=0.603 Data Time=0.002
+09/08 05:12:38 PM [Epoch 35/150][Step 150/195] Loss=1.994 Time=0.635 Data Time=0.002
+09/08 05:12:54 PM [Epoch 35/150][Step 180/195] Loss=2.102 Time=0.440 Data Time=0.002
+09/08 05:13:12 PM Epoch 34: acc 10.522
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:13:12 PM Temperature: 2.061254201021998
+09/08 05:13:12 PM [Epoch 36/150] lr=0.043707
+09/08 05:13:12 PM update arch: False
+09/08 05:13:32 PM [Epoch 36/150][Step 30/195] Loss=2.028 Time=0.446 Data Time=0.001
+09/08 05:13:47 PM [Epoch 36/150][Step 60/195] Loss=2.133 Time=0.486 Data Time=0.002
+09/08 05:14:04 PM [Epoch 36/150][Step 90/195] Loss=2.129 Time=0.495 Data Time=0.002
+09/08 05:14:20 PM [Epoch 36/150][Step 120/195] Loss=2.079 Time=0.528 Data Time=0.002
+09/08 05:14:37 PM [Epoch 36/150][Step 150/195] Loss=2.189 Time=0.608 Data Time=0.002
+09/08 05:14:53 PM [Epoch 36/150][Step 180/195] Loss=1.975 Time=0.564 Data Time=0.001
+09/08 05:15:12 PM Epoch 35: acc 10.087
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:15:12 PM Temperature: 2.009722845996448
+09/08 05:15:12 PM [Epoch 37/150] lr=0.043360
+09/08 05:15:12 PM update arch: False
+09/08 05:15:31 PM [Epoch 37/150][Step 30/195] Loss=2.010 Time=0.546 Data Time=0.001
+09/08 05:15:47 PM [Epoch 37/150][Step 60/195] Loss=2.125 Time=0.424 Data Time=0.002
+09/08 05:16:04 PM [Epoch 37/150][Step 90/195] Loss=2.014 Time=0.610 Data Time=0.002
+09/08 05:16:19 PM [Epoch 37/150][Step 120/195] Loss=2.012 Time=0.428 Data Time=0.002
+09/08 05:16:35 PM [Epoch 37/150][Step 150/195] Loss=1.967 Time=0.471 Data Time=0.003
+09/08 05:16:52 PM [Epoch 37/150][Step 180/195] Loss=2.034 Time=0.629 Data Time=0.001
+09/08 05:17:11 PM Epoch 36: acc 9.939
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:17:11 PM Temperature: 1.9594797748465367
+09/08 05:17:11 PM [Epoch 38/150] lr=0.043005
+09/08 05:17:11 PM update arch: False
+09/08 05:17:30 PM [Epoch 38/150][Step 30/195] Loss=1.974 Time=0.416 Data Time=0.001
+09/08 05:17:47 PM [Epoch 38/150][Step 60/195] Loss=2.032 Time=0.610 Data Time=0.002
+09/08 05:18:03 PM [Epoch 38/150][Step 90/195] Loss=2.014 Time=0.449 Data Time=0.002
+09/08 05:18:20 PM [Epoch 38/150][Step 120/195] Loss=2.063 Time=0.491 Data Time=0.003
+09/08 05:18:36 PM [Epoch 38/150][Step 150/195] Loss=2.033 Time=0.476 Data Time=0.002
+09/08 05:18:51 PM [Epoch 38/150][Step 180/195] Loss=2.017 Time=0.425 Data Time=0.001
+09/08 05:19:10 PM Epoch 37: acc 10.008
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:19:10 PM Temperature: 1.9104927804753733
+09/08 05:19:10 PM [Epoch 39/150] lr=0.042642
+09/08 05:19:10 PM update arch: False
+09/08 05:19:28 PM [Epoch 39/150][Step 30/195] Loss=2.042 Time=0.535 Data Time=0.001
+09/08 05:19:45 PM [Epoch 39/150][Step 60/195] Loss=1.971 Time=0.753 Data Time=0.002
+09/08 05:20:02 PM [Epoch 39/150][Step 90/195] Loss=1.910 Time=0.621 Data Time=0.002
+09/08 05:20:18 PM [Epoch 39/150][Step 120/195] Loss=2.063 Time=0.583 Data Time=0.002
+09/08 05:20:34 PM [Epoch 39/150][Step 150/195] Loss=2.011 Time=0.523 Data Time=0.002
+09/08 05:20:51 PM [Epoch 39/150][Step 180/195] Loss=2.036 Time=0.661 Data Time=0.001
+09/08 05:21:10 PM Epoch 38: acc 10.028
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:21:10 PM Temperature: 1.862730460963489
+09/08 05:21:10 PM [Epoch 40/150] lr=0.042271
+09/08 05:21:10 PM update arch: False
+09/08 05:21:28 PM [Epoch 40/150][Step 30/195] Loss=2.102 Time=0.557 Data Time=0.001
+09/08 05:21:45 PM [Epoch 40/150][Step 60/195] Loss=1.964 Time=0.555 Data Time=0.002
+09/08 05:22:02 PM [Epoch 40/150][Step 90/195] Loss=2.020 Time=0.693 Data Time=0.002
+09/08 05:22:19 PM [Epoch 40/150][Step 120/195] Loss=2.089 Time=0.586 Data Time=0.003
+09/08 05:22:36 PM [Epoch 40/150][Step 150/195] Loss=1.924 Time=0.483 Data Time=0.002
+09/08 05:22:53 PM [Epoch 40/150][Step 180/195] Loss=2.124 Time=0.505 Data Time=0.001
+09/08 05:23:12 PM Epoch 39: acc 10.275
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:23:12 PM Temperature: 1.8161621994394017
+09/08 05:23:12 PM [Epoch 41/150] lr=0.041894
+09/08 05:23:12 PM update arch: False
+09/08 05:23:30 PM [Epoch 41/150][Step 30/195] Loss=2.053 Time=0.639 Data Time=0.001
+09/08 05:23:48 PM [Epoch 41/150][Step 60/195] Loss=1.971 Time=0.661 Data Time=0.002
+09/08 05:24:05 PM [Epoch 41/150][Step 90/195] Loss=2.020 Time=0.616 Data Time=0.002
+09/08 05:24:21 PM [Epoch 41/150][Step 120/195] Loss=2.056 Time=0.557 Data Time=0.003
+09/08 05:24:38 PM [Epoch 41/150][Step 150/195] Loss=1.996 Time=0.471 Data Time=0.002
+09/08 05:24:54 PM [Epoch 41/150][Step 180/195] Loss=2.034 Time=0.621 Data Time=0.001
+09/08 05:25:13 PM Epoch 40: acc 10.047
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:25:13 PM Temperature: 1.7707581444534166
+09/08 05:25:13 PM [Epoch 42/150] lr=0.041509
+09/08 05:25:13 PM update arch: False
+09/08 05:25:31 PM [Epoch 42/150][Step 30/195] Loss=1.933 Time=0.635 Data Time=0.001
+09/08 05:25:48 PM [Epoch 42/150][Step 60/195] Loss=1.996 Time=0.607 Data Time=0.002
+09/08 05:26:05 PM [Epoch 42/150][Step 90/195] Loss=2.014 Time=0.659 Data Time=0.002
+09/08 05:26:22 PM [Epoch 42/150][Step 120/195] Loss=2.011 Time=0.500 Data Time=0.004
+09/08 05:26:38 PM [Epoch 42/150][Step 150/195] Loss=2.063 Time=0.491 Data Time=0.002
+09/08 05:26:55 PM [Epoch 42/150][Step 180/195] Loss=1.990 Time=0.699 Data Time=0.007
+09/08 05:27:13 PM Epoch 41: acc 10.285
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:27:13 PM Temperature: 1.7264891908420812
+09/08 05:27:13 PM [Epoch 43/150] lr=0.041117
+09/08 05:27:13 PM update arch: False
+09/08 05:27:32 PM [Epoch 43/150][Step 30/195] Loss=2.223 Time=0.667 Data Time=0.001
+09/08 05:27:49 PM [Epoch 43/150][Step 60/195] Loss=1.970 Time=0.632 Data Time=0.002
+09/08 05:28:06 PM [Epoch 43/150][Step 90/195] Loss=1.957 Time=0.597 Data Time=0.002
+09/08 05:28:23 PM [Epoch 43/150][Step 120/195] Loss=1.994 Time=0.604 Data Time=0.002
+09/08 05:28:40 PM [Epoch 43/150][Step 150/195] Loss=1.955 Time=0.508 Data Time=0.002
+09/08 05:28:56 PM [Epoch 43/150][Step 180/195] Loss=2.007 Time=0.601 Data Time=0.001
+09/08 05:29:15 PM Epoch 42: acc 10.186
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:29:15 PM Temperature: 1.683326961071029
+09/08 05:29:15 PM [Epoch 44/150] lr=0.040718
+09/08 05:29:15 PM update arch: False
+09/08 05:29:34 PM [Epoch 44/150][Step 30/195] Loss=2.047 Time=0.454 Data Time=0.001
+09/08 05:29:50 PM [Epoch 44/150][Step 60/195] Loss=2.066 Time=0.592 Data Time=0.002
+09/08 05:30:07 PM [Epoch 44/150][Step 90/195] Loss=1.964 Time=0.656 Data Time=0.002
+09/08 05:30:23 PM [Epoch 44/150][Step 120/195] Loss=1.935 Time=0.477 Data Time=0.002
+09/08 05:30:40 PM [Epoch 44/150][Step 150/195] Loss=2.077 Time=0.583 Data Time=0.002
+09/08 05:30:57 PM [Epoch 44/150][Step 180/195] Loss=2.016 Time=0.539 Data Time=0.001
+09/08 05:31:16 PM Epoch 43: acc 9.771
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:31:16 PM Temperature: 1.6412437870442533
+09/08 05:31:16 PM [Epoch 45/150] lr=0.040313
+09/08 05:31:16 PM update arch: False
+09/08 05:31:35 PM [Epoch 45/150][Step 30/195] Loss=1.963 Time=0.545 Data Time=0.002
+09/08 05:31:52 PM [Epoch 45/150][Step 60/195] Loss=2.044 Time=0.581 Data Time=0.002
+09/08 05:32:08 PM [Epoch 45/150][Step 90/195] Loss=1.973 Time=0.596 Data Time=0.002
+09/08 05:32:24 PM [Epoch 45/150][Step 120/195] Loss=1.985 Time=0.592 Data Time=0.002
+09/08 05:32:41 PM [Epoch 45/150][Step 150/195] Loss=1.944 Time=0.566 Data Time=0.002
+09/08 05:32:57 PM [Epoch 45/150][Step 180/195] Loss=1.987 Time=0.725 Data Time=0.001
+09/08 05:33:16 PM Epoch 44: acc 9.405
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:33:16 PM Temperature: 1.600212692368147
+09/08 05:33:16 PM [Epoch 46/150] lr=0.039901
+09/08 05:33:16 PM update arch: False
+09/08 05:33:35 PM [Epoch 46/150][Step 30/195] Loss=1.982 Time=0.446 Data Time=0.002
+09/08 05:33:50 PM [Epoch 46/150][Step 60/195] Loss=1.928 Time=0.551 Data Time=0.002
+09/08 05:34:06 PM [Epoch 46/150][Step 90/195] Loss=2.005 Time=0.431 Data Time=0.002
+09/08 05:34:23 PM [Epoch 46/150][Step 120/195] Loss=2.067 Time=0.553 Data Time=0.002
+09/08 05:34:39 PM [Epoch 46/150][Step 150/195] Loss=1.889 Time=0.542 Data Time=0.002
+09/08 05:34:55 PM [Epoch 46/150][Step 180/195] Loss=1.994 Time=0.568 Data Time=0.001
+09/08 05:35:14 PM Epoch 45: acc 10.166
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:35:14 PM Temperature: 1.5602073750589431
+09/08 05:35:14 PM [Epoch 47/150] lr=0.039482
+09/08 05:35:14 PM update arch: False
+09/08 05:35:32 PM [Epoch 47/150][Step 30/195] Loss=2.089 Time=0.511 Data Time=0.004
+09/08 05:35:48 PM [Epoch 47/150][Step 60/195] Loss=1.909 Time=0.494 Data Time=0.002
+09/08 05:36:04 PM [Epoch 47/150][Step 90/195] Loss=2.031 Time=0.541 Data Time=0.002
+09/08 05:36:21 PM [Epoch 47/150][Step 120/195] Loss=1.890 Time=0.560 Data Time=0.002
+09/08 05:36:37 PM [Epoch 47/150][Step 150/195] Loss=2.077 Time=0.412 Data Time=0.002
+09/08 05:36:54 PM [Epoch 47/150][Step 180/195] Loss=1.948 Time=0.575 Data Time=0.001
+09/08 05:37:13 PM Epoch 46: acc 9.652
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:37:13 PM Temperature: 1.5212021906824695
+09/08 05:37:13 PM [Epoch 48/150] lr=0.039058
+09/08 05:37:13 PM update arch: False
+09/08 05:37:34 PM [Epoch 48/150][Step 30/195] Loss=1.996 Time=0.498 Data Time=0.001
+09/08 05:37:50 PM [Epoch 48/150][Step 60/195] Loss=1.984 Time=0.541 Data Time=0.002
+09/08 05:38:06 PM [Epoch 48/150][Step 90/195] Loss=1.999 Time=0.522 Data Time=0.002
+09/08 05:38:22 PM [Epoch 48/150][Step 120/195] Loss=1.976 Time=0.548 Data Time=0.002
+09/08 05:38:38 PM [Epoch 48/150][Step 150/195] Loss=1.986 Time=0.528 Data Time=0.002
+09/08 05:38:55 PM [Epoch 48/150][Step 180/195] Loss=1.932 Time=0.410 Data Time=0.001
+09/08 05:39:14 PM Epoch 47: acc 10.275
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:39:14 PM Temperature: 1.483172135915408
+09/08 05:39:14 PM [Epoch 49/150] lr=0.038628
+09/08 05:39:14 PM update arch: False
+09/08 05:39:36 PM [Epoch 49/150][Step 30/195] Loss=1.851 Time=0.546 Data Time=0.002
+09/08 05:39:53 PM [Epoch 49/150][Step 60/195] Loss=1.954 Time=0.619 Data Time=0.002
+09/08 05:40:10 PM [Epoch 49/150][Step 90/195] Loss=1.956 Time=0.483 Data Time=0.002
+09/08 05:40:26 PM [Epoch 49/150][Step 120/195] Loss=1.936 Time=0.558 Data Time=0.002
+09/08 05:40:43 PM [Epoch 49/150][Step 150/195] Loss=1.973 Time=0.549 Data Time=0.002
+09/08 05:40:59 PM [Epoch 49/150][Step 180/195] Loss=2.022 Time=0.622 Data Time=0.001
+09/08 05:41:18 PM Epoch 48: acc 10.334
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:41:18 PM Temperature: 1.4460928325175226
+09/08 05:41:18 PM [Epoch 50/150] lr=0.038192
+09/08 05:41:18 PM update arch: False
+09/08 05:41:41 PM [Epoch 50/150][Step 30/195] Loss=1.945 Time=0.549 Data Time=0.001
+09/08 05:41:58 PM [Epoch 50/150][Step 60/195] Loss=1.940 Time=0.551 Data Time=0.002
+09/08 05:42:15 PM [Epoch 50/150][Step 90/195] Loss=1.989 Time=0.557 Data Time=0.002
+09/08 05:42:31 PM [Epoch 50/150][Step 120/195] Loss=1.985 Time=0.611 Data Time=0.002
+09/08 05:42:48 PM [Epoch 50/150][Step 150/195] Loss=1.928 Time=0.574 Data Time=0.002
+09/08 05:43:04 PM [Epoch 50/150][Step 180/195] Loss=2.058 Time=0.567 Data Time=0.001
+09/08 05:43:25 PM Epoch 49: acc 9.761
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:43:25 PM Temperature: 1.4099405117045847
+09/08 05:43:25 PM [Epoch 51/150] lr=0.037750
+09/08 05:43:25 PM update arch: False
+09/08 05:43:44 PM [Epoch 51/150][Step 30/195] Loss=1.958 Time=0.539 Data Time=0.001
+09/08 05:44:00 PM [Epoch 51/150][Step 60/195] Loss=1.983 Time=0.622 Data Time=0.002
+09/08 05:44:17 PM [Epoch 51/150][Step 90/195] Loss=2.018 Time=0.613 Data Time=0.002
+09/08 05:44:34 PM [Epoch 51/150][Step 120/195] Loss=1.949 Time=0.537 Data Time=0.002
+09/08 05:44:49 PM [Epoch 51/150][Step 150/195] Loss=1.998 Time=0.339 Data Time=0.002
+09/08 05:45:05 PM [Epoch 51/150][Step 180/195] Loss=1.913 Time=0.636 Data Time=0.001
+09/08 05:45:24 PM Epoch 50: acc 9.820
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:45:24 PM Temperature: 1.37469199891197
+09/08 05:45:24 PM [Epoch 52/150] lr=0.037303
+09/08 05:45:24 PM update arch: False
+09/08 05:45:45 PM [Epoch 52/150][Step 30/195] Loss=1.966 Time=0.464 Data Time=0.001
+09/08 05:46:01 PM [Epoch 52/150][Step 60/195] Loss=2.073 Time=0.646 Data Time=0.002
+09/08 05:46:17 PM [Epoch 52/150][Step 90/195] Loss=1.911 Time=0.560 Data Time=0.002
+09/08 05:46:34 PM [Epoch 52/150][Step 120/195] Loss=1.960 Time=0.603 Data Time=0.002
+09/08 05:46:50 PM [Epoch 52/150][Step 150/195] Loss=1.934 Time=0.579 Data Time=0.002
+09/08 05:47:06 PM [Epoch 52/150][Step 180/195] Loss=2.043 Time=0.488 Data Time=0.001
+09/08 05:47:26 PM Epoch 51: acc 10.136
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:47:26 PM Temperature: 1.3403246989391706
+09/08 05:47:26 PM [Epoch 53/150] lr=0.036851
+09/08 05:47:26 PM update arch: False
+09/08 05:47:48 PM [Epoch 53/150][Step 30/195] Loss=1.982 Time=0.638 Data Time=0.002
+09/08 05:48:05 PM [Epoch 53/150][Step 60/195] Loss=1.951 Time=0.445 Data Time=0.002
+09/08 05:48:21 PM [Epoch 53/150][Step 90/195] Loss=1.973 Time=0.702 Data Time=0.002
+09/08 05:48:38 PM [Epoch 53/150][Step 120/195] Loss=1.922 Time=0.559 Data Time=0.002
+09/08 05:48:55 PM [Epoch 53/150][Step 150/195] Loss=1.952 Time=0.482 Data Time=0.002
+09/08 05:49:11 PM [Epoch 53/150][Step 180/195] Loss=2.011 Time=0.477 Data Time=0.001
+09/08 05:49:31 PM Epoch 52: acc 10.374
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:49:31 PM Temperature: 1.3068165814656911
+09/08 05:49:31 PM [Epoch 54/150] lr=0.036394
+09/08 05:49:31 PM update arch: False
+09/08 05:49:51 PM [Epoch 54/150][Step 30/195] Loss=2.020 Time=0.530 Data Time=0.002
+09/08 05:50:07 PM [Epoch 54/150][Step 60/195] Loss=2.002 Time=0.604 Data Time=0.002
+09/08 05:50:24 PM [Epoch 54/150][Step 90/195] Loss=1.904 Time=0.530 Data Time=0.002
+09/08 05:50:40 PM [Epoch 54/150][Step 120/195] Loss=1.964 Time=0.688 Data Time=0.002
+09/08 05:50:56 PM [Epoch 54/150][Step 150/195] Loss=1.987 Time=0.556 Data Time=0.002
+09/08 05:51:12 PM [Epoch 54/150][Step 180/195] Loss=1.897 Time=0.543 Data Time=0.001
+09/08 05:51:32 PM Epoch 53: acc 9.840
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:51:32 PM Temperature: 1.274146166929049
+09/08 05:51:32 PM [Epoch 55/150] lr=0.035932
+09/08 05:51:32 PM update arch: False
+09/08 05:51:55 PM [Epoch 55/150][Step 30/195] Loss=1.945 Time=0.578 Data Time=0.001
+09/08 05:52:11 PM [Epoch 55/150][Step 60/195] Loss=1.948 Time=0.587 Data Time=0.002
+09/08 05:52:28 PM [Epoch 55/150][Step 90/195] Loss=1.976 Time=0.669 Data Time=0.002
+09/08 05:52:45 PM [Epoch 55/150][Step 120/195] Loss=2.029 Time=0.637 Data Time=0.002
+09/08 05:53:02 PM [Epoch 55/150][Step 150/195] Loss=1.930 Time=0.575 Data Time=0.002
+09/08 05:53:18 PM [Epoch 55/150][Step 180/195] Loss=1.994 Time=0.526 Data Time=0.001
+09/08 05:53:39 PM Epoch 54: acc 10.492
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:53:39 PM Temperature: 1.2422925127558229
+09/08 05:53:39 PM [Epoch 56/150] lr=0.035465
+09/08 05:53:39 PM update arch: False
+09/08 05:54:01 PM [Epoch 56/150][Step 30/195] Loss=2.012 Time=0.464 Data Time=0.001
+09/08 05:54:19 PM [Epoch 56/150][Step 60/195] Loss=2.085 Time=0.599 Data Time=0.002
+09/08 05:54:36 PM [Epoch 56/150][Step 90/195] Loss=1.943 Time=0.520 Data Time=0.002
+09/08 05:54:52 PM [Epoch 56/150][Step 120/195] Loss=2.047 Time=0.547 Data Time=0.002
+09/08 05:55:08 PM [Epoch 56/150][Step 150/195] Loss=1.978 Time=0.492 Data Time=0.002
+09/08 05:55:25 PM [Epoch 56/150][Step 180/195] Loss=1.920 Time=0.608 Data Time=0.001
+09/08 05:55:46 PM Epoch 55: acc 10.146
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:55:46 PM Temperature: 1.211235199936927
+09/08 05:55:46 PM [Epoch 57/150] lr=0.034994
+09/08 05:55:46 PM update arch: False
+09/08 05:56:08 PM [Epoch 57/150][Step 30/195] Loss=2.058 Time=0.635 Data Time=0.001
+09/08 05:56:24 PM [Epoch 57/150][Step 60/195] Loss=1.948 Time=0.378 Data Time=0.002
+09/08 05:56:40 PM [Epoch 57/150][Step 90/195] Loss=2.008 Time=0.647 Data Time=0.002
+09/08 05:56:57 PM [Epoch 57/150][Step 120/195] Loss=1.859 Time=0.646 Data Time=0.002
+09/08 05:57:14 PM [Epoch 57/150][Step 150/195] Loss=2.024 Time=0.407 Data Time=0.002
+09/08 05:57:30 PM [Epoch 57/150][Step 180/195] Loss=1.910 Time=0.488 Data Time=0.001
+09/08 05:57:51 PM Epoch 56: acc 10.305
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:57:51 PM Temperature: 1.180954319938504
+09/08 05:57:51 PM [Epoch 58/150] lr=0.034519
+09/08 05:57:51 PM update arch: False
+09/08 05:58:12 PM [Epoch 58/150][Step 30/195] Loss=1.939 Time=0.523 Data Time=0.001
+09/08 05:58:29 PM [Epoch 58/150][Step 60/195] Loss=1.914 Time=0.626 Data Time=0.002
+09/08 05:58:45 PM [Epoch 58/150][Step 90/195] Loss=1.982 Time=0.463 Data Time=0.002
+09/08 05:59:01 PM [Epoch 58/150][Step 120/195] Loss=1.948 Time=0.448 Data Time=0.002
+09/08 05:59:18 PM [Epoch 58/150][Step 150/195] Loss=1.917 Time=0.506 Data Time=0.003
+09/08 05:59:34 PM [Epoch 58/150][Step 180/195] Loss=2.001 Time=0.436 Data Time=0.001
+09/08 05:59:54 PM Epoch 57: acc 10.196
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 05:59:54 PM Temperature: 1.1514304619400413
+09/08 05:59:54 PM [Epoch 59/150] lr=0.034040
+09/08 05:59:54 PM update arch: False
+09/08 06:00:14 PM [Epoch 59/150][Step 30/195] Loss=1.962 Time=0.573 Data Time=0.002
+09/08 06:00:31 PM [Epoch 59/150][Step 60/195] Loss=1.921 Time=0.505 Data Time=0.002
+09/08 06:00:50 PM [Epoch 59/150][Step 90/195] Loss=1.935 Time=0.507 Data Time=0.002
+09/08 06:01:06 PM [Epoch 59/150][Step 120/195] Loss=1.932 Time=0.688 Data Time=0.002
+09/08 06:01:22 PM [Epoch 59/150][Step 150/195] Loss=1.920 Time=0.581 Data Time=0.002
+09/08 06:01:38 PM [Epoch 59/150][Step 180/195] Loss=1.980 Time=0.405 Data Time=0.001
+09/08 06:01:58 PM Epoch 58: acc 10.166
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 06:01:58 PM Temperature: 1.12264470039154
+09/08 06:01:58 PM [Epoch 60/150] lr=0.033557
+09/08 06:01:58 PM update arch: False
+09/08 06:02:20 PM [Epoch 60/150][Step 30/195] Loss=1.913 Time=0.467 Data Time=0.001
+09/08 06:02:37 PM [Epoch 60/150][Step 60/195] Loss=1.915 Time=0.583 Data Time=0.002
+09/08 06:02:54 PM [Epoch 60/150][Step 90/195] Loss=1.969 Time=0.470 Data Time=0.002
+09/08 06:03:10 PM [Epoch 60/150][Step 120/195] Loss=1.948 Time=0.586 Data Time=0.002
+09/08 06:03:28 PM [Epoch 60/150][Step 150/195] Loss=1.944 Time=0.538 Data Time=0.002
+09/08 06:03:44 PM [Epoch 60/150][Step 180/195] Loss=1.904 Time=0.567 Data Time=0.001
+09/08 06:04:03 PM Epoch 59: acc 10.038
+add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 add_k3_e3 09/08 06:04:03 PM Temperature: 1.0945785828817516
+09/08 06:04:03 PM [Epoch 61/150] lr=0.033071
+09/08 06:04:03 PM update arch: True
+09/08 06:04:42 PM [Epoch 61/150][Step 30/195] Loss=2.008 Time=1.116 Data Time=0.001
+09/08 06:05:13 PM [Epoch 61/150][Step 60/195] Loss=1.963 Time=1.062 Data Time=0.002
+09/08 06:05:45 PM [Epoch 61/150][Step 90/195] Loss=1.934 Time=0.988 Data Time=0.002
+09/08 06:06:15 PM [Epoch 61/150][Step 120/195] Loss=1.969 Time=0.990 Data Time=0.002
+09/08 06:06:48 PM [Epoch 61/150][Step 150/195] Loss=1.931 Time=1.171 Data Time=0.002
+09/08 06:07:20 PM [Epoch 61/150][Step 180/195] Loss=1.977 Time=1.069 Data Time=0.001
+skip
+add_k3_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k3_e3
+add_k3_e1
+k5_e1
+add_k5_e6
+add_k5_e3
+add_k5_e1
+k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 06:07:46 PM Epoch 60: acc 10.107
+09/08 06:07:46 PM Epoch 60: FLOPs 28283878.400
+skip add_k3_e3 add_k3_e3 skip skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k3_e3 add_k3_e1 k5_e1 add_k5_e6 add_k5_e3 add_k5_e1 k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 k5_e3 09/08 06:07:46 PM Temperature: 1.067214118309708
+09/08 06:07:46 PM [Epoch 62/150] lr=0.032581
+09/08 06:07:46 PM update arch: True
+09/08 06:08:24 PM [Epoch 62/150][Step 30/195] Loss=1.889 Time=1.092 Data Time=0.001
+09/08 06:08:56 PM [Epoch 62/150][Step 60/195] Loss=1.959 Time=0.824 Data Time=0.002
+09/08 06:09:28 PM [Epoch 62/150][Step 90/195] Loss=2.040 Time=1.190 Data Time=0.002
+09/08 06:10:00 PM [Epoch 62/150][Step 120/195] Loss=1.915 Time=0.929 Data Time=0.002
+09/08 06:10:31 PM [Epoch 62/150][Step 150/195] Loss=1.902 Time=1.011 Data Time=0.002
+09/08 06:11:02 PM [Epoch 62/150][Step 180/195] Loss=1.947 Time=0.986 Data Time=0.001
+skip
+skip
+add_k3_e3
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+skip
+add_k3_e1
+k5_e1
+add_k3_e6
+add_k5_e6
+k3_e3
+k5_e3
+k5_e3
+add_k5_e6
+add_k3_e6
+k5_e3
+09/08 06:11:31 PM Epoch 61: acc 10.463
+09/08 06:11:31 PM Epoch 61: FLOPs 37083443.200
+skip skip add_k3_e3 skip skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 skip add_k3_e1 k5_e1 add_k3_e6 add_k5_e6 k3_e3 k5_e3 k5_e3 add_k5_e6 add_k3_e6 k5_e3 09/08 06:11:31 PM Temperature: 1.040533765351965
+09/08 06:11:31 PM [Epoch 63/150] lr=0.032089
+09/08 06:11:31 PM update arch: True
+09/08 06:12:06 PM [Epoch 63/150][Step 30/195] Loss=1.956 Time=1.036 Data Time=0.001
+09/08 06:12:37 PM [Epoch 63/150][Step 60/195] Loss=1.971 Time=1.202 Data Time=0.002
+09/08 06:13:08 PM [Epoch 63/150][Step 90/195] Loss=1.983 Time=1.099 Data Time=0.002
+09/08 06:13:38 PM [Epoch 63/150][Step 120/195] Loss=1.928 Time=0.907 Data Time=0.002
+09/08 06:14:10 PM [Epoch 63/150][Step 150/195] Loss=1.906 Time=1.149 Data Time=0.002
+09/08 06:14:40 PM [Epoch 63/150][Step 180/195] Loss=1.817 Time=1.023 Data Time=0.001
+skip
+skip
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+skip
+add_k5_e6
+k5_e1
+add_k3_e6
+add_k3_e6
+add_k3_e3
+k5_e3
+add_k5_e3
+add_k5_e6
+k3_e6
+k5_e3
+09/08 06:15:08 PM Epoch 62: acc 10.166
+09/08 06:15:08 PM Epoch 62: FLOPs 35183001.600
+skip skip skip skip skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 skip add_k5_e6 k5_e1 add_k3_e6 add_k3_e6 add_k3_e3 k5_e3 add_k5_e3 add_k5_e6 k3_e6 k5_e3 09/08 06:15:08 PM Temperature: 1.014520421218166
+09/08 06:15:08 PM [Epoch 64/150] lr=0.031593
+09/08 06:15:08 PM update arch: True
+09/08 06:15:46 PM [Epoch 64/150][Step 30/195] Loss=1.869 Time=0.978 Data Time=0.001
+09/08 06:16:16 PM [Epoch 64/150][Step 60/195] Loss=2.032 Time=0.921 Data Time=0.002
+09/08 06:16:46 PM [Epoch 64/150][Step 90/195] Loss=1.980 Time=0.949 Data Time=0.002
+09/08 06:17:16 PM [Epoch 64/150][Step 120/195] Loss=1.965 Time=1.199 Data Time=0.002
+09/08 06:17:46 PM [Epoch 64/150][Step 150/195] Loss=1.967 Time=1.169 Data Time=0.002
+09/08 06:18:16 PM [Epoch 64/150][Step 180/195] Loss=1.926 Time=1.014 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k3_e3
+skip
+add_k5_e6
+k5_e3
+add_k3_e6
+skip
+add_k3_e3
+k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 06:18:44 PM Epoch 63: acc 9.899
+09/08 06:18:44 PM Epoch 63: FLOPs 28965657.600
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k3_e3 skip add_k5_e6 k5_e3 add_k3_e6 skip add_k3_e3 k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 k5_e3 09/08 06:18:44 PM Temperature: 0.9891574106877119
+09/08 06:18:44 PM [Epoch 65/150] lr=0.031095
+09/08 06:18:44 PM update arch: True
+09/08 06:19:29 PM [Epoch 65/150][Step 30/195] Loss=2.046 Time=1.061 Data Time=0.002
+09/08 06:20:00 PM [Epoch 65/150][Step 60/195] Loss=1.969 Time=1.173 Data Time=0.002
+09/08 06:20:31 PM [Epoch 65/150][Step 90/195] Loss=1.874 Time=0.957 Data Time=0.002
+09/08 06:21:01 PM [Epoch 65/150][Step 120/195] Loss=1.964 Time=0.939 Data Time=0.002
+09/08 06:21:32 PM [Epoch 65/150][Step 150/195] Loss=1.938 Time=1.087 Data Time=0.002
+09/08 06:22:02 PM [Epoch 65/150][Step 180/195] Loss=1.887 Time=1.007 Data Time=0.001
+skip
+add_k3_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k3_e3
+skip
+add_k5_e6
+k5_e3
+add_k3_e6
+skip
+add_k3_e3
+k5_e3
+add_k5_e3
+add_k5_e6
+k3_e6
+k5_e3
+09/08 06:22:31 PM Epoch 64: acc 9.968
+09/08 06:22:31 PM Epoch 64: FLOPs 34841804.800
+skip add_k3_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k3_e3 skip add_k5_e6 k5_e3 add_k3_e6 skip add_k3_e3 k5_e3 add_k5_e3 add_k5_e6 k3_e6 k5_e3 09/08 06:22:31 PM Temperature: 0.964428475420519
+09/08 06:22:31 PM [Epoch 66/150] lr=0.030594
+09/08 06:22:31 PM update arch: True
+09/08 06:23:04 PM [Epoch 66/150][Step 30/195] Loss=1.935 Time=1.054 Data Time=0.001
+09/08 06:23:33 PM [Epoch 66/150][Step 60/195] Loss=1.886 Time=0.917 Data Time=0.002
+09/08 06:24:05 PM [Epoch 66/150][Step 90/195] Loss=1.876 Time=1.160 Data Time=0.002
+09/08 06:24:36 PM [Epoch 66/150][Step 120/195] Loss=1.935 Time=0.855 Data Time=0.002
+09/08 06:25:05 PM [Epoch 66/150][Step 150/195] Loss=1.905 Time=1.083 Data Time=0.002
+09/08 06:25:37 PM [Epoch 66/150][Step 180/195] Loss=1.875 Time=1.156 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+k5_e3
+add_k3_e6
+add_k5_e6
+k3_e3
+k5_e3
+add_k5_e3
+add_k5_e6
+k3_e6
+k5_e6
+09/08 06:26:03 PM Epoch 65: acc 10.057
+09/08 06:26:03 PM Epoch 65: FLOPs 47069516.800
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 k5_e3 add_k3_e6 add_k5_e6 k3_e3 k5_e3 add_k5_e3 add_k5_e6 k3_e6 k5_e6 09/08 06:26:03 PM Temperature: 0.940317763535006
+09/08 06:26:03 PM [Epoch 67/150] lr=0.030091
+09/08 06:26:03 PM update arch: True
+09/08 06:26:35 PM [Epoch 67/150][Step 30/195] Loss=2.005 Time=0.769 Data Time=0.002
+09/08 06:27:06 PM [Epoch 67/150][Step 60/195] Loss=1.899 Time=1.133 Data Time=0.002
+09/08 06:27:37 PM [Epoch 67/150][Step 90/195] Loss=2.035 Time=0.912 Data Time=0.002
+09/08 06:28:08 PM [Epoch 67/150][Step 120/195] Loss=1.917 Time=1.046 Data Time=0.002
+09/08 06:28:39 PM [Epoch 67/150][Step 150/195] Loss=1.831 Time=1.182 Data Time=0.002
+09/08 06:29:10 PM [Epoch 67/150][Step 180/195] Loss=1.969 Time=1.000 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k3_e3
+k5_e3
+add_k3_e6
+add_k5_e6
+k3_e3
+k5_e3
+add_k5_e3
+add_k5_e3
+k5_e3
+k5_e3
+09/08 06:29:34 PM Epoch 66: acc 9.929
+09/08 06:29:34 PM Epoch 66: FLOPs 37650688.000
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k3_e6 add_k5_e3 add_k3_e3 k5_e3 add_k3_e6 add_k5_e6 k3_e3 k5_e3 add_k5_e3 add_k5_e3 k5_e3 k5_e3 09/08 06:29:34 PM Temperature: 0.9168098194466308
+09/08 06:29:34 PM [Epoch 68/150] lr=0.029586
+09/08 06:29:34 PM update arch: True
+09/08 06:30:09 PM [Epoch 68/150][Step 30/195] Loss=1.926 Time=0.916 Data Time=0.001
+09/08 06:30:41 PM [Epoch 68/150][Step 60/195] Loss=1.897 Time=0.993 Data Time=0.002
+09/08 06:31:11 PM [Epoch 68/150][Step 90/195] Loss=1.936 Time=1.062 Data Time=0.002
+09/08 06:31:42 PM [Epoch 68/150][Step 120/195] Loss=1.878 Time=1.113 Data Time=0.002
+09/08 06:32:13 PM [Epoch 68/150][Step 150/195] Loss=1.950 Time=0.953 Data Time=0.002
+09/08 06:32:44 PM [Epoch 68/150][Step 180/195] Loss=1.982 Time=1.035 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k3_e3
+k5_e3
+add_k3_e6
+add_k3_e6
+k3_e1
+k5_e3
+add_k5_e6
+k5_e3
+k5_e3
+k5_e3
+09/08 06:33:10 PM Epoch 67: acc 10.156
+09/08 06:33:10 PM Epoch 67: FLOPs 37626444.800
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k3_e6 add_k5_e3 add_k3_e3 k5_e3 add_k3_e6 add_k3_e6 k3_e1 k5_e3 add_k5_e6 k5_e3 k5_e3 k5_e3 09/08 06:33:10 PM Temperature: 0.8938895739604651
+09/08 06:33:10 PM [Epoch 69/150] lr=0.029079
+09/08 06:33:10 PM update arch: True
+09/08 06:33:43 PM [Epoch 69/150][Step 30/195] Loss=1.913 Time=0.973 Data Time=0.001
+09/08 06:34:13 PM [Epoch 69/150][Step 60/195] Loss=1.866 Time=1.113 Data Time=0.002
+09/08 06:34:44 PM [Epoch 69/150][Step 90/195] Loss=1.962 Time=1.037 Data Time=0.002
+09/08 06:35:15 PM [Epoch 69/150][Step 120/195] Loss=1.933 Time=1.128 Data Time=0.002
+09/08 06:35:46 PM [Epoch 69/150][Step 150/195] Loss=1.923 Time=1.033 Data Time=0.002
+09/08 06:36:18 PM [Epoch 69/150][Step 180/195] Loss=1.863 Time=1.120 Data Time=0.002
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k3_e3
+k5_e3
+add_k3_e6
+add_k3_e6
+k3_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+k5_e3
+k5_e3
+09/08 06:36:44 PM Epoch 68: acc 10.364
+09/08 06:36:44 PM Epoch 68: FLOPs 35517952.000
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k3_e6 add_k5_e3 add_k3_e3 k5_e3 add_k3_e6 add_k3_e6 k3_e1 k5_e3 add_k5_e6 add_k5_e6 k5_e3 k5_e3 09/08 06:36:44 PM Temperature: 0.8715423346114535
+09/08 06:36:44 PM [Epoch 70/150] lr=0.028571
+09/08 06:36:44 PM update arch: True
+09/08 06:37:18 PM [Epoch 70/150][Step 30/195] Loss=1.993 Time=1.005 Data Time=0.001
+09/08 06:37:49 PM [Epoch 70/150][Step 60/195] Loss=1.906 Time=0.951 Data Time=0.002
+09/08 06:38:20 PM [Epoch 70/150][Step 90/195] Loss=2.081 Time=1.110 Data Time=0.002
+09/08 06:38:50 PM [Epoch 70/150][Step 120/195] Loss=2.048 Time=1.028 Data Time=0.002
+09/08 06:39:20 PM [Epoch 70/150][Step 150/195] Loss=1.891 Time=0.850 Data Time=0.002
+09/08 06:39:50 PM [Epoch 70/150][Step 180/195] Loss=1.871 Time=1.051 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k3_e3
+k5_e3
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+k5_e3
+09/08 06:40:15 PM Epoch 69: acc 9.840
+09/08 06:40:15 PM Epoch 69: FLOPs 32586112.000
+skip add_k5_e3 skip skip skip add_k5_e3 skip skip skip add_k5_e6 add_k5_e6 add_k5_e6 add_k3_e3 k5_e3 add_k3_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 k5_e3 09/08 06:40:15 PM Temperature: 0.8497537762461671
+09/08 06:40:15 PM [Epoch 71/150] lr=0.028061
+09/08 06:40:15 PM update arch: True
+09/08 06:40:49 PM [Epoch 71/150][Step 30/195] Loss=1.878 Time=1.018 Data Time=0.001
+09/08 06:41:20 PM [Epoch 71/150][Step 60/195] Loss=2.083 Time=0.999 Data Time=0.002
+09/08 06:41:50 PM [Epoch 71/150][Step 90/195] Loss=1.910 Time=1.029 Data Time=0.002
+09/08 06:42:20 PM [Epoch 71/150][Step 120/195] Loss=1.891 Time=1.110 Data Time=0.002
+09/08 06:42:50 PM [Epoch 71/150][Step 150/195] Loss=1.899 Time=0.873 Data Time=0.002
+09/08 06:43:21 PM [Epoch 71/150][Step 180/195] Loss=1.868 Time=0.919 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+k5_e3
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 06:43:46 PM Epoch 70: acc 10.324
+09/08 06:43:46 PM Epoch 70: FLOPs 36590131.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 k5_e3 add_k3_e6 add_k3_e6 k5_e1 k5_e6 add_k5_e6 add_k5_e6 add_k5_e3 k5_e3 09/08 06:43:46 PM Temperature: 0.8285099318400129
+09/08 06:43:46 PM [Epoch 72/150] lr=0.027550
+09/08 06:43:46 PM update arch: True
+09/08 06:44:19 PM [Epoch 72/150][Step 30/195] Loss=2.001 Time=1.050 Data Time=0.002
+09/08 06:44:50 PM [Epoch 72/150][Step 60/195] Loss=1.891 Time=1.136 Data Time=0.002
+09/08 06:45:21 PM [Epoch 72/150][Step 90/195] Loss=1.947 Time=0.994 Data Time=0.002
+09/08 06:45:52 PM [Epoch 72/150][Step 120/195] Loss=2.109 Time=1.068 Data Time=0.002
+09/08 06:46:23 PM [Epoch 72/150][Step 150/195] Loss=1.920 Time=1.190 Data Time=0.002
+09/08 06:46:54 PM [Epoch 72/150][Step 180/195] Loss=1.891 Time=1.144 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+k5_e3
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e6
+add_k5_e6
+add_k5_e3
+k5_e3
+k5_e3
+09/08 06:47:21 PM Epoch 71: acc 9.474
+09/08 06:47:21 PM Epoch 71: FLOPs 38796928.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 k5_e3 add_k5_e6 add_k3_e6 k5_e1 k5_e6 add_k5_e6 add_k5_e3 k5_e3 k5_e3 09/08 06:47:21 PM Temperature: 0.8077971835440125
+09/08 06:47:21 PM [Epoch 73/150] lr=0.027038
+09/08 06:47:21 PM update arch: True
+09/08 06:47:53 PM [Epoch 73/150][Step 30/195] Loss=1.911 Time=0.984 Data Time=0.002
+09/08 06:48:23 PM [Epoch 73/150][Step 60/195] Loss=2.047 Time=1.018 Data Time=0.002
+09/08 06:48:53 PM [Epoch 73/150][Step 90/195] Loss=1.993 Time=0.928 Data Time=0.002
+09/08 06:49:24 PM [Epoch 73/150][Step 120/195] Loss=1.886 Time=0.992 Data Time=0.002
+09/08 06:49:55 PM [Epoch 73/150][Step 150/195] Loss=1.915 Time=0.884 Data Time=0.002
+09/08 06:50:26 PM [Epoch 73/150][Step 180/195] Loss=1.952 Time=1.036 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+k5_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+k5_e3
+k5_e3
+09/08 06:50:53 PM Epoch 72: acc 10.255
+09/08 06:50:53 PM Epoch 72: FLOPs 37592550.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 k5_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 k5_e3 k5_e3 09/08 06:50:53 PM Temperature: 0.7876022539554122
+09/08 06:50:53 PM [Epoch 74/150] lr=0.026526
+09/08 06:50:53 PM update arch: True
+09/08 06:51:26 PM [Epoch 74/150][Step 30/195] Loss=2.006 Time=1.139 Data Time=0.001
+09/08 06:51:57 PM [Epoch 74/150][Step 60/195] Loss=1.817 Time=1.094 Data Time=0.002
+09/08 06:52:28 PM [Epoch 74/150][Step 90/195] Loss=2.074 Time=0.956 Data Time=0.003
+09/08 06:52:58 PM [Epoch 74/150][Step 120/195] Loss=1.884 Time=1.046 Data Time=0.002
+09/08 06:53:29 PM [Epoch 74/150][Step 150/195] Loss=2.036 Time=0.973 Data Time=0.002
+09/08 06:53:59 PM [Epoch 74/150][Step 180/195] Loss=1.962 Time=0.770 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+k5_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e6
+add_k5_e6
+add_k5_e6
+k5_e3
+k5_e3
+09/08 06:54:25 PM Epoch 73: acc 10.038
+09/08 06:54:25 PM Epoch 73: FLOPs 42639820.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 skip add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 k5_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e6 add_k5_e6 add_k5_e6 k5_e3 k5_e3 09/08 06:54:25 PM Temperature: 0.7679121976065268
+09/08 06:54:25 PM [Epoch 75/150] lr=0.026013
+09/08 06:54:25 PM update arch: True
+09/08 06:54:59 PM [Epoch 75/150][Step 30/195] Loss=1.888 Time=0.998 Data Time=0.003
+09/08 06:55:31 PM [Epoch 75/150][Step 60/195] Loss=1.877 Time=0.983 Data Time=0.002
+09/08 06:56:02 PM [Epoch 75/150][Step 90/195] Loss=2.003 Time=0.819 Data Time=0.002
+09/08 06:56:32 PM [Epoch 75/150][Step 120/195] Loss=1.969 Time=1.099 Data Time=0.002
+09/08 06:57:02 PM [Epoch 75/150][Step 150/195] Loss=1.906 Time=1.071 Data Time=0.003
+09/08 06:57:34 PM [Epoch 75/150][Step 180/195] Loss=1.921 Time=1.185 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+k5_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 06:58:00 PM Epoch 74: acc 9.810
+09/08 06:58:00 PM Epoch 74: FLOPs 39830067.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 skip add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 k5_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e6 add_k5_e6 add_k5_e6 add_k5_e3 k5_e3 09/08 06:58:00 PM Temperature: 0.7487143926663636
+09/08 06:58:00 PM [Epoch 76/150] lr=0.025500
+09/08 06:58:00 PM update arch: True
+09/08 06:58:34 PM [Epoch 76/150][Step 30/195] Loss=2.043 Time=1.228 Data Time=0.002
+09/08 06:59:05 PM [Epoch 76/150][Step 60/195] Loss=1.888 Time=1.091 Data Time=0.002
+09/08 06:59:36 PM [Epoch 76/150][Step 90/195] Loss=1.929 Time=1.070 Data Time=0.002
+09/08 07:00:07 PM [Epoch 76/150][Step 120/195] Loss=1.979 Time=0.897 Data Time=0.002
+09/08 07:00:39 PM [Epoch 76/150][Step 150/195] Loss=1.990 Time=1.121 Data Time=0.002
+09/08 07:01:09 PM [Epoch 76/150][Step 180/195] Loss=1.842 Time=0.899 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+k5_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 07:01:35 PM Epoch 75: acc 9.949
+09/08 07:01:35 PM Epoch 75: FLOPs 37022924.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 k5_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 k5_e3 09/08 07:01:35 PM Temperature: 0.7299965328497047
+09/08 07:01:35 PM [Epoch 77/150] lr=0.024987
+09/08 07:01:35 PM update arch: True
+09/08 07:02:08 PM [Epoch 77/150][Step 30/195] Loss=1.956 Time=1.081 Data Time=0.001
+09/08 07:02:39 PM [Epoch 77/150][Step 60/195] Loss=1.978 Time=1.006 Data Time=0.002
+09/08 07:03:11 PM [Epoch 77/150][Step 90/195] Loss=1.941 Time=0.944 Data Time=0.002
+09/08 07:03:42 PM [Epoch 77/150][Step 120/195] Loss=2.103 Time=1.142 Data Time=0.002
+09/08 07:04:14 PM [Epoch 77/150][Step 150/195] Loss=1.881 Time=1.216 Data Time=0.002
+09/08 07:04:46 PM [Epoch 77/150][Step 180/195] Loss=1.850 Time=1.155 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+k5_e3
+09/08 07:05:11 PM Epoch 76: acc 10.314
+09/08 07:05:11 PM Epoch 76: FLOPs 33603609.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 k5_e3 09/08 07:05:11 PM Temperature: 0.7117466195284619
+09/08 07:05:11 PM [Epoch 78/150] lr=0.024474
+09/08 07:05:11 PM update arch: True
+09/08 07:05:46 PM [Epoch 78/150][Step 30/195] Loss=1.895 Time=1.151 Data Time=0.001
+09/08 07:06:17 PM [Epoch 78/150][Step 60/195] Loss=1.982 Time=0.993 Data Time=0.002
+09/08 07:06:48 PM [Epoch 78/150][Step 90/195] Loss=1.901 Time=0.976 Data Time=0.002
+09/08 07:07:19 PM [Epoch 78/150][Step 120/195] Loss=1.992 Time=1.021 Data Time=0.002
+09/08 07:07:50 PM [Epoch 78/150][Step 150/195] Loss=1.926 Time=0.986 Data Time=0.002
+09/08 07:08:21 PM [Epoch 78/150][Step 180/195] Loss=1.917 Time=0.923 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+skip
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+k5_e3
+09/08 07:08:48 PM Epoch 77: acc 9.810
+09/08 07:08:48 PM Epoch 77: FLOPs 32441958.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 skip add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 k5_e3 09/08 07:08:48 PM Temperature: 0.6939529540402503
+09/08 07:08:48 PM [Epoch 79/150] lr=0.023962
+09/08 07:08:48 PM update arch: True
+09/08 07:09:21 PM [Epoch 79/150][Step 30/195] Loss=2.113 Time=0.924 Data Time=0.002
+09/08 07:09:52 PM [Epoch 79/150][Step 60/195] Loss=1.989 Time=1.049 Data Time=0.004
+09/08 07:10:23 PM [Epoch 79/150][Step 90/195] Loss=1.950 Time=1.002 Data Time=0.002
+09/08 07:10:54 PM [Epoch 79/150][Step 120/195] Loss=1.935 Time=0.901 Data Time=0.002
+09/08 07:11:25 PM [Epoch 79/150][Step 150/195] Loss=1.975 Time=1.125 Data Time=0.002
+09/08 07:11:56 PM [Epoch 79/150][Step 180/195] Loss=2.123 Time=1.080 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+k5_e3
+09/08 07:12:22 PM Epoch 78: acc 9.800
+09/08 07:12:22 PM Epoch 78: FLOPs 32614809.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 k5_e3 09/08 07:12:22 PM Temperature: 0.676604130189244
+09/08 07:12:22 PM [Epoch 80/150] lr=0.023450
+09/08 07:12:22 PM update arch: True
+09/08 07:12:56 PM [Epoch 80/150][Step 30/195] Loss=2.073 Time=0.805 Data Time=0.001
+09/08 07:13:28 PM [Epoch 80/150][Step 60/195] Loss=1.955 Time=0.952 Data Time=0.002
+09/08 07:13:59 PM [Epoch 80/150][Step 90/195] Loss=1.934 Time=1.046 Data Time=0.002
+09/08 07:14:30 PM [Epoch 80/150][Step 120/195] Loss=1.940 Time=1.003 Data Time=0.002
+09/08 07:15:01 PM [Epoch 80/150][Step 150/195] Loss=2.014 Time=0.982 Data Time=0.002
+09/08 07:15:32 PM [Epoch 80/150][Step 180/195] Loss=1.920 Time=1.067 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+k5_e3
+09/08 07:15:58 PM Epoch 79: acc 9.751
+09/08 07:15:58 PM Epoch 79: FLOPs 34276992.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 k5_e3 09/08 07:15:58 PM Temperature: 0.6596890269345129
+09/08 07:15:58 PM [Epoch 81/150] lr=0.022939
+09/08 07:15:58 PM update arch: True
+09/08 07:16:32 PM [Epoch 81/150][Step 30/195] Loss=1.917 Time=1.128 Data Time=0.001
+09/08 07:17:03 PM [Epoch 81/150][Step 60/195] Loss=2.035 Time=0.950 Data Time=0.002
+09/08 07:17:36 PM [Epoch 81/150][Step 90/195] Loss=1.894 Time=1.008 Data Time=0.002
+09/08 07:18:07 PM [Epoch 81/150][Step 120/195] Loss=1.977 Time=1.028 Data Time=0.002
+09/08 07:18:38 PM [Epoch 81/150][Step 150/195] Loss=1.924 Time=0.917 Data Time=0.002
+09/08 07:19:09 PM [Epoch 81/150][Step 180/195] Loss=1.856 Time=1.047 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+k5_e3
+09/08 07:19:35 PM Epoch 80: acc 9.593
+09/08 07:19:35 PM Epoch 80: FLOPs 33851827.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 k5_e3 09/08 07:19:35 PM Temperature: 0.6431968012611501
+09/08 07:19:35 PM [Epoch 82/150] lr=0.022429
+09/08 07:19:35 PM update arch: True
+09/08 07:20:09 PM [Epoch 82/150][Step 30/195] Loss=1.989 Time=1.034 Data Time=0.004
+09/08 07:20:40 PM [Epoch 82/150][Step 60/195] Loss=1.997 Time=0.935 Data Time=0.002
+09/08 07:21:13 PM [Epoch 82/150][Step 90/195] Loss=1.960 Time=0.965 Data Time=0.002
+09/08 07:21:45 PM [Epoch 82/150][Step 120/195] Loss=1.962 Time=1.120 Data Time=0.002
+09/08 07:22:16 PM [Epoch 82/150][Step 150/195] Loss=2.003 Time=1.071 Data Time=0.002
+09/08 07:22:47 PM [Epoch 82/150][Step 180/195] Loss=2.016 Time=1.255 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+k5_e3
+09/08 07:23:14 PM Epoch 81: acc 10.374
+09/08 07:23:14 PM Epoch 81: FLOPs 33150566.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 k5_e3 09/08 07:23:14 PM Temperature: 0.6271168812296214
+09/08 07:23:14 PM [Epoch 83/150] lr=0.021921
+09/08 07:23:14 PM update arch: True
+09/08 07:23:46 PM [Epoch 83/150][Step 30/195] Loss=1.904 Time=0.926 Data Time=0.004
+09/08 07:24:16 PM [Epoch 83/150][Step 60/195] Loss=2.275 Time=1.222 Data Time=0.002
+09/08 07:24:48 PM [Epoch 83/150][Step 90/195] Loss=1.950 Time=1.010 Data Time=0.002
+09/08 07:25:19 PM [Epoch 83/150][Step 120/195] Loss=1.944 Time=0.957 Data Time=0.002
+09/08 07:25:51 PM [Epoch 83/150][Step 150/195] Loss=1.937 Time=1.090 Data Time=0.002
+09/08 07:26:21 PM [Epoch 83/150][Step 180/195] Loss=1.997 Time=0.904 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+k5_e3
+09/08 07:26:47 PM Epoch 82: acc 10.532
+09/08 07:26:47 PM Epoch 82: FLOPs 33575731.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 k5_e3 09/08 07:26:47 PM Temperature: 0.6114389591988809
+09/08 07:26:47 PM [Epoch 84/150] lr=0.021414
+09/08 07:26:47 PM update arch: True
+09/08 07:27:21 PM [Epoch 84/150][Step 30/195] Loss=1.927 Time=1.012 Data Time=0.001
+09/08 07:27:53 PM [Epoch 84/150][Step 60/195] Loss=2.092 Time=1.027 Data Time=0.002
+09/08 07:28:25 PM [Epoch 84/150][Step 90/195] Loss=2.052 Time=1.021 Data Time=0.002
+09/08 07:28:57 PM [Epoch 84/150][Step 120/195] Loss=2.053 Time=1.112 Data Time=0.002
+09/08 07:29:29 PM [Epoch 84/150][Step 150/195] Loss=1.955 Time=1.211 Data Time=0.001
+09/08 07:30:00 PM [Epoch 84/150][Step 180/195] Loss=1.879 Time=1.044 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+k5_e1
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 07:30:26 PM Epoch 83: acc 9.958
+09/08 07:30:26 PM Epoch 83: FLOPs 29871411.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 k5_e1 k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 07:30:26 PM Temperature: 0.5961529852189088
+09/08 07:30:26 PM [Epoch 85/150] lr=0.020909
+09/08 07:30:26 PM update arch: True
+09/08 07:31:00 PM [Epoch 85/150][Step 30/195] Loss=1.999 Time=1.241 Data Time=0.001
+09/08 07:31:32 PM [Epoch 85/150][Step 60/195] Loss=1.994 Time=1.033 Data Time=0.002
+09/08 07:32:03 PM [Epoch 85/150][Step 90/195] Loss=1.914 Time=1.119 Data Time=0.002
+09/08 07:32:34 PM [Epoch 85/150][Step 120/195] Loss=2.020 Time=0.983 Data Time=0.002
+09/08 07:33:06 PM [Epoch 85/150][Step 150/195] Loss=2.061 Time=0.913 Data Time=0.002
+09/08 07:33:38 PM [Epoch 85/150][Step 180/195] Loss=1.952 Time=1.076 Data Time=0.002
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k3_e3
+k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 07:34:04 PM Epoch 84: acc 9.543
+09/08 07:34:04 PM Epoch 84: FLOPs 29065728.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k3_e3 k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 07:34:04 PM Temperature: 0.5812491605884361
+09/08 07:34:04 PM [Epoch 86/150] lr=0.020406
+09/08 07:34:04 PM update arch: True
+09/08 07:34:39 PM [Epoch 86/150][Step 30/195] Loss=2.004 Time=0.987 Data Time=0.002
+09/08 07:35:09 PM [Epoch 86/150][Step 60/195] Loss=1.928 Time=0.979 Data Time=0.002
+09/08 07:35:41 PM [Epoch 86/150][Step 90/195] Loss=1.997 Time=1.037 Data Time=0.002
+09/08 07:36:12 PM [Epoch 86/150][Step 120/195] Loss=1.900 Time=1.266 Data Time=0.002
+09/08 07:36:43 PM [Epoch 86/150][Step 150/195] Loss=1.908 Time=0.901 Data Time=0.002
+09/08 07:37:14 PM [Epoch 86/150][Step 180/195] Loss=1.940 Time=1.127 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 07:37:40 PM Epoch 85: acc 9.830
+09/08 07:37:40 PM Epoch 85: FLOPs 26192384.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 07:37:40 PM Temperature: 0.5667179315737252
+09/08 07:37:40 PM [Epoch 87/150] lr=0.019905
+09/08 07:37:40 PM update arch: True
+09/08 07:38:14 PM [Epoch 87/150][Step 30/195] Loss=2.052 Time=1.152 Data Time=0.001
+09/08 07:38:45 PM [Epoch 87/150][Step 60/195] Loss=1.916 Time=0.978 Data Time=0.002
+09/08 07:39:17 PM [Epoch 87/150][Step 90/195] Loss=1.984 Time=1.077 Data Time=0.002
+09/08 07:39:48 PM [Epoch 87/150][Step 120/195] Loss=1.987 Time=1.069 Data Time=0.002
+09/08 07:40:19 PM [Epoch 87/150][Step 150/195] Loss=1.966 Time=1.165 Data Time=0.002
+09/08 07:40:50 PM [Epoch 87/150][Step 180/195] Loss=2.086 Time=1.118 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 07:41:17 PM Epoch 86: acc 10.087
+09/08 07:41:17 PM Epoch 86: FLOPs 25794252.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 07:41:17 PM Temperature: 0.552549983284382
+09/08 07:41:17 PM [Epoch 88/150] lr=0.019407
+09/08 07:41:17 PM update arch: True
+09/08 07:41:50 PM [Epoch 88/150][Step 30/195] Loss=1.996 Time=1.131 Data Time=0.001
+09/08 07:42:22 PM [Epoch 88/150][Step 60/195] Loss=2.014 Time=1.110 Data Time=0.002
+09/08 07:42:53 PM [Epoch 88/150][Step 90/195] Loss=1.993 Time=1.146 Data Time=0.002
+09/08 07:43:25 PM [Epoch 88/150][Step 120/195] Loss=1.967 Time=1.111 Data Time=0.002
+09/08 07:43:56 PM [Epoch 88/150][Step 150/195] Loss=1.937 Time=1.204 Data Time=0.002
+09/08 07:44:27 PM [Epoch 88/150][Step 180/195] Loss=2.035 Time=1.035 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 07:44:54 PM Epoch 87: acc 9.612
+09/08 07:44:54 PM Epoch 87: FLOPs 26495513.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 07:44:54 PM Temperature: 0.5387362337022725
+09/08 07:44:54 PM [Epoch 89/150] lr=0.018911
+09/08 07:44:54 PM update arch: True
+09/08 07:45:28 PM [Epoch 89/150][Step 30/195] Loss=1.959 Time=1.064 Data Time=0.001
+09/08 07:45:59 PM [Epoch 89/150][Step 60/195] Loss=2.025 Time=1.148 Data Time=0.002
+09/08 07:46:30 PM [Epoch 89/150][Step 90/195] Loss=2.090 Time=0.973 Data Time=0.002
+09/08 07:47:01 PM [Epoch 89/150][Step 120/195] Loss=1.998 Time=0.970 Data Time=0.002
+09/08 07:47:33 PM [Epoch 89/150][Step 150/195] Loss=1.952 Time=1.190 Data Time=0.002
+09/08 07:48:04 PM [Epoch 89/150][Step 180/195] Loss=1.982 Time=0.997 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 07:48:30 PM Epoch 88: acc 10.077
+09/08 07:48:30 PM Epoch 88: FLOPs 26070348.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 07:48:30 PM Temperature: 0.5252678278597156
+09/08 07:48:30 PM [Epoch 90/150] lr=0.018419
+09/08 07:48:30 PM update arch: True
+09/08 07:49:04 PM [Epoch 90/150][Step 30/195] Loss=1.931 Time=1.020 Data Time=0.001
+09/08 07:49:35 PM [Epoch 90/150][Step 60/195] Loss=1.978 Time=1.013 Data Time=0.002
+09/08 07:50:06 PM [Epoch 90/150][Step 90/195] Loss=1.932 Time=1.063 Data Time=0.002
+09/08 07:50:38 PM [Epoch 90/150][Step 120/195] Loss=1.942 Time=1.111 Data Time=0.002
+09/08 07:51:09 PM [Epoch 90/150][Step 150/195] Loss=1.871 Time=1.295 Data Time=0.002
+09/08 07:51:40 PM [Epoch 90/150][Step 180/195] Loss=2.099 Time=1.182 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 07:52:06 PM Epoch 89: acc 9.929
+09/08 07:52:06 PM Epoch 89: FLOPs 25932723.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 07:52:06 PM Temperature: 0.5121361321632227
+09/08 07:52:06 PM [Epoch 91/150] lr=0.017929
+09/08 07:52:06 PM update arch: True
+09/08 07:52:40 PM [Epoch 91/150][Step 30/195] Loss=1.909 Time=1.022 Data Time=0.001
+09/08 07:53:12 PM [Epoch 91/150][Step 60/195] Loss=2.008 Time=0.975 Data Time=0.002
+09/08 07:53:43 PM [Epoch 91/150][Step 90/195] Loss=1.896 Time=1.164 Data Time=0.002
+09/08 07:54:14 PM [Epoch 91/150][Step 120/195] Loss=2.036 Time=1.049 Data Time=0.002
+09/08 07:54:45 PM [Epoch 91/150][Step 150/195] Loss=1.880 Time=0.993 Data Time=0.002
+09/08 07:55:17 PM [Epoch 91/150][Step 180/195] Loss=1.947 Time=0.957 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+09/08 07:55:43 PM Epoch 90: acc 9.691
+09/08 07:55:43 PM Epoch 90: FLOPs 24934707.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 09/08 07:55:43 PM Temperature: 0.4993327288591421
+09/08 07:55:43 PM [Epoch 92/150] lr=0.017443
+09/08 07:55:43 PM update arch: True
+09/08 07:56:16 PM [Epoch 92/150][Step 30/195] Loss=1.962 Time=1.112 Data Time=0.001
+09/08 07:56:48 PM [Epoch 92/150][Step 60/195] Loss=2.143 Time=0.971 Data Time=0.002
+09/08 07:57:19 PM [Epoch 92/150][Step 90/195] Loss=1.956 Time=1.038 Data Time=0.002
+09/08 07:57:50 PM [Epoch 92/150][Step 120/195] Loss=2.017 Time=0.942 Data Time=0.002
+09/08 07:58:22 PM [Epoch 92/150][Step 150/195] Loss=2.124 Time=1.293 Data Time=0.002
+09/08 07:58:52 PM [Epoch 92/150][Step 180/195] Loss=2.008 Time=1.027 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e6
+add_k3_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 07:59:18 PM Epoch 91: acc 10.018
+09/08 07:59:18 PM Epoch 91: FLOPs 26436531.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e6 add_k3_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 07:59:18 PM Temperature: 0.48684941063766357
+09/08 07:59:18 PM [Epoch 93/150] lr=0.016960
+09/08 07:59:18 PM update arch: True
+09/08 07:59:54 PM [Epoch 93/150][Step 30/195] Loss=2.065 Time=1.050 Data Time=0.001
+09/08 08:00:24 PM [Epoch 93/150][Step 60/195] Loss=2.016 Time=0.969 Data Time=0.002
+09/08 08:00:56 PM [Epoch 93/150][Step 90/195] Loss=2.016 Time=1.122 Data Time=0.002
+09/08 08:01:28 PM [Epoch 93/150][Step 120/195] Loss=1.994 Time=1.023 Data Time=0.003
+09/08 08:02:01 PM [Epoch 93/150][Step 150/195] Loss=2.040 Time=1.140 Data Time=0.002
+09/08 08:02:33 PM [Epoch 93/150][Step 180/195] Loss=2.100 Time=0.975 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e6
+add_k3_e6
+add_k5_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 08:02:59 PM Epoch 92: acc 9.869
+09/08 08:02:59 PM Epoch 92: FLOPs 26436531.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e6 add_k3_e6 add_k5_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 08:02:59 PM Temperature: 0.47467817537172197
+09/08 08:02:59 PM [Epoch 94/150] lr=0.016481
+09/08 08:02:59 PM update arch: True
+09/08 08:03:33 PM [Epoch 94/150][Step 30/195] Loss=2.028 Time=1.012 Data Time=0.001
+09/08 08:04:04 PM [Epoch 94/150][Step 60/195] Loss=1.957 Time=1.114 Data Time=0.002
+09/08 08:04:36 PM [Epoch 94/150][Step 90/195] Loss=1.953 Time=1.210 Data Time=0.002
+09/08 08:05:07 PM [Epoch 94/150][Step 120/195] Loss=2.246 Time=1.069 Data Time=0.002
+09/08 08:05:38 PM [Epoch 94/150][Step 150/195] Loss=1.964 Time=1.031 Data Time=0.002
+09/08 08:06:10 PM [Epoch 94/150][Step 180/195] Loss=1.963 Time=1.213 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 08:06:36 PM Epoch 93: acc 10.344
+09/08 08:06:36 PM Epoch 93: FLOPs 25519001.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 08:06:36 PM Temperature: 0.4628112209874289
+09/08 08:06:36 PM [Epoch 95/150] lr=0.016006
+09/08 08:06:36 PM update arch: True
+09/08 08:07:11 PM [Epoch 95/150][Step 30/195] Loss=2.039 Time=1.020 Data Time=0.001
+09/08 08:07:42 PM [Epoch 95/150][Step 60/195] Loss=2.177 Time=1.080 Data Time=0.002
+09/08 08:08:13 PM [Epoch 95/150][Step 90/195] Loss=2.230 Time=0.844 Data Time=0.002
+09/08 08:08:45 PM [Epoch 95/150][Step 120/195] Loss=2.060 Time=0.992 Data Time=0.003
+09/08 08:09:16 PM [Epoch 95/150][Step 150/195] Loss=1.976 Time=1.191 Data Time=0.005
+09/08 08:09:47 PM [Epoch 95/150][Step 180/195] Loss=1.965 Time=0.980 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 08:10:14 PM Epoch 94: acc 10.117
+09/08 08:10:14 PM Epoch 94: FLOPs 25519001.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 08:10:14 PM Temperature: 0.4512409404627432
+09/08 08:10:14 PM [Epoch 96/150] lr=0.015535
+09/08 08:10:14 PM update arch: True
+09/08 08:10:48 PM [Epoch 96/150][Step 30/195] Loss=1.999 Time=0.973 Data Time=0.001
+09/08 08:11:20 PM [Epoch 96/150][Step 60/195] Loss=2.114 Time=1.119 Data Time=0.002
+09/08 08:11:51 PM [Epoch 96/150][Step 90/195] Loss=1.922 Time=0.940 Data Time=0.002
+09/08 08:12:23 PM [Epoch 96/150][Step 120/195] Loss=2.129 Time=1.015 Data Time=0.002
+09/08 08:12:54 PM [Epoch 96/150][Step 150/195] Loss=2.012 Time=1.228 Data Time=0.002
+09/08 08:13:27 PM [Epoch 96/150][Step 180/195] Loss=1.943 Time=1.199 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+09/08 08:13:54 PM Epoch 95: acc 9.919
+09/08 08:13:54 PM Epoch 95: FLOPs 25519001.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 09/08 08:13:54 PM Temperature: 0.43995991695117465
+09/08 08:13:54 PM [Epoch 97/150] lr=0.015068
+09/08 08:13:54 PM update arch: True
+09/08 08:14:28 PM [Epoch 97/150][Step 30/195] Loss=2.103 Time=0.857 Data Time=0.001
+09/08 08:15:00 PM [Epoch 97/150][Step 60/195] Loss=2.054 Time=1.238 Data Time=0.002
+09/08 08:15:32 PM [Epoch 97/150][Step 90/195] Loss=2.067 Time=1.231 Data Time=0.002
+09/08 08:16:04 PM [Epoch 97/150][Step 120/195] Loss=1.955 Time=1.017 Data Time=0.002
+09/08 08:16:35 PM [Epoch 97/150][Step 150/195] Loss=1.975 Time=0.997 Data Time=0.002
+09/08 08:17:07 PM [Epoch 97/150][Step 180/195] Loss=1.932 Time=1.050 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e3
+09/08 08:17:33 PM Epoch 96: acc 9.593
+09/08 08:17:33 PM Epoch 96: FLOPs 24797081.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e3 09/08 08:17:33 PM Temperature: 0.4289609190273952
+09/08 08:17:33 PM [Epoch 98/150] lr=0.014606
+09/08 08:17:33 PM update arch: True
+09/08 08:18:08 PM [Epoch 98/150][Step 30/195] Loss=1.837 Time=1.015 Data Time=0.002
+09/08 08:18:40 PM [Epoch 98/150][Step 60/195] Loss=2.026 Time=1.053 Data Time=0.002
+09/08 08:19:13 PM [Epoch 98/150][Step 90/195] Loss=1.953 Time=1.200 Data Time=0.002
+09/08 08:19:44 PM [Epoch 98/150][Step 120/195] Loss=1.959 Time=1.226 Data Time=0.001
+09/08 08:20:15 PM [Epoch 98/150][Step 150/195] Loss=2.096 Time=1.026 Data Time=0.002
+09/08 08:20:46 PM [Epoch 98/150][Step 180/195] Loss=2.088 Time=1.188 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e3
+09/08 08:21:13 PM Epoch 97: acc 10.305
+09/08 08:21:13 PM Epoch 97: FLOPs 24724582.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e3 09/08 08:21:13 PM Temperature: 0.4182368960517103
+09/08 08:21:13 PM [Epoch 99/150] lr=0.014149
+09/08 08:21:13 PM update arch: True
+09/08 08:21:47 PM [Epoch 99/150][Step 30/195] Loss=1.860 Time=1.161 Data Time=0.002
+09/08 08:22:19 PM [Epoch 99/150][Step 60/195] Loss=2.151 Time=1.153 Data Time=0.002
+09/08 08:22:50 PM [Epoch 99/150][Step 90/195] Loss=1.977 Time=1.009 Data Time=0.002
+09/08 08:23:22 PM [Epoch 99/150][Step 120/195] Loss=2.025 Time=0.922 Data Time=0.002
+09/08 08:23:53 PM [Epoch 99/150][Step 150/195] Loss=1.957 Time=1.190 Data Time=0.004
+09/08 08:24:24 PM [Epoch 99/150][Step 180/195] Loss=2.038 Time=1.022 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+09/08 08:24:51 PM Epoch 98: acc 10.334
+09/08 08:24:51 PM Epoch 98: FLOPs 26426700.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 09/08 08:24:51 PM Temperature: 0.40778097365041754
+09/08 08:24:51 PM [Epoch 100/150] lr=0.013697
+09/08 08:24:51 PM update arch: True
+09/08 08:25:24 PM [Epoch 100/150][Step 30/195] Loss=2.151 Time=1.024 Data Time=0.001
+09/08 08:25:55 PM [Epoch 100/150][Step 60/195] Loss=2.099 Time=0.895 Data Time=0.002
+09/08 08:26:26 PM [Epoch 100/150][Step 90/195] Loss=2.035 Time=1.033 Data Time=0.002
+09/08 08:26:58 PM [Epoch 100/150][Step 120/195] Loss=1.960 Time=1.109 Data Time=0.002
+09/08 08:27:30 PM [Epoch 100/150][Step 150/195] Loss=2.051 Time=1.047 Data Time=0.002
+09/08 08:28:02 PM [Epoch 100/150][Step 180/195] Loss=2.090 Time=0.899 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+09/08 08:28:29 PM Epoch 99: acc 10.057
+09/08 08:28:29 PM Epoch 99: FLOPs 25851008.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e3 09/08 08:28:29 PM Temperature: 0.3975864493091571
+09/08 08:28:29 PM [Epoch 101/150] lr=0.013250
+09/08 08:28:29 PM update arch: True
+09/08 08:29:04 PM [Epoch 101/150][Step 30/195] Loss=1.958 Time=1.198 Data Time=0.001
+09/08 08:29:36 PM [Epoch 101/150][Step 60/195] Loss=1.928 Time=1.004 Data Time=0.002
+09/08 08:30:07 PM [Epoch 101/150][Step 90/195] Loss=1.869 Time=1.240 Data Time=0.002
+09/08 08:30:39 PM [Epoch 101/150][Step 120/195] Loss=2.263 Time=1.041 Data Time=0.002
+09/08 08:31:10 PM [Epoch 101/150][Step 150/195] Loss=1.939 Time=1.107 Data Time=0.002
+09/08 08:31:41 PM [Epoch 101/150][Step 180/195] Loss=2.045 Time=1.058 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+09/08 08:32:08 PM Epoch 100: acc 10.097
+09/08 08:32:08 PM Epoch 100: FLOPs 25644569.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e3 09/08 08:32:08 PM Temperature: 0.38764678807642816
+09/08 08:32:08 PM [Epoch 102/150] lr=0.012808
+09/08 08:32:08 PM update arch: True
+09/08 08:32:42 PM [Epoch 102/150][Step 30/195] Loss=2.022 Time=1.025 Data Time=0.001
+09/08 08:33:15 PM [Epoch 102/150][Step 60/195] Loss=2.105 Time=1.084 Data Time=0.002
+09/08 08:33:47 PM [Epoch 102/150][Step 90/195] Loss=1.918 Time=1.186 Data Time=0.002
+09/08 08:34:19 PM [Epoch 102/150][Step 120/195] Loss=2.038 Time=1.149 Data Time=0.002
+09/08 08:34:51 PM [Epoch 102/150][Step 150/195] Loss=2.123 Time=1.047 Data Time=0.002
+09/08 08:35:23 PM [Epoch 102/150][Step 180/195] Loss=1.925 Time=1.041 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+09/08 08:35:50 PM Epoch 101: acc 9.830
+09/08 08:35:50 PM Epoch 101: FLOPs 25644569.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e3 09/08 08:35:50 PM Temperature: 0.37795561837451747
+09/08 08:35:50 PM [Epoch 103/150] lr=0.012372
+09/08 08:35:50 PM update arch: True
+09/08 08:36:25 PM [Epoch 103/150][Step 30/195] Loss=1.925 Time=0.964 Data Time=0.002
+09/08 08:36:57 PM [Epoch 103/150][Step 60/195] Loss=1.874 Time=1.146 Data Time=0.002
+09/08 08:37:29 PM [Epoch 103/150][Step 90/195] Loss=2.121 Time=1.023 Data Time=0.002
+09/08 08:38:01 PM [Epoch 103/150][Step 120/195] Loss=1.970 Time=1.216 Data Time=0.002
+09/08 08:38:33 PM [Epoch 103/150][Step 150/195] Loss=1.871 Time=1.105 Data Time=0.002
+09/08 08:39:04 PM [Epoch 103/150][Step 180/195] Loss=1.921 Time=1.064 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k3_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+09/08 08:39:31 PM Epoch 102: acc 10.483
+09/08 08:39:31 PM Epoch 102: FLOPs 25389363.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k3_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 09/08 08:39:31 PM Temperature: 0.3685067279151545
+09/08 08:39:31 PM [Epoch 104/150] lr=0.011942
+09/08 08:39:31 PM update arch: True
+09/08 08:40:06 PM [Epoch 104/150][Step 30/195] Loss=1.953 Time=0.973 Data Time=0.001
+09/08 08:40:37 PM [Epoch 104/150][Step 60/195] Loss=1.924 Time=1.141 Data Time=0.003
+09/08 08:41:08 PM [Epoch 104/150][Step 90/195] Loss=1.978 Time=1.176 Data Time=0.002
+09/08 08:41:40 PM [Epoch 104/150][Step 120/195] Loss=1.955 Time=1.172 Data Time=0.002
+09/08 08:42:12 PM [Epoch 104/150][Step 150/195] Loss=1.944 Time=1.016 Data Time=0.002
+09/08 08:42:45 PM [Epoch 104/150][Step 180/195] Loss=1.971 Time=1.067 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 08:43:12 PM Epoch 103: acc 9.860
+09/08 08:43:12 PM Epoch 103: FLOPs 25970816.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 08:43:12 PM Temperature: 0.3592940597172756
+09/08 08:43:12 PM [Epoch 105/150] lr=0.011518
+09/08 08:43:12 PM update arch: True
+09/08 08:43:46 PM [Epoch 105/150][Step 30/195] Loss=1.988 Time=0.906 Data Time=0.001
+09/08 08:44:19 PM [Epoch 105/150][Step 60/195] Loss=1.973 Time=0.954 Data Time=0.002
+09/08 08:44:52 PM [Epoch 105/150][Step 90/195] Loss=1.955 Time=1.167 Data Time=0.002
+09/08 08:45:23 PM [Epoch 105/150][Step 120/195] Loss=1.980 Time=0.963 Data Time=0.002
+09/08 08:45:55 PM [Epoch 105/150][Step 150/195] Loss=1.949 Time=1.080 Data Time=0.002
+09/08 08:46:27 PM [Epoch 105/150][Step 180/195] Loss=2.012 Time=1.043 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 08:46:53 PM Epoch 104: acc 9.899
+09/08 08:46:53 PM Epoch 104: FLOPs 26108441.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 08:46:53 PM Temperature: 0.35031170822434377
+09/08 08:46:53 PM [Epoch 106/150] lr=0.011099
+09/08 08:46:53 PM update arch: True
+09/08 08:47:28 PM [Epoch 106/150][Step 30/195] Loss=2.032 Time=1.004 Data Time=0.001
+09/08 08:47:59 PM [Epoch 106/150][Step 60/195] Loss=1.862 Time=1.049 Data Time=0.002
+09/08 08:48:30 PM [Epoch 106/150][Step 90/195] Loss=1.955 Time=0.944 Data Time=0.002
+09/08 08:49:02 PM [Epoch 106/150][Step 120/195] Loss=1.877 Time=1.227 Data Time=0.002
+09/08 08:49:34 PM [Epoch 106/150][Step 150/195] Loss=1.934 Time=1.185 Data Time=0.002
+09/08 08:50:06 PM [Epoch 106/150][Step 180/195] Loss=1.956 Time=1.230 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+09/08 08:50:33 PM Epoch 105: acc 10.364
+09/08 08:50:33 PM Epoch 105: FLOPs 26108441.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 09/08 08:50:33 PM Temperature: 0.34155391551873515
+09/08 08:50:33 PM [Epoch 107/150] lr=0.010687
+09/08 08:50:33 PM update arch: True
+09/08 08:51:08 PM [Epoch 107/150][Step 30/195] Loss=1.910 Time=0.994 Data Time=0.001
+09/08 08:51:40 PM [Epoch 107/150][Step 60/195] Loss=1.875 Time=1.167 Data Time=0.002
+09/08 08:52:12 PM [Epoch 107/150][Step 90/195] Loss=1.940 Time=1.121 Data Time=0.002
+09/08 08:52:44 PM [Epoch 107/150][Step 120/195] Loss=2.010 Time=0.999 Data Time=0.002
+09/08 08:53:15 PM [Epoch 107/150][Step 150/195] Loss=2.030 Time=0.861 Data Time=0.001
+09/08 08:53:47 PM [Epoch 107/150][Step 180/195] Loss=2.012 Time=1.130 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k3_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 08:54:14 PM Epoch 106: acc 9.929
+09/08 08:54:14 PM Epoch 106: FLOPs 27088640.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k3_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 08:54:14 PM Temperature: 0.3330150676307667
+09/08 08:54:14 PM [Epoch 108/150] lr=0.010282
+09/08 08:54:14 PM update arch: True
+09/08 08:54:48 PM [Epoch 108/150][Step 30/195] Loss=1.986 Time=1.335 Data Time=0.002
+09/08 08:55:19 PM [Epoch 108/150][Step 60/195] Loss=2.301 Time=0.851 Data Time=0.002
+09/08 08:55:51 PM [Epoch 108/150][Step 90/195] Loss=2.043 Time=1.134 Data Time=0.002
+09/08 08:56:24 PM [Epoch 108/150][Step 120/195] Loss=2.051 Time=1.104 Data Time=0.002
+09/08 08:56:57 PM [Epoch 108/150][Step 150/195] Loss=1.905 Time=1.252 Data Time=0.002
+09/08 08:57:29 PM [Epoch 108/150][Step 180/195] Loss=1.999 Time=1.120 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 08:57:56 PM Epoch 107: acc 10.018
+09/08 08:57:56 PM Epoch 107: FLOPs 27127961.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 08:57:56 PM Temperature: 0.3246896909399976
+09/08 08:57:56 PM [Epoch 109/150] lr=0.009883
+09/08 08:57:56 PM update arch: True
+09/08 08:58:31 PM [Epoch 109/150][Step 30/195] Loss=1.908 Time=1.103 Data Time=0.001
+09/08 08:59:03 PM [Epoch 109/150][Step 60/195] Loss=1.921 Time=1.355 Data Time=0.002
+09/08 08:59:35 PM [Epoch 109/150][Step 90/195] Loss=2.094 Time=1.077 Data Time=0.002
+09/08 09:00:07 PM [Epoch 109/150][Step 120/195] Loss=2.097 Time=1.142 Data Time=0.002
+09/08 09:00:40 PM [Epoch 109/150][Step 150/195] Loss=1.956 Time=1.130 Data Time=0.002
+09/08 09:01:12 PM [Epoch 109/150][Step 180/195] Loss=1.947 Time=1.134 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:01:39 PM Epoch 108: acc 10.117
+09/08 09:01:39 PM Epoch 108: FLOPs 27127961.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:01:39 PM Temperature: 0.3165724486664977
+09/08 09:01:39 PM [Epoch 110/150] lr=0.009491
+09/08 09:01:39 PM update arch: True
+09/08 09:02:13 PM [Epoch 110/150][Step 30/195] Loss=2.103 Time=1.094 Data Time=0.001
+09/08 09:02:45 PM [Epoch 110/150][Step 60/195] Loss=2.015 Time=1.081 Data Time=0.002
+09/08 09:03:17 PM [Epoch 110/150][Step 90/195] Loss=1.974 Time=1.016 Data Time=0.002
+09/08 09:03:48 PM [Epoch 110/150][Step 120/195] Loss=2.063 Time=0.827 Data Time=0.002
+09/08 09:04:21 PM [Epoch 110/150][Step 150/195] Loss=2.014 Time=1.027 Data Time=0.002
+09/08 09:04:53 PM [Epoch 110/150][Step 180/195] Loss=1.987 Time=1.169 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+09/08 09:05:20 PM Epoch 109: acc 9.850
+09/08 09:05:20 PM Epoch 109: FLOPs 27143859.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 09/08 09:05:20 PM Temperature: 0.30865813744983517
+09/08 09:05:20 PM [Epoch 111/150] lr=0.009106
+09/08 09:05:20 PM update arch: True
+09/08 09:05:54 PM [Epoch 111/150][Step 30/195] Loss=2.025 Time=0.998 Data Time=0.001
+09/08 09:06:26 PM [Epoch 111/150][Step 60/195] Loss=2.145 Time=1.090 Data Time=0.002
+09/08 09:06:58 PM [Epoch 111/150][Step 90/195] Loss=1.920 Time=1.094 Data Time=0.002
+09/08 09:07:30 PM [Epoch 111/150][Step 120/195] Loss=2.034 Time=1.059 Data Time=0.002
+09/08 09:08:03 PM [Epoch 111/150][Step 150/195] Loss=1.910 Time=0.976 Data Time=0.002
+09/08 09:08:36 PM [Epoch 111/150][Step 180/195] Loss=2.073 Time=0.928 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:09:03 PM Epoch 110: acc 9.415
+09/08 09:09:03 PM Epoch 110: FLOPs 27982745.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:09:03 PM Temperature: 0.3009416840135893
+09/08 09:09:03 PM [Epoch 112/150] lr=0.008729
+09/08 09:09:03 PM update arch: True
+09/08 09:09:38 PM [Epoch 112/150][Step 30/195] Loss=1.923 Time=1.073 Data Time=0.003
+09/08 09:10:10 PM [Epoch 112/150][Step 60/195] Loss=1.949 Time=0.975 Data Time=0.002
+09/08 09:10:41 PM [Epoch 112/150][Step 90/195] Loss=1.981 Time=1.059 Data Time=0.002
+09/08 09:11:13 PM [Epoch 112/150][Step 120/195] Loss=2.046 Time=1.187 Data Time=0.003
+09/08 09:11:46 PM [Epoch 112/150][Step 150/195] Loss=2.064 Time=1.296 Data Time=0.002
+09/08 09:12:18 PM [Epoch 112/150][Step 180/195] Loss=1.940 Time=1.049 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:12:46 PM Epoch 111: acc 10.067
+09/08 09:12:46 PM Epoch 111: FLOPs 27982745.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:12:46 PM Temperature: 0.29341814191324955
+09/08 09:12:46 PM [Epoch 113/150] lr=0.008358
+09/08 09:12:46 PM update arch: True
+09/08 09:13:21 PM [Epoch 113/150][Step 30/195] Loss=1.908 Time=1.093 Data Time=0.002
+09/08 09:13:53 PM [Epoch 113/150][Step 60/195] Loss=1.866 Time=0.996 Data Time=0.002
+09/08 09:14:26 PM [Epoch 113/150][Step 90/195] Loss=1.983 Time=0.981 Data Time=0.002
+09/08 09:14:58 PM [Epoch 113/150][Step 120/195] Loss=2.021 Time=1.054 Data Time=0.001
+09/08 09:15:30 PM [Epoch 113/150][Step 150/195] Loss=2.129 Time=0.911 Data Time=0.002
+09/08 09:16:03 PM [Epoch 113/150][Step 180/195] Loss=1.922 Time=1.055 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:16:30 PM Epoch 112: acc 9.306
+09/08 09:16:30 PM Epoch 112: FLOPs 27419955.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:16:30 PM Temperature: 0.28608268836541834
+09/08 09:16:30 PM [Epoch 114/150] lr=0.007995
+09/08 09:16:30 PM update arch: True
+09/08 09:17:06 PM [Epoch 114/150][Step 30/195] Loss=1.865 Time=1.156 Data Time=0.003
+09/08 09:17:38 PM [Epoch 114/150][Step 60/195] Loss=1.939 Time=1.071 Data Time=0.002
+09/08 09:18:12 PM [Epoch 114/150][Step 90/195] Loss=2.117 Time=1.114 Data Time=0.002
+09/08 09:18:45 PM [Epoch 114/150][Step 120/195] Loss=2.147 Time=1.092 Data Time=0.002
+09/08 09:19:16 PM [Epoch 114/150][Step 150/195] Loss=2.040 Time=1.025 Data Time=0.003
+09/08 09:19:49 PM [Epoch 114/150][Step 180/195] Loss=2.020 Time=1.028 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:20:16 PM Epoch 113: acc 10.156
+09/08 09:20:16 PM Epoch 113: FLOPs 27419955.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:20:16 PM Temperature: 0.27893062115628287
+09/08 09:20:16 PM [Epoch 115/150] lr=0.007640
+09/08 09:20:16 PM update arch: True
+09/08 09:20:50 PM [Epoch 115/150][Step 30/195] Loss=2.026 Time=1.147 Data Time=0.002
+09/08 09:21:23 PM [Epoch 115/150][Step 60/195] Loss=1.978 Time=1.069 Data Time=0.002
+09/08 09:21:56 PM [Epoch 115/150][Step 90/195] Loss=1.940 Time=0.889 Data Time=0.003
+09/08 09:22:28 PM [Epoch 115/150][Step 120/195] Loss=1.902 Time=1.274 Data Time=0.002
+09/08 09:23:00 PM [Epoch 115/150][Step 150/195] Loss=2.102 Time=1.130 Data Time=0.002
+09/08 09:23:32 PM [Epoch 115/150][Step 180/195] Loss=1.863 Time=1.174 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:23:59 PM Epoch 114: acc 10.413
+09/08 09:23:59 PM Epoch 114: FLOPs 27141017.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:23:59 PM Temperature: 0.2719573556273758
+09/08 09:23:59 PM [Epoch 116/150] lr=0.007293
+09/08 09:23:59 PM update arch: True
+09/08 09:24:34 PM [Epoch 116/150][Step 30/195] Loss=2.413 Time=1.005 Data Time=0.001
+09/08 09:25:06 PM [Epoch 116/150][Step 60/195] Loss=2.107 Time=1.012 Data Time=0.002
+09/08 09:25:39 PM [Epoch 116/150][Step 90/195] Loss=2.038 Time=1.159 Data Time=0.002
+09/08 09:26:12 PM [Epoch 116/150][Step 120/195] Loss=2.089 Time=1.142 Data Time=0.002
+09/08 09:26:45 PM [Epoch 116/150][Step 150/195] Loss=2.083 Time=0.965 Data Time=0.003
+09/08 09:27:17 PM [Epoch 116/150][Step 180/195] Loss=2.069 Time=0.997 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:27:45 PM Epoch 115: acc 9.780
+09/08 09:27:45 PM Epoch 115: FLOPs 27545292.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:27:45 PM Temperature: 0.26515842173669135
+09/08 09:27:45 PM [Epoch 117/150] lr=0.006954
+09/08 09:27:45 PM update arch: True
+09/08 09:28:20 PM [Epoch 117/150][Step 30/195] Loss=1.897 Time=1.203 Data Time=0.002
+09/08 09:28:53 PM [Epoch 117/150][Step 60/195] Loss=1.993 Time=1.023 Data Time=0.002
+09/08 09:29:24 PM [Epoch 117/150][Step 90/195] Loss=1.929 Time=1.184 Data Time=0.002
+09/08 09:29:56 PM [Epoch 117/150][Step 120/195] Loss=1.895 Time=0.996 Data Time=0.002
+09/08 09:30:30 PM [Epoch 117/150][Step 150/195] Loss=1.921 Time=1.307 Data Time=0.002
+09/08 09:31:01 PM [Epoch 117/150][Step 180/195] Loss=1.959 Time=1.057 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:31:29 PM Epoch 116: acc 10.384
+09/08 09:31:29 PM Epoch 116: FLOPs 26841190.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:31:29 PM Temperature: 0.2585294611932741
+09/08 09:31:29 PM [Epoch 118/150] lr=0.006622
+09/08 09:31:29 PM update arch: True
+09/08 09:32:04 PM [Epoch 118/150][Step 30/195] Loss=1.909 Time=1.056 Data Time=0.001
+09/08 09:32:36 PM [Epoch 118/150][Step 60/195] Loss=1.953 Time=0.917 Data Time=0.002
+09/08 09:33:10 PM [Epoch 118/150][Step 90/195] Loss=2.040 Time=1.094 Data Time=0.001
+09/08 09:33:43 PM [Epoch 118/150][Step 120/195] Loss=1.956 Time=1.062 Data Time=0.002
+09/08 09:34:15 PM [Epoch 118/150][Step 150/195] Loss=2.380 Time=0.738 Data Time=0.002
+09/08 09:34:48 PM [Epoch 118/150][Step 180/195] Loss=1.972 Time=1.054 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:35:15 PM Epoch 117: acc 10.186
+09/08 09:35:15 PM Epoch 117: FLOPs 27357286.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:35:15 PM Temperature: 0.2520662246634422
+09/08 09:35:15 PM [Epoch 119/150] lr=0.006300
+09/08 09:35:15 PM update arch: True
+09/08 09:35:49 PM [Epoch 119/150][Step 30/195] Loss=1.950 Time=0.951 Data Time=0.001
+09/08 09:36:21 PM [Epoch 119/150][Step 60/195] Loss=1.935 Time=1.176 Data Time=0.002
+09/08 09:36:53 PM [Epoch 119/150][Step 90/195] Loss=1.950 Time=1.154 Data Time=0.002
+09/08 09:37:26 PM [Epoch 119/150][Step 120/195] Loss=1.948 Time=1.164 Data Time=0.002
+09/08 09:37:59 PM [Epoch 119/150][Step 150/195] Loss=2.054 Time=0.977 Data Time=0.002
+09/08 09:38:31 PM [Epoch 119/150][Step 180/195] Loss=1.950 Time=1.130 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:38:58 PM Epoch 118: acc 9.800
+09/08 09:38:58 PM Epoch 118: FLOPs 27636224.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:38:58 PM Temperature: 0.24576456904685617
+09/08 09:38:58 PM [Epoch 120/150] lr=0.005985
+09/08 09:38:58 PM update arch: True
+09/08 09:39:33 PM [Epoch 120/150][Step 30/195] Loss=1.941 Time=0.958 Data Time=0.002
+09/08 09:40:05 PM [Epoch 120/150][Step 60/195] Loss=2.080 Time=1.088 Data Time=0.002
+09/08 09:40:38 PM [Epoch 120/150][Step 90/195] Loss=1.960 Time=1.157 Data Time=0.002
+09/08 09:41:11 PM [Epoch 120/150][Step 120/195] Loss=2.032 Time=1.144 Data Time=0.002
+09/08 09:41:42 PM [Epoch 120/150][Step 150/195] Loss=2.027 Time=1.053 Data Time=0.003
+09/08 09:42:16 PM [Epoch 120/150][Step 180/195] Loss=1.963 Time=1.146 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k3_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:42:43 PM Epoch 119: acc 10.087
+09/08 09:42:43 PM Epoch 119: FLOPs 27636224.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k3_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:42:43 PM Temperature: 0.23962045482068478
+09/08 09:42:43 PM [Epoch 121/150] lr=0.005679
+09/08 09:42:43 PM update arch: True
+09/08 09:43:18 PM [Epoch 121/150][Step 30/195] Loss=1.885 Time=1.048 Data Time=0.003
+09/08 09:43:51 PM [Epoch 121/150][Step 60/195] Loss=2.024 Time=1.070 Data Time=0.002
+09/08 09:44:24 PM [Epoch 121/150][Step 90/195] Loss=1.958 Time=1.188 Data Time=0.002
+09/08 09:44:57 PM [Epoch 121/150][Step 120/195] Loss=1.959 Time=1.116 Data Time=0.002
+09/08 09:45:29 PM [Epoch 121/150][Step 150/195] Loss=2.104 Time=1.233 Data Time=0.002
+09/08 09:46:02 PM [Epoch 121/150][Step 180/195] Loss=1.939 Time=0.981 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:46:31 PM Epoch 120: acc 9.612
+09/08 09:46:31 PM Epoch 120: FLOPs 27675545.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:46:31 PM Temperature: 0.23362994345016763
+09/08 09:46:31 PM [Epoch 122/150] lr=0.005382
+09/08 09:46:31 PM update arch: True
+09/08 09:47:06 PM [Epoch 122/150][Step 30/195] Loss=1.956 Time=1.249 Data Time=0.002
+09/08 09:47:38 PM [Epoch 122/150][Step 60/195] Loss=1.958 Time=1.281 Data Time=0.002
+09/08 09:48:12 PM [Epoch 122/150][Step 90/195] Loss=2.038 Time=1.308 Data Time=0.002
+09/08 09:48:44 PM [Epoch 122/150][Step 120/195] Loss=2.101 Time=1.024 Data Time=0.002
+09/08 09:49:17 PM [Epoch 122/150][Step 150/195] Loss=2.027 Time=1.077 Data Time=0.002
+09/08 09:49:49 PM [Epoch 122/150][Step 180/195] Loss=1.990 Time=1.152 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:50:17 PM Epoch 121: acc 10.245
+09/08 09:50:17 PM Epoch 121: FLOPs 27675545.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:50:17 PM Temperature: 0.2277891948639134
+09/08 09:50:17 PM [Epoch 123/150] lr=0.005093
+09/08 09:50:17 PM update arch: True
+09/08 09:50:53 PM [Epoch 123/150][Step 30/195] Loss=1.921 Time=0.924 Data Time=0.001
+09/08 09:51:26 PM [Epoch 123/150][Step 60/195] Loss=2.087 Time=1.017 Data Time=0.002
+09/08 09:51:59 PM [Epoch 123/150][Step 90/195] Loss=1.922 Time=1.134 Data Time=0.002
+09/08 09:52:30 PM [Epoch 123/150][Step 120/195] Loss=2.018 Time=1.076 Data Time=0.002
+09/08 09:53:04 PM [Epoch 123/150][Step 150/195] Loss=2.059 Time=1.210 Data Time=0.002
+09/08 09:53:36 PM [Epoch 123/150][Step 180/195] Loss=2.083 Time=1.111 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:54:04 PM Epoch 122: acc 10.611
+09/08 09:54:04 PM Epoch 122: FLOPs 28584857.600
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:54:04 PM Temperature: 0.2220944649923156
+09/08 09:54:04 PM [Epoch 124/150] lr=0.004814
+09/08 09:54:04 PM update arch: True
+09/08 09:54:39 PM [Epoch 124/150][Step 30/195] Loss=1.994 Time=1.039 Data Time=0.002
+09/08 09:55:12 PM [Epoch 124/150][Step 60/195] Loss=1.885 Time=1.260 Data Time=0.002
+09/08 09:55:46 PM [Epoch 124/150][Step 90/195] Loss=1.874 Time=1.086 Data Time=0.002
+09/08 09:56:18 PM [Epoch 124/150][Step 120/195] Loss=1.947 Time=1.069 Data Time=0.002
+09/08 09:56:51 PM [Epoch 124/150][Step 150/195] Loss=1.920 Time=0.876 Data Time=0.002
+09/08 09:57:24 PM [Epoch 124/150][Step 180/195] Loss=1.965 Time=1.147 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 09:57:51 PM Epoch 123: acc 9.998
+09/08 09:57:51 PM Epoch 123: FLOPs 28584857.600
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 09:57:51 PM Temperature: 0.2165421033675077
+09/08 09:57:51 PM [Epoch 125/150] lr=0.004544
+09/08 09:57:51 PM update arch: True
+09/08 09:58:26 PM [Epoch 125/150][Step 30/195] Loss=1.901 Time=1.065 Data Time=0.001
+09/08 09:58:59 PM [Epoch 125/150][Step 60/195] Loss=2.067 Time=1.180 Data Time=0.002
+09/08 09:59:33 PM [Epoch 125/150][Step 90/195] Loss=1.933 Time=0.928 Data Time=0.002
+09/08 10:00:05 PM [Epoch 125/150][Step 120/195] Loss=1.883 Time=1.030 Data Time=0.002
+09/08 10:00:38 PM [Epoch 125/150][Step 150/195] Loss=1.860 Time=1.187 Data Time=0.002
+09/08 10:01:11 PM [Epoch 125/150][Step 180/195] Loss=2.196 Time=1.025 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:01:39 PM Epoch 124: acc 10.245
+09/08 10:01:39 PM Epoch 124: FLOPs 28584857.600
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:01:39 PM Temperature: 0.21112855078332
+09/08 10:01:39 PM [Epoch 126/150] lr=0.004282
+09/08 10:01:39 PM update arch: True
+09/08 10:02:14 PM [Epoch 126/150][Step 30/195] Loss=2.063 Time=1.244 Data Time=0.001
+09/08 10:02:47 PM [Epoch 126/150][Step 60/195] Loss=1.937 Time=1.197 Data Time=0.002
+09/08 10:03:19 PM [Epoch 126/150][Step 90/195] Loss=1.917 Time=1.023 Data Time=0.002
+09/08 10:03:52 PM [Epoch 126/150][Step 120/195] Loss=1.997 Time=1.057 Data Time=0.002
+09/08 10:04:25 PM [Epoch 126/150][Step 150/195] Loss=1.903 Time=1.090 Data Time=0.004
+09/08 10:04:59 PM [Epoch 126/150][Step 180/195] Loss=2.059 Time=1.061 Data Time=0.002
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:05:26 PM Epoch 125: acc 10.028
+09/08 10:05:26 PM Epoch 125: FLOPs 28584857.600
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:05:26 PM Temperature: 0.205850337013737
+09/08 10:05:26 PM [Epoch 127/150] lr=0.004030
+09/08 10:05:26 PM update arch: True
+09/08 10:06:00 PM [Epoch 127/150][Step 30/195] Loss=2.109 Time=1.075 Data Time=0.001
+09/08 10:06:34 PM [Epoch 127/150][Step 60/195] Loss=2.022 Time=1.093 Data Time=0.002
+09/08 10:07:07 PM [Epoch 127/150][Step 90/195] Loss=2.036 Time=1.014 Data Time=0.002
+09/08 10:07:40 PM [Epoch 127/150][Step 120/195] Loss=2.034 Time=1.172 Data Time=0.002
+09/08 10:08:13 PM [Epoch 127/150][Step 150/195] Loss=1.851 Time=1.178 Data Time=0.002
+09/08 10:08:46 PM [Epoch 127/150][Step 180/195] Loss=2.066 Time=1.014 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+09/08 10:09:14 PM Epoch 126: acc 9.543
+09/08 10:09:14 PM Epoch 126: FLOPs 27883596.800
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 09/08 10:09:14 PM Temperature: 0.20070407858839356
+09/08 10:09:14 PM [Epoch 128/150] lr=0.003788
+09/08 10:09:14 PM update arch: True
+09/08 10:09:49 PM [Epoch 128/150][Step 30/195] Loss=1.976 Time=1.060 Data Time=0.004
+09/08 10:10:22 PM [Epoch 128/150][Step 60/195] Loss=2.075 Time=0.997 Data Time=0.002
+09/08 10:10:56 PM [Epoch 128/150][Step 90/195] Loss=1.940 Time=1.263 Data Time=0.002
+09/08 10:11:29 PM [Epoch 128/150][Step 120/195] Loss=1.838 Time=1.044 Data Time=0.003
+09/08 10:12:01 PM [Epoch 128/150][Step 150/195] Loss=1.872 Time=1.050 Data Time=0.002
+09/08 10:12:35 PM [Epoch 128/150][Step 180/195] Loss=2.032 Time=1.128 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:13:03 PM Epoch 127: acc 10.156
+09/08 10:13:03 PM Epoch 127: FLOPs 29041971.200
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:13:03 PM Temperature: 0.19568647662368374
+09/08 10:13:03 PM [Epoch 129/150] lr=0.003555
+09/08 10:13:03 PM update arch: True
+09/08 10:13:39 PM [Epoch 129/150][Step 30/195] Loss=2.003 Time=0.990 Data Time=0.001
+09/08 10:14:13 PM [Epoch 129/150][Step 60/195] Loss=2.186 Time=1.085 Data Time=0.002
+09/08 10:14:46 PM [Epoch 129/150][Step 90/195] Loss=1.977 Time=1.168 Data Time=0.002
+09/08 10:15:19 PM [Epoch 129/150][Step 120/195] Loss=2.004 Time=1.127 Data Time=0.002
+09/08 10:15:51 PM [Epoch 129/150][Step 150/195] Loss=1.989 Time=1.002 Data Time=0.001
+09/08 10:16:23 PM [Epoch 129/150][Step 180/195] Loss=2.093 Time=1.106 Data Time=0.001
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:16:50 PM Epoch 128: acc 9.978
+09/08 10:16:50 PM Epoch 128: FLOPs 29167308.800
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:16:50 PM Temperature: 0.19079431470809163
+09/08 10:16:50 PM [Epoch 130/150] lr=0.003332
+09/08 10:16:50 PM update arch: True
+09/08 10:17:26 PM [Epoch 130/150][Step 30/195] Loss=1.946 Time=1.164 Data Time=0.001
+09/08 10:17:59 PM [Epoch 130/150][Step 60/195] Loss=1.889 Time=1.145 Data Time=0.002
+09/08 10:18:32 PM [Epoch 130/150][Step 90/195] Loss=1.986 Time=1.060 Data Time=0.002
+09/08 10:19:04 PM [Epoch 130/150][Step 120/195] Loss=1.910 Time=1.078 Data Time=0.002
+09/08 10:19:37 PM [Epoch 130/150][Step 150/195] Loss=1.925 Time=1.250 Data Time=0.002
+09/08 10:20:10 PM [Epoch 130/150][Step 180/195] Loss=2.004 Time=1.116 Data Time=0.002
+skip
+add_k5_e3
+add_k3_e3
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:20:38 PM Epoch 129: acc 9.573
+09/08 10:20:38 PM Epoch 129: FLOPs 29029683.200
+skip add_k5_e3 add_k3_e3 skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:20:38 PM Temperature: 0.18602445684038932
+09/08 10:20:38 PM [Epoch 131/150] lr=0.003118
+09/08 10:20:38 PM update arch: True
+09/08 10:21:13 PM [Epoch 131/150][Step 30/195] Loss=1.901 Time=1.011 Data Time=0.001
+09/08 10:21:47 PM [Epoch 131/150][Step 60/195] Loss=1.882 Time=1.200 Data Time=0.002
+09/08 10:22:20 PM [Epoch 131/150][Step 90/195] Loss=2.045 Time=1.084 Data Time=0.002
+09/08 10:22:53 PM [Epoch 131/150][Step 120/195] Loss=1.911 Time=1.050 Data Time=0.003
+09/08 10:23:26 PM [Epoch 131/150][Step 150/195] Loss=1.983 Time=0.854 Data Time=0.002
+09/08 10:24:01 PM [Epoch 131/150][Step 180/195] Loss=2.141 Time=1.113 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:24:29 PM Epoch 130: acc 9.652
+09/08 10:24:29 PM Epoch 130: FLOPs 28420198.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:24:29 PM Temperature: 0.1813738454193796
+09/08 10:24:29 PM [Epoch 132/150] lr=0.002914
+09/08 10:24:29 PM update arch: True
+09/08 10:25:05 PM [Epoch 132/150][Step 30/195] Loss=2.023 Time=1.209 Data Time=0.004
+09/08 10:25:39 PM [Epoch 132/150][Step 60/195] Loss=2.033 Time=1.370 Data Time=0.002
+09/08 10:26:12 PM [Epoch 132/150][Step 90/195] Loss=2.002 Time=1.113 Data Time=0.002
+09/08 10:26:45 PM [Epoch 132/150][Step 120/195] Loss=1.993 Time=1.025 Data Time=0.002
+09/08 10:27:18 PM [Epoch 132/150][Step 150/195] Loss=1.929 Time=1.143 Data Time=0.002
+09/08 10:27:52 PM [Epoch 132/150][Step 180/195] Loss=2.013 Time=1.053 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:28:19 PM Epoch 131: acc 9.761
+09/08 10:28:19 PM Epoch 131: FLOPs 28420198.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:28:19 PM Temperature: 0.17683949928389509
+09/08 10:28:19 PM [Epoch 133/150] lr=0.002720
+09/08 10:28:19 PM update arch: True
+09/08 10:28:56 PM [Epoch 133/150][Step 30/195] Loss=1.928 Time=1.298 Data Time=0.003
+09/08 10:29:30 PM [Epoch 133/150][Step 60/195] Loss=1.892 Time=1.073 Data Time=0.002
+09/08 10:30:04 PM [Epoch 133/150][Step 90/195] Loss=1.998 Time=1.165 Data Time=0.002
+09/08 10:30:37 PM [Epoch 133/150][Step 120/195] Loss=1.927 Time=1.109 Data Time=0.002
+09/08 10:31:09 PM [Epoch 133/150][Step 150/195] Loss=1.951 Time=1.089 Data Time=0.002
+09/08 10:31:43 PM [Epoch 133/150][Step 180/195] Loss=2.015 Time=1.148 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:32:11 PM Epoch 132: acc 10.354
+09/08 10:32:11 PM Epoch 132: FLOPs 28120371.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:32:11 PM Temperature: 0.17241851180179774
+09/08 10:32:11 PM [Epoch 134/150] lr=0.002537
+09/08 10:32:11 PM update arch: True
+09/08 10:32:45 PM [Epoch 134/150][Step 30/195] Loss=1.966 Time=1.229 Data Time=0.002
+09/08 10:33:19 PM [Epoch 134/150][Step 60/195] Loss=2.048 Time=1.201 Data Time=0.002
+09/08 10:33:52 PM [Epoch 134/150][Step 90/195] Loss=2.051 Time=1.264 Data Time=0.002
+09/08 10:34:25 PM [Epoch 134/150][Step 120/195] Loss=1.921 Time=1.158 Data Time=0.002
+09/08 10:35:00 PM [Epoch 134/150][Step 150/195] Loss=1.892 Time=1.384 Data Time=0.002
+09/08 10:35:33 PM [Epoch 134/150][Step 180/195] Loss=1.941 Time=1.205 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:36:00 PM Epoch 133: acc 10.176
+09/08 10:36:00 PM Epoch 133: FLOPs 28120371.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:36:00 PM Temperature: 0.16810804900675275
+09/08 10:36:00 PM [Epoch 135/150] lr=0.002363
+09/08 10:36:00 PM update arch: True
+09/08 10:36:36 PM [Epoch 135/150][Step 30/195] Loss=2.097 Time=0.913 Data Time=0.001
+09/08 10:37:10 PM [Epoch 135/150][Step 60/195] Loss=1.990 Time=1.265 Data Time=0.002
+09/08 10:37:43 PM [Epoch 135/150][Step 90/195] Loss=1.992 Time=1.117 Data Time=0.002
+09/08 10:38:16 PM [Epoch 135/150][Step 120/195] Loss=1.945 Time=1.161 Data Time=0.002
+09/08 10:38:49 PM [Epoch 135/150][Step 150/195] Loss=1.927 Time=0.982 Data Time=0.002
+09/08 10:39:22 PM [Epoch 135/150][Step 180/195] Loss=1.967 Time=1.184 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:39:49 PM Epoch 134: acc 10.403
+09/08 10:39:49 PM Epoch 134: FLOPs 28120371.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:39:49 PM Temperature: 0.16390534778158394
+09/08 10:39:49 PM [Epoch 136/150] lr=0.002199
+09/08 10:39:49 PM update arch: True
+09/08 10:40:26 PM [Epoch 136/150][Step 30/195] Loss=1.990 Time=1.066 Data Time=0.003
+09/08 10:41:00 PM [Epoch 136/150][Step 60/195] Loss=1.840 Time=1.150 Data Time=0.002
+09/08 10:41:34 PM [Epoch 136/150][Step 90/195] Loss=2.022 Time=1.014 Data Time=0.002
+09/08 10:42:08 PM [Epoch 136/150][Step 120/195] Loss=1.924 Time=1.132 Data Time=0.002
+09/08 10:42:40 PM [Epoch 136/150][Step 150/195] Loss=2.015 Time=1.145 Data Time=0.002
+09/08 10:43:14 PM [Epoch 136/150][Step 180/195] Loss=2.045 Time=1.301 Data Time=0.002
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:43:42 PM Epoch 135: acc 9.691
+09/08 10:43:42 PM Epoch 135: FLOPs 27841433.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:43:42 PM Temperature: 0.15980771408704436
+09/08 10:43:42 PM [Epoch 137/150] lr=0.002046
+09/08 10:43:42 PM update arch: True
+09/08 10:44:18 PM [Epoch 137/150][Step 30/195] Loss=1.950 Time=1.079 Data Time=0.001
+09/08 10:44:51 PM [Epoch 137/150][Step 60/195] Loss=2.194 Time=0.978 Data Time=0.002
+09/08 10:45:24 PM [Epoch 137/150][Step 90/195] Loss=2.157 Time=1.144 Data Time=0.002
+09/08 10:45:57 PM [Epoch 137/150][Step 120/195] Loss=1.916 Time=1.016 Data Time=0.002
+09/08 10:46:31 PM [Epoch 137/150][Step 150/195] Loss=2.230 Time=1.015 Data Time=0.002
+09/08 10:47:03 PM [Epoch 137/150][Step 180/195] Loss=1.996 Time=1.000 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:47:31 PM Epoch 136: acc 9.810
+09/08 10:47:31 PM Epoch 136: FLOPs 27006310.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:47:31 PM Temperature: 0.15581252123486825
+09/08 10:47:31 PM [Epoch 138/150] lr=0.001903
+09/08 10:47:31 PM update arch: True
+09/08 10:48:08 PM [Epoch 138/150][Step 30/195] Loss=1.954 Time=1.211 Data Time=0.001
+09/08 10:48:41 PM [Epoch 138/150][Step 60/195] Loss=1.922 Time=1.164 Data Time=0.002
+09/08 10:49:16 PM [Epoch 138/150][Step 90/195] Loss=2.038 Time=1.181 Data Time=0.002
+09/08 10:49:49 PM [Epoch 138/150][Step 120/195] Loss=1.937 Time=1.184 Data Time=0.002
+09/08 10:50:23 PM [Epoch 138/150][Step 150/195] Loss=1.960 Time=1.174 Data Time=0.002
+09/08 10:50:56 PM [Epoch 138/150][Step 180/195] Loss=1.891 Time=1.026 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:51:24 PM Epoch 137: acc 9.909
+09/08 10:51:24 PM Epoch 137: FLOPs 27006310.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:51:24 PM Temperature: 0.15191720820399654
+09/08 10:51:24 PM [Epoch 139/150] lr=0.001770
+09/08 10:51:24 PM update arch: True
+09/08 10:52:00 PM [Epoch 139/150][Step 30/195] Loss=1.991 Time=1.137 Data Time=0.001
+09/08 10:52:33 PM [Epoch 139/150][Step 60/195] Loss=1.888 Time=1.057 Data Time=0.002
+09/08 10:53:06 PM [Epoch 139/150][Step 90/195] Loss=1.929 Time=0.992 Data Time=0.002
+09/08 10:53:40 PM [Epoch 139/150][Step 120/195] Loss=2.052 Time=1.210 Data Time=0.002
+09/08 10:54:14 PM [Epoch 139/150][Step 150/195] Loss=1.979 Time=1.052 Data Time=0.002
+09/08 10:54:47 PM [Epoch 139/150][Step 180/195] Loss=2.007 Time=0.962 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:55:14 PM Epoch 138: acc 9.682
+09/08 10:55:14 PM Epoch 138: FLOPs 27006310.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:55:14 PM Temperature: 0.1481192779988966
+09/08 10:55:14 PM [Epoch 140/150] lr=0.001647
+09/08 10:55:14 PM update arch: True
+09/08 10:55:50 PM [Epoch 140/150][Step 30/195] Loss=1.917 Time=1.016 Data Time=0.001
+09/08 10:56:24 PM [Epoch 140/150][Step 60/195] Loss=1.941 Time=1.072 Data Time=0.002
+09/08 10:56:58 PM [Epoch 140/150][Step 90/195] Loss=1.956 Time=1.082 Data Time=0.002
+09/08 10:57:32 PM [Epoch 140/150][Step 120/195] Loss=2.051 Time=1.085 Data Time=0.002
+09/08 10:58:05 PM [Epoch 140/150][Step 150/195] Loss=1.936 Time=1.078 Data Time=0.002
+09/08 10:58:39 PM [Epoch 140/150][Step 180/195] Loss=2.107 Time=1.173 Data Time=0.002
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 10:59:07 PM Epoch 139: acc 10.028
+09/08 10:59:07 PM Epoch 139: FLOPs 27006310.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 10:59:07 PM Temperature: 0.1444162960489242
+09/08 10:59:07 PM [Epoch 141/150] lr=0.001535
+09/08 10:59:07 PM update arch: True
+09/08 10:59:43 PM [Epoch 141/150][Step 30/195] Loss=1.968 Time=0.919 Data Time=0.001
+09/08 11:00:16 PM [Epoch 141/150][Step 60/195] Loss=1.948 Time=1.144 Data Time=0.002
+09/08 11:00:50 PM [Epoch 141/150][Step 90/195] Loss=1.920 Time=1.159 Data Time=0.002
+09/08 11:01:23 PM [Epoch 141/150][Step 120/195] Loss=2.005 Time=1.158 Data Time=0.002
+09/08 11:01:56 PM [Epoch 141/150][Step 150/195] Loss=1.931 Time=1.069 Data Time=0.002
+09/08 11:02:30 PM [Epoch 141/150][Step 180/195] Loss=1.971 Time=1.209 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:02:58 PM Epoch 140: acc 10.334
+09/08 11:02:58 PM Epoch 140: FLOPs 27392153.600
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:02:58 PM Temperature: 0.14080588864770108
+09/08 11:02:58 PM [Epoch 142/150] lr=0.001434
+09/08 11:02:58 PM update arch: True
+09/08 11:03:33 PM [Epoch 142/150][Step 30/195] Loss=2.052 Time=1.137 Data Time=0.001
+09/08 11:04:07 PM [Epoch 142/150][Step 60/195] Loss=1.961 Time=1.006 Data Time=0.002
+09/08 11:04:41 PM [Epoch 142/150][Step 90/195] Loss=1.952 Time=1.005 Data Time=0.002
+09/08 11:05:14 PM [Epoch 142/150][Step 120/195] Loss=1.862 Time=1.136 Data Time=0.002
+09/08 11:05:48 PM [Epoch 142/150][Step 150/195] Loss=2.003 Time=1.004 Data Time=0.002
+09/08 11:06:22 PM [Epoch 142/150][Step 180/195] Loss=1.957 Time=1.356 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:06:50 PM Epoch 141: acc 9.642
+09/08 11:06:50 PM Epoch 141: FLOPs 27616563.200
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:06:50 PM Temperature: 0.13728574143150857
+09/08 11:06:50 PM [Epoch 143/150] lr=0.001343
+09/08 11:06:50 PM update arch: True
+09/08 11:07:28 PM [Epoch 143/150][Step 30/195] Loss=2.075 Time=0.992 Data Time=0.003
+09/08 11:08:02 PM [Epoch 143/150][Step 60/195] Loss=1.920 Time=1.079 Data Time=0.002
+09/08 11:08:35 PM [Epoch 143/150][Step 90/195] Loss=2.052 Time=1.183 Data Time=0.002
+09/08 11:09:08 PM [Epoch 143/150][Step 120/195] Loss=1.882 Time=1.046 Data Time=0.002
+09/08 11:09:42 PM [Epoch 143/150][Step 150/195] Loss=1.951 Time=1.237 Data Time=0.002
+09/08 11:10:16 PM [Epoch 143/150][Step 180/195] Loss=2.198 Time=1.015 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:10:44 PM Epoch 142: acc 9.583
+09/08 11:10:44 PM Epoch 142: FLOPs 28002406.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:10:44 PM Temperature: 0.13385359789572085
+09/08 11:10:44 PM [Epoch 144/150] lr=0.001263
+09/08 11:10:44 PM update arch: True
+09/08 11:11:21 PM [Epoch 144/150][Step 30/195] Loss=1.965 Time=1.164 Data Time=0.001
+09/08 11:11:55 PM [Epoch 144/150][Step 60/195] Loss=2.008 Time=1.131 Data Time=0.002
+09/08 11:12:29 PM [Epoch 144/150][Step 90/195] Loss=1.968 Time=1.083 Data Time=0.002
+09/08 11:13:02 PM [Epoch 144/150][Step 120/195] Loss=2.087 Time=0.977 Data Time=0.002
+09/08 11:13:36 PM [Epoch 144/150][Step 150/195] Loss=2.124 Time=1.143 Data Time=0.003
+09/08 11:14:09 PM [Epoch 144/150][Step 180/195] Loss=1.972 Time=0.957 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:14:37 PM Epoch 143: acc 9.741
+09/08 11:14:37 PM Epoch 143: FLOPs 27609190.400
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:14:37 PM Temperature: 0.13050725794832782
+09/08 11:14:37 PM [Epoch 145/150] lr=0.001193
+09/08 11:14:37 PM update arch: True
+09/08 11:15:12 PM [Epoch 145/150][Step 30/195] Loss=2.024 Time=1.131 Data Time=0.001
+09/08 11:15:47 PM [Epoch 145/150][Step 60/195] Loss=2.046 Time=1.224 Data Time=0.001
+09/08 11:16:21 PM [Epoch 145/150][Step 90/195] Loss=1.951 Time=1.181 Data Time=0.002
+09/08 11:16:54 PM [Epoch 145/150][Step 120/195] Loss=1.992 Time=1.195 Data Time=0.002
+09/08 11:17:28 PM [Epoch 145/150][Step 150/195] Loss=1.886 Time=1.061 Data Time=0.002
+09/08 11:18:02 PM [Epoch 145/150][Step 180/195] Loss=1.972 Time=1.103 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:18:31 PM Epoch 144: acc 10.196
+09/08 11:18:31 PM Epoch 144: FLOPs 27330252.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:18:31 PM Temperature: 0.12724457649961962
+09/08 11:18:31 PM [Epoch 146/150] lr=0.001134
+09/08 11:18:31 PM update arch: True
+09/08 11:19:07 PM [Epoch 146/150][Step 30/195] Loss=2.000 Time=1.069 Data Time=0.001
+09/08 11:19:40 PM [Epoch 146/150][Step 60/195] Loss=2.037 Time=1.149 Data Time=0.002
+09/08 11:20:14 PM [Epoch 146/150][Step 90/195] Loss=1.888 Time=1.320 Data Time=0.002
+09/08 11:20:49 PM [Epoch 146/150][Step 120/195] Loss=2.077 Time=1.192 Data Time=0.002
+09/08 11:21:23 PM [Epoch 146/150][Step 150/195] Loss=1.991 Time=1.152 Data Time=0.002
+09/08 11:21:56 PM [Epoch 146/150][Step 180/195] Loss=1.938 Time=1.040 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:22:24 PM Epoch 145: acc 10.127
+09/08 11:22:24 PM Epoch 145: FLOPs 27330252.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:22:24 PM Temperature: 0.12406346208712912
+09/08 11:22:24 PM [Epoch 147/150] lr=0.001086
+09/08 11:22:24 PM update arch: True
+09/08 11:23:00 PM [Epoch 147/150][Step 30/195] Loss=1.983 Time=1.028 Data Time=0.001
+09/08 11:23:34 PM [Epoch 147/150][Step 60/195] Loss=1.869 Time=1.159 Data Time=0.002
+09/08 11:24:09 PM [Epoch 147/150][Step 90/195] Loss=1.903 Time=1.312 Data Time=0.002
+09/08 11:24:42 PM [Epoch 147/150][Step 120/195] Loss=2.015 Time=0.932 Data Time=0.002
+09/08 11:25:16 PM [Epoch 147/150][Step 150/195] Loss=1.928 Time=1.126 Data Time=0.002
+09/08 11:25:50 PM [Epoch 147/150][Step 180/195] Loss=1.847 Time=1.141 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:26:19 PM Epoch 146: acc 9.622
+09/08 11:26:19 PM Epoch 146: FLOPs 27716096.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:26:19 PM Temperature: 0.1209618755349509
+09/08 11:26:19 PM [Epoch 148/150] lr=0.001048
+09/08 11:26:19 PM update arch: True
+09/08 11:26:55 PM [Epoch 148/150][Step 30/195] Loss=1.977 Time=1.343 Data Time=0.001
+09/08 11:27:29 PM [Epoch 148/150][Step 60/195] Loss=1.936 Time=0.991 Data Time=0.002
+09/08 11:28:02 PM [Epoch 148/150][Step 90/195] Loss=2.134 Time=1.092 Data Time=0.002
+09/08 11:28:35 PM [Epoch 148/150][Step 120/195] Loss=1.984 Time=1.236 Data Time=0.002
+09/08 11:29:08 PM [Epoch 148/150][Step 150/195] Loss=1.983 Time=1.084 Data Time=0.002
+09/08 11:29:41 PM [Epoch 148/150][Step 180/195] Loss=1.961 Time=1.187 Data Time=0.002
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:30:10 PM Epoch 147: acc 9.790
+09/08 11:30:10 PM Epoch 147: FLOPs 27384780.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:30:10 PM Temperature: 0.1179378286465771
+09/08 11:30:10 PM [Epoch 149/150] lr=0.001021
+09/08 11:30:10 PM update arch: True
+09/08 11:30:47 PM [Epoch 149/150][Step 30/195] Loss=2.186 Time=1.217 Data Time=0.001
+09/08 11:31:22 PM [Epoch 149/150][Step 60/195] Loss=2.203 Time=0.993 Data Time=0.002
+09/08 11:31:55 PM [Epoch 149/150][Step 90/195] Loss=1.931 Time=1.066 Data Time=0.002
+09/08 11:32:30 PM [Epoch 149/150][Step 120/195] Loss=1.936 Time=1.091 Data Time=0.002
+09/08 11:33:04 PM [Epoch 149/150][Step 150/195] Loss=2.041 Time=1.071 Data Time=0.002
+09/08 11:33:38 PM [Epoch 149/150][Step 180/195] Loss=1.910 Time=1.038 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:34:06 PM Epoch 148: acc 10.295
+09/08 11:34:06 PM Epoch 148: FLOPs 27330252.800
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 09/08 11:34:06 PM Temperature: 0.11498938293041269
+09/08 11:34:06 PM [Epoch 150/150] lr=0.001005
+09/08 11:34:06 PM update arch: True
+09/08 11:34:42 PM [Epoch 150/150][Step 30/195] Loss=1.899 Time=1.263 Data Time=0.001
+09/08 11:35:16 PM [Epoch 150/150][Step 60/195] Loss=1.943 Time=0.969 Data Time=0.002
+09/08 11:35:51 PM [Epoch 150/150][Step 90/195] Loss=1.949 Time=1.231 Data Time=0.002
+09/08 11:36:25 PM [Epoch 150/150][Step 120/195] Loss=1.920 Time=1.172 Data Time=0.002
+09/08 11:36:59 PM [Epoch 150/150][Step 150/195] Loss=1.971 Time=1.123 Data Time=0.002
+09/08 11:37:32 PM [Epoch 150/150][Step 180/195] Loss=2.050 Time=1.098 Data Time=0.001
+skip
+add_k5_e3
+skip
+skip
+skip
+add_k5_e3
+add_k3_e6
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k5_e3
+add_k5_e3
+add_k5_e6
+add_k3_e6
+add_k5_e3
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+add_k5_e6
+09/08 11:38:01 PM Epoch 149: acc 10.008
+09/08 11:38:01 PM Epoch 149: FLOPs 27716096.000
+skip add_k5_e3 skip skip skip add_k5_e3 add_k3_e6 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e3 add_k5_e6 add_k5_e3 add_k5_e3 add_k5_e6 add_k3_e6 add_k5_e3 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 add_k5_e6 

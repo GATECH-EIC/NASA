@@ -68,6 +68,10 @@ parser.add_argument('--header_channel', type=int, default=1504,
                     help='header_channel')
 parser.add_argument('--lr', type=float, default=None,
                     help='the learning rate')
+parser.add_argument('--lr_schedule', type=str, default=None,
+                    help='the learning rate schedule')
+parser.add_argument('--weight_decay', type=float, default=None,
+                    help='the weight_decay')
 parser.add_argument('--nepochs', type=int, default=None,
                     help='training epochs')
 parser.add_argument('--transfer_epoch', type=int, default=None,
@@ -131,6 +135,10 @@ def main():
         config.batch_size = args.batch_size
     if args.lr is not None:
         config.lr = args.lr
+    if args.lr_schedule is not None:
+        config.lr_schedule = args.lr_schedule
+    if args.weight_decay is not None:
+        config.weight_decay = args.weight_decay
     if args.num_workers is not None:
         config.num_workers = args.num_workers
     if args.world_size is not None:
@@ -265,7 +273,9 @@ def main_worker(gpu, ngpus_per_node, config):
         # print(alpha)
         Epoch = state['epoch']
         print(Epoch)
+        # print('ok!!!!!')
         model = FBNet_Infer(alpha=alpha, config=config, cand=None)
+        # print('ok!!!!!')
         flops = model.forward_flops((3, config.image_height, config.image_width))
         print('FLOPs: ', flops)
         # model = resnet20_add(num_classes=100, quantize=False, weight_bits=8, quantize_v='sbm')

@@ -1,0 +1,638 @@
+Unable to import CPU and/or CUDA bit-wise shift kernels
+Using /tmp/torch_extensions as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /tmp/torch_extensions/adder_cuda/build.ninja...
+Building extension module adder_cuda...
+ninja: no work to do.
+Loading extension module adder_cuda...
+config.hw_platform_path:  fbnet/edgegpu/
+gpu [0]
+Use GPU: [0] for training
+09/08 05:09:24 PM args = {'seed': 2, 'repo_name': 'DNA', 'world_size': 2, 'multiprocessing_distributed': False, 'rank': 0, 'dist_backend': 'nccl', 'dist_url': 'tcp://eic-2019gpu5.ece.rice.edu:10001', 'gpu': [0], 'dataset': 'cifar100', 'dataset_path': '/media/shared-corpus/CIFAR100', 'num_train_imgs': 50000, 'num_eval_imgs': 10000, 'bn_eps': 1e-05, 'bn_momentum': 0.1, 'opt': 'Sgd', 'momentum': 0.9, 'weight_decay': 0.0005, 'betas': [0.5, 0.999], 'num_workers': 16, 'grad_clip': 5, 'pretrain': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddShiftAdd_2_1.5e-10_shiftps', 'num_layer_list': [1, 4, 4, 4, 4, 4, 1], 'num_channel_list': [16, 24, 32, 64, 112, 184, 352], 'stride_list': [1, 1, 2, 2, 1, 2, 1], 'stem_channel': 16, 'header_channel': 1504, 'enable_skip': True, 'perturb_alpha': False, 'epsilon_alpha': 0.3, 'sample_func': 'gumbel_softmax', 'temp_init': 5, 'temp_decay': 0.975, 'mode': 'proxy_hard', 'hard': True, 'offset': True, 'act_num': 2, 'pretrain_epoch': 60, 'search_space': 'AddShiftAdd', 'pretrain_aline': True, 'pretrain_mode': 'proxy_hard', 'pretrain_act_num': 2, 'arch_one_hot_loss_weight': None, 'arch_mse_loss_weight': None, 'num_sample': 10, 'update_hw_freq': 5, 'batch_size': 128, 'niters_per_epoch': 781, 'image_height': 32, 'image_width': 32, 'eval_epoch': 1, 'lr_schedule': 'cosine', 'lr': 0.05, 'decay_epoch': 20, 'lr_decay': 0.97, 'milestones': [50, 100, 200], 'gamma': 0.1, 'learning_rate_min': 0.001, 'train_portion': 0.5, 'unrolled': False, 'arch_learning_rate': 0.0003, 'arch_update_frec': 1, 'efficiency_metric': 'flops', 'hw_platform_path': 'fbnet/edgegpu/', 'alpha_weight': 1, 'latency_weight': 1e-10, 'fps_max': 100, 'fps_min': 90, 'flops_mode': 'single_path', 'flops_weight': 1.5e-10, 'flops_max': 100000000.0, 'flops_min': 50000000.0, 'flops_decouple': False, 'port': '4657', 'distributed': False, 'local_rank': 0, 'num_classes': 100, 'nepochs': 150, 'save': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddShiftAdd_2_1.5e-10_shiftps'}
+config.gpu: [0]
+architect initialized!
+No checkpoint. Search from scratch.
+09/08 05:09:31 PM Temperature: 5.0
+09/08 05:09:31 PM [Epoch 1/150] lr=0.050000
+09/08 05:09:31 PM update arch: False
+09/08 05:10:26 PM [Epoch 1/150][Step 30/195] Loss=4.611 Time=1.573 Data Time=0.003
+09/08 05:11:13 PM [Epoch 1/150][Step 60/195] Loss=4.598 Time=1.468 Data Time=0.002
+09/08 05:11:59 PM [Epoch 1/150][Step 90/195] Loss=4.616 Time=1.511 Data Time=0.002
+09/08 05:12:48 PM [Epoch 1/150][Step 120/195] Loss=4.609 Time=1.765 Data Time=0.002
+09/08 05:13:35 PM [Epoch 1/150][Step 150/195] Loss=4.609 Time=1.630 Data Time=0.002
+09/08 05:14:24 PM [Epoch 1/150][Step 180/195] Loss=4.610 Time=2.020 Data Time=0.001
+09/08 05:14:48 PM Temperature: 4.875
+09/08 05:14:48 PM [Epoch 2/150] lr=0.049995
+09/08 05:14:48 PM update arch: False
+09/08 05:15:36 PM [Epoch 2/150][Step 30/195] Loss=4.612 Time=1.562 Data Time=0.002
+09/08 05:16:22 PM [Epoch 2/150][Step 60/195] Loss=4.606 Time=1.391 Data Time=0.002
+09/08 05:17:07 PM [Epoch 2/150][Step 90/195] Loss=4.615 Time=1.708 Data Time=0.002
+09/08 05:17:57 PM [Epoch 2/150][Step 120/195] Loss=4.619 Time=1.619 Data Time=0.002
+09/08 05:18:44 PM [Epoch 2/150][Step 150/195] Loss=4.602 Time=1.721 Data Time=0.002
+09/08 05:19:30 PM [Epoch 2/150][Step 180/195] Loss=4.614 Time=1.080 Data Time=0.002
+09/08 05:20:15 PM Epoch 1: acc 0.989
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:20:15 PM Temperature: 4.753125
+09/08 05:20:15 PM [Epoch 3/150] lr=0.049979
+09/08 05:20:15 PM update arch: False
+09/08 05:21:04 PM [Epoch 3/150][Step 30/195] Loss=4.611 Time=1.601 Data Time=0.003
+09/08 05:21:52 PM [Epoch 3/150][Step 60/195] Loss=4.613 Time=1.705 Data Time=0.002
+09/08 05:22:41 PM [Epoch 3/150][Step 90/195] Loss=4.611 Time=1.770 Data Time=0.002
+09/08 05:23:28 PM [Epoch 3/150][Step 120/195] Loss=4.599 Time=1.823 Data Time=0.002
+09/08 05:24:16 PM [Epoch 3/150][Step 150/195] Loss=4.609 Time=1.603 Data Time=0.002
+09/08 05:25:05 PM [Epoch 3/150][Step 180/195] Loss=4.606 Time=1.780 Data Time=0.002
+09/08 05:25:51 PM Epoch 2: acc 0.979
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:25:51 PM Temperature: 4.6342968749999995
+09/08 05:25:51 PM [Epoch 4/150] lr=0.049952
+09/08 05:25:51 PM update arch: False
+09/08 05:26:40 PM [Epoch 4/150][Step 30/195] Loss=4.596 Time=1.570 Data Time=0.003
+09/08 05:27:27 PM [Epoch 4/150][Step 60/195] Loss=4.602 Time=2.027 Data Time=0.002
+09/08 05:28:15 PM [Epoch 4/150][Step 90/195] Loss=4.603 Time=1.522 Data Time=0.002
+09/08 05:29:01 PM [Epoch 4/150][Step 120/195] Loss=4.611 Time=1.553 Data Time=0.002
+09/08 05:29:48 PM [Epoch 4/150][Step 150/195] Loss=4.604 Time=1.121 Data Time=0.002
+09/08 05:30:35 PM [Epoch 4/150][Step 180/195] Loss=4.605 Time=1.906 Data Time=0.001
+09/08 05:31:21 PM Epoch 3: acc 1.048
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:31:21 PM Temperature: 4.518439453125
+09/08 05:31:21 PM [Epoch 5/150] lr=0.049914
+09/08 05:31:21 PM update arch: False
+09/08 05:32:10 PM [Epoch 5/150][Step 30/195] Loss=4.609 Time=1.499 Data Time=0.001
+09/08 05:32:56 PM [Epoch 5/150][Step 60/195] Loss=4.604 Time=1.689 Data Time=0.002
+09/08 05:33:42 PM [Epoch 5/150][Step 90/195] Loss=4.613 Time=1.086 Data Time=0.002
+09/08 05:34:28 PM [Epoch 5/150][Step 120/195] Loss=4.614 Time=1.704 Data Time=0.002
+09/08 05:35:17 PM [Epoch 5/150][Step 150/195] Loss=4.603 Time=1.767 Data Time=0.002
+09/08 05:36:04 PM [Epoch 5/150][Step 180/195] Loss=4.608 Time=1.571 Data Time=0.001
+09/08 05:36:49 PM Epoch 4: acc 0.949
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:36:49 PM Temperature: 4.4054784667968745
+09/08 05:36:49 PM [Epoch 6/150] lr=0.049866
+09/08 05:36:49 PM update arch: False
+09/08 05:37:42 PM [Epoch 6/150][Step 30/195] Loss=4.605 Time=1.394 Data Time=0.001
+09/08 05:38:31 PM [Epoch 6/150][Step 60/195] Loss=4.617 Time=1.392 Data Time=0.002
+09/08 05:39:18 PM [Epoch 6/150][Step 90/195] Loss=4.618 Time=1.448 Data Time=0.002
+09/08 05:40:07 PM [Epoch 6/150][Step 120/195] Loss=4.602 Time=1.668 Data Time=0.002
+09/08 05:40:52 PM [Epoch 6/150][Step 150/195] Loss=4.603 Time=1.001 Data Time=0.002
+09/08 05:41:38 PM [Epoch 6/150][Step 180/195] Loss=4.609 Time=1.533 Data Time=0.001
+09/08 05:42:24 PM Epoch 5: acc 1.078
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:42:24 PM Temperature: 4.295341505126952
+09/08 05:42:24 PM [Epoch 7/150] lr=0.049807
+09/08 05:42:24 PM update arch: False
+09/08 05:43:13 PM [Epoch 7/150][Step 30/195] Loss=4.605 Time=1.804 Data Time=0.001
+09/08 05:44:02 PM [Epoch 7/150][Step 60/195] Loss=4.602 Time=1.654 Data Time=0.002
+09/08 05:44:50 PM [Epoch 7/150][Step 90/195] Loss=4.603 Time=1.321 Data Time=0.002
+09/08 05:45:37 PM [Epoch 7/150][Step 120/195] Loss=4.605 Time=1.609 Data Time=0.002
+09/08 05:46:23 PM [Epoch 7/150][Step 150/195] Loss=4.600 Time=1.577 Data Time=0.002
+09/08 05:47:11 PM [Epoch 7/150][Step 180/195] Loss=4.613 Time=1.453 Data Time=0.001
+09/08 05:47:58 PM Epoch 6: acc 1.009
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:47:58 PM Temperature: 4.187957967498779
+09/08 05:47:58 PM [Epoch 8/150] lr=0.049737
+09/08 05:47:58 PM update arch: False
+09/08 05:48:54 PM [Epoch 8/150][Step 30/195] Loss=4.610 Time=1.831 Data Time=0.001
+09/08 05:49:40 PM [Epoch 8/150][Step 60/195] Loss=4.597 Time=1.728 Data Time=0.002
+09/08 05:50:27 PM [Epoch 8/150][Step 90/195] Loss=4.609 Time=1.945 Data Time=0.002
+09/08 05:51:16 PM [Epoch 8/150][Step 120/195] Loss=4.610 Time=1.700 Data Time=0.002
+09/08 05:52:03 PM [Epoch 8/150][Step 150/195] Loss=4.606 Time=1.618 Data Time=0.002
+09/08 05:52:50 PM [Epoch 8/150][Step 180/195] Loss=4.606 Time=1.373 Data Time=0.001
+09/08 05:53:34 PM Epoch 7: acc 0.939
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:53:34 PM Temperature: 4.08325901831131
+09/08 05:53:34 PM [Epoch 9/150] lr=0.049657
+09/08 05:53:34 PM update arch: False
+09/08 05:54:30 PM [Epoch 9/150][Step 30/195] Loss=4.602 Time=1.784 Data Time=0.001
+09/08 05:55:18 PM [Epoch 9/150][Step 60/195] Loss=4.608 Time=1.511 Data Time=0.002
+09/08 05:56:04 PM [Epoch 9/150][Step 90/195] Loss=4.605 Time=1.731 Data Time=0.002
+09/08 05:56:52 PM [Epoch 9/150][Step 120/195] Loss=4.606 Time=1.709 Data Time=0.002
+09/08 05:57:42 PM [Epoch 9/150][Step 150/195] Loss=4.603 Time=1.716 Data Time=0.002
+09/08 05:58:32 PM [Epoch 9/150][Step 180/195] Loss=4.604 Time=3.940 Data Time=0.001
+09/08 05:59:20 PM Epoch 8: acc 0.949
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 05:59:20 PM Temperature: 3.9811775428535263
+09/08 05:59:20 PM [Epoch 10/150] lr=0.049566
+09/08 05:59:20 PM update arch: False
+09/08 06:00:17 PM [Epoch 10/150][Step 30/195] Loss=4.598 Time=1.420 Data Time=0.001
+09/08 06:01:07 PM [Epoch 10/150][Step 60/195] Loss=4.619 Time=3.383 Data Time=0.002
+09/08 06:01:55 PM [Epoch 10/150][Step 90/195] Loss=4.610 Time=1.604 Data Time=0.002
+09/08 06:02:45 PM [Epoch 10/150][Step 120/195] Loss=4.609 Time=1.936 Data Time=0.002
+09/08 06:03:31 PM [Epoch 10/150][Step 150/195] Loss=4.603 Time=1.311 Data Time=0.002
+09/08 06:04:18 PM [Epoch 10/150][Step 180/195] Loss=4.603 Time=1.254 Data Time=0.002
+09/08 06:05:04 PM Epoch 9: acc 1.058
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:05:04 PM Temperature: 3.8816481042821884
+09/08 06:05:04 PM [Epoch 11/150] lr=0.049465
+09/08 06:05:04 PM update arch: False
+09/08 06:06:00 PM [Epoch 11/150][Step 30/195] Loss=4.606 Time=1.821 Data Time=0.001
+09/08 06:06:48 PM [Epoch 11/150][Step 60/195] Loss=4.612 Time=1.242 Data Time=0.001
+09/08 06:07:38 PM [Epoch 11/150][Step 90/195] Loss=4.609 Time=1.646 Data Time=0.002
+09/08 06:08:25 PM [Epoch 11/150][Step 120/195] Loss=4.607 Time=1.264 Data Time=0.002
+09/08 06:09:11 PM [Epoch 11/150][Step 150/195] Loss=4.606 Time=1.642 Data Time=0.002
+09/08 06:09:57 PM [Epoch 11/150][Step 180/195] Loss=4.599 Time=1.396 Data Time=0.001
+09/08 06:10:43 PM Epoch 10: acc 0.969
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:10:43 PM Temperature: 3.7846069016751334
+09/08 06:10:43 PM [Epoch 12/150] lr=0.049353
+09/08 06:10:43 PM update arch: False
+09/08 06:11:38 PM [Epoch 12/150][Step 30/195] Loss=4.611 Time=1.397 Data Time=0.001
+09/08 06:12:24 PM [Epoch 12/150][Step 60/195] Loss=4.596 Time=1.276 Data Time=0.002
+09/08 06:13:10 PM [Epoch 12/150][Step 90/195] Loss=4.600 Time=1.349 Data Time=0.002
+09/08 06:13:58 PM [Epoch 12/150][Step 120/195] Loss=4.607 Time=1.453 Data Time=0.002
+09/08 06:14:46 PM [Epoch 12/150][Step 150/195] Loss=4.598 Time=1.502 Data Time=0.002
+09/08 06:15:34 PM [Epoch 12/150][Step 180/195] Loss=4.606 Time=1.488 Data Time=0.002
+09/08 06:16:22 PM Epoch 11: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:16:22 PM Temperature: 3.6899917291332547
+09/08 06:16:22 PM [Epoch 13/150] lr=0.049230
+09/08 06:16:22 PM update arch: False
+09/08 06:17:20 PM [Epoch 13/150][Step 30/195] Loss=4.603 Time=2.040 Data Time=0.001
+09/08 06:18:08 PM [Epoch 13/150][Step 60/195] Loss=4.605 Time=1.372 Data Time=0.002
+09/08 06:18:56 PM [Epoch 13/150][Step 90/195] Loss=4.602 Time=1.548 Data Time=0.002
+09/08 06:19:41 PM [Epoch 13/150][Step 120/195] Loss=4.600 Time=1.240 Data Time=0.002
+09/08 06:20:32 PM [Epoch 13/150][Step 150/195] Loss=4.604 Time=1.898 Data Time=0.003
+09/08 06:21:17 PM [Epoch 13/150][Step 180/195] Loss=4.605 Time=1.806 Data Time=0.001
+09/08 06:22:06 PM Epoch 12: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:22:06 PM Temperature: 3.5977419359049234
+09/08 06:22:06 PM [Epoch 14/150] lr=0.049097
+09/08 06:22:06 PM update arch: False
+09/08 06:23:00 PM [Epoch 14/150][Step 30/195] Loss=4.607 Time=1.782 Data Time=0.002
+09/08 06:23:45 PM [Epoch 14/150][Step 60/195] Loss=4.605 Time=1.435 Data Time=0.002
+09/08 06:24:34 PM [Epoch 14/150][Step 90/195] Loss=4.612 Time=1.282 Data Time=0.002
+09/08 06:25:21 PM [Epoch 14/150][Step 120/195] Loss=4.606 Time=1.735 Data Time=0.002
+09/08 06:26:07 PM [Epoch 14/150][Step 150/195] Loss=4.602 Time=1.882 Data Time=0.003
+09/08 06:26:55 PM [Epoch 14/150][Step 180/195] Loss=4.610 Time=1.596 Data Time=0.002
+09/08 06:27:43 PM Epoch 13: acc 0.860
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:27:43 PM Temperature: 3.5077983875073
+09/08 06:27:43 PM [Epoch 15/150] lr=0.048954
+09/08 06:27:43 PM update arch: False
+09/08 06:28:30 PM [Epoch 15/150][Step 30/195] Loss=4.595 Time=1.435 Data Time=0.001
+09/08 06:29:19 PM [Epoch 15/150][Step 60/195] Loss=4.604 Time=1.704 Data Time=0.002
+09/08 06:30:06 PM [Epoch 15/150][Step 90/195] Loss=4.609 Time=1.767 Data Time=0.002
+09/08 06:30:53 PM [Epoch 15/150][Step 120/195] Loss=4.610 Time=1.770 Data Time=0.002
+09/08 06:31:39 PM [Epoch 15/150][Step 150/195] Loss=4.596 Time=1.239 Data Time=0.002
+09/08 06:32:27 PM [Epoch 15/150][Step 180/195] Loss=4.611 Time=1.838 Data Time=0.001
+09/08 06:33:12 PM Epoch 14: acc 1.048
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:33:12 PM Temperature: 3.420103427819617
+09/08 06:33:12 PM [Epoch 16/150] lr=0.048801
+09/08 06:33:12 PM update arch: False
+09/08 06:33:58 PM [Epoch 16/150][Step 30/195] Loss=4.604 Time=1.268 Data Time=0.001
+09/08 06:34:45 PM [Epoch 16/150][Step 60/195] Loss=4.606 Time=1.344 Data Time=0.002
+09/08 06:35:34 PM [Epoch 16/150][Step 90/195] Loss=4.607 Time=1.570 Data Time=0.002
+09/08 06:36:22 PM [Epoch 16/150][Step 120/195] Loss=4.601 Time=1.128 Data Time=0.002
+09/08 06:37:09 PM [Epoch 16/150][Step 150/195] Loss=4.594 Time=1.497 Data Time=0.002
+09/08 06:37:54 PM [Epoch 16/150][Step 180/195] Loss=4.596 Time=1.643 Data Time=0.001
+09/08 06:38:41 PM Epoch 15: acc 1.058
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:38:41 PM Temperature: 3.334600842124127
+09/08 06:38:41 PM [Epoch 17/150] lr=0.048637
+09/08 06:38:41 PM update arch: False
+09/08 06:39:29 PM [Epoch 17/150][Step 30/195] Loss=4.578 Time=1.525 Data Time=0.001
+09/08 06:40:16 PM [Epoch 17/150][Step 60/195] Loss=4.580 Time=1.647 Data Time=0.002
+09/08 06:41:02 PM [Epoch 17/150][Step 90/195] Loss=4.603 Time=1.809 Data Time=0.002
+09/08 06:41:48 PM [Epoch 17/150][Step 120/195] Loss=4.582 Time=1.098 Data Time=0.002
+09/08 06:42:35 PM [Epoch 17/150][Step 150/195] Loss=4.607 Time=1.881 Data Time=0.002
+09/08 06:43:22 PM [Epoch 17/150][Step 180/195] Loss=4.609 Time=1.854 Data Time=0.001
+09/08 06:44:07 PM Epoch 16: acc 0.989
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:44:07 PM Temperature: 3.251235821071024
+09/08 06:44:07 PM [Epoch 18/150] lr=0.048463
+09/08 06:44:07 PM update arch: False
+09/08 06:44:55 PM [Epoch 18/150][Step 30/195] Loss=4.608 Time=1.593 Data Time=0.001
+09/08 06:45:41 PM [Epoch 18/150][Step 60/195] Loss=4.613 Time=1.867 Data Time=0.002
+09/08 06:46:28 PM [Epoch 18/150][Step 90/195] Loss=4.606 Time=1.908 Data Time=0.002
+09/08 06:47:16 PM [Epoch 18/150][Step 120/195] Loss=4.605 Time=1.683 Data Time=0.002
+09/08 06:48:00 PM [Epoch 18/150][Step 150/195] Loss=4.611 Time=1.788 Data Time=0.002
+09/08 06:48:47 PM [Epoch 18/150][Step 180/195] Loss=4.530 Time=1.438 Data Time=0.001
+09/08 06:49:31 PM Epoch 17: acc 0.999
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:49:31 PM Temperature: 3.169954925544248
+09/08 06:49:31 PM [Epoch 19/150] lr=0.048280
+09/08 06:49:31 PM update arch: False
+09/08 06:50:21 PM [Epoch 19/150][Step 30/195] Loss=4.525 Time=1.640 Data Time=0.001
+09/08 06:51:07 PM [Epoch 19/150][Step 60/195] Loss=4.594 Time=1.683 Data Time=0.002
+09/08 06:51:56 PM [Epoch 19/150][Step 90/195] Loss=4.608 Time=1.728 Data Time=0.002
+09/08 06:52:44 PM [Epoch 19/150][Step 120/195] Loss=4.608 Time=1.805 Data Time=0.002
+09/08 06:53:30 PM [Epoch 19/150][Step 150/195] Loss=4.444 Time=1.709 Data Time=0.002
+09/08 06:54:17 PM [Epoch 19/150][Step 180/195] Loss=4.613 Time=1.499 Data Time=0.002
+09/08 06:55:01 PM Epoch 18: acc 0.969
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 06:55:01 PM Temperature: 3.0907060524056416
+09/08 06:55:01 PM [Epoch 20/150] lr=0.048086
+09/08 06:55:01 PM update arch: False
+09/08 06:55:51 PM [Epoch 20/150][Step 30/195] Loss=4.481 Time=1.182 Data Time=0.001
+09/08 06:56:39 PM [Epoch 20/150][Step 60/195] Loss=4.519 Time=1.970 Data Time=0.002
+09/08 06:57:28 PM [Epoch 20/150][Step 90/195] Loss=4.511 Time=1.141 Data Time=0.002
+09/08 06:58:15 PM [Epoch 20/150][Step 120/195] Loss=4.590 Time=1.659 Data Time=0.002
+09/08 06:59:02 PM [Epoch 20/150][Step 150/195] Loss=4.437 Time=1.482 Data Time=0.002
+09/08 06:59:49 PM [Epoch 20/150][Step 180/195] Loss=4.510 Time=1.627 Data Time=0.002
+09/08 07:00:36 PM Epoch 19: acc 0.989
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:00:36 PM Temperature: 3.0134384010955007
+09/08 07:00:36 PM [Epoch 21/150] lr=0.047882
+09/08 07:00:36 PM update arch: False
+09/08 07:01:26 PM [Epoch 21/150][Step 30/195] Loss=4.602 Time=1.366 Data Time=0.001
+09/08 07:02:15 PM [Epoch 21/150][Step 60/195] Loss=4.494 Time=1.833 Data Time=0.002
+09/08 07:03:04 PM [Epoch 21/150][Step 90/195] Loss=4.480 Time=1.418 Data Time=0.002
+09/08 07:03:51 PM [Epoch 21/150][Step 120/195] Loss=4.432 Time=1.408 Data Time=0.002
+09/08 07:04:37 PM [Epoch 21/150][Step 150/195] Loss=4.487 Time=1.743 Data Time=0.004
+09/08 07:05:24 PM [Epoch 21/150][Step 180/195] Loss=4.647 Time=1.519 Data Time=0.002
+09/08 07:06:06 PM Epoch 20: acc 0.900
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:06:06 PM Temperature: 2.9381024410681134
+09/08 07:06:06 PM [Epoch 22/150] lr=0.047668
+09/08 07:06:06 PM update arch: False
+09/08 07:06:56 PM [Epoch 22/150][Step 30/195] Loss=4.461 Time=1.794 Data Time=0.001
+09/08 07:07:41 PM [Epoch 22/150][Step 60/195] Loss=4.606 Time=1.936 Data Time=0.002
+09/08 07:08:28 PM [Epoch 22/150][Step 90/195] Loss=4.463 Time=1.194 Data Time=0.002
+09/08 07:09:15 PM [Epoch 22/150][Step 120/195] Loss=4.491 Time=1.473 Data Time=0.002
+09/08 07:10:00 PM [Epoch 22/150][Step 150/195] Loss=4.439 Time=1.593 Data Time=0.002
+09/08 07:10:47 PM [Epoch 22/150][Step 180/195] Loss=4.448 Time=1.500 Data Time=0.001
+09/08 07:11:32 PM Epoch 21: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:11:32 PM Temperature: 2.8646498800414104
+09/08 07:11:32 PM [Epoch 23/150] lr=0.047445
+09/08 07:11:32 PM update arch: False
+09/08 07:12:21 PM [Epoch 23/150][Step 30/195] Loss=4.504 Time=1.599 Data Time=0.001
+09/08 07:13:10 PM [Epoch 23/150][Step 60/195] Loss=4.405 Time=1.896 Data Time=0.002
+09/08 07:13:59 PM [Epoch 23/150][Step 90/195] Loss=4.394 Time=1.495 Data Time=0.002
+09/08 07:14:44 PM [Epoch 23/150][Step 120/195] Loss=4.425 Time=1.371 Data Time=0.003
+09/08 07:15:31 PM [Epoch 23/150][Step 150/195] Loss=4.426 Time=1.866 Data Time=0.002
+09/08 07:16:19 PM [Epoch 23/150][Step 180/195] Loss=4.441 Time=1.585 Data Time=0.001
+09/08 07:17:05 PM Epoch 22: acc 0.989
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:17:05 PM Temperature: 2.793033633040375
+09/08 07:17:05 PM [Epoch 24/150] lr=0.047212
+09/08 07:17:05 PM update arch: False
+09/08 07:17:54 PM [Epoch 24/150][Step 30/195] Loss=4.428 Time=1.714 Data Time=0.001
+09/08 07:18:42 PM [Epoch 24/150][Step 60/195] Loss=4.432 Time=1.463 Data Time=0.002
+09/08 07:19:29 PM [Epoch 24/150][Step 90/195] Loss=4.503 Time=1.291 Data Time=0.002
+09/08 07:20:16 PM [Epoch 24/150][Step 120/195] Loss=4.612 Time=1.517 Data Time=0.002
+09/08 07:21:03 PM [Epoch 24/150][Step 150/195] Loss=4.348 Time=1.535 Data Time=0.002
+09/08 07:21:51 PM [Epoch 24/150][Step 180/195] Loss=4.458 Time=1.807 Data Time=0.001
+09/08 07:22:38 PM Epoch 23: acc 1.068
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:22:38 PM Temperature: 2.7232077922143656
+09/08 07:22:38 PM [Epoch 25/150] lr=0.046970
+09/08 07:22:38 PM update arch: False
+09/08 07:23:27 PM [Epoch 25/150][Step 30/195] Loss=4.447 Time=1.424 Data Time=0.001
+09/08 07:24:16 PM [Epoch 25/150][Step 60/195] Loss=4.443 Time=1.735 Data Time=0.002
+09/08 07:25:02 PM [Epoch 25/150][Step 90/195] Loss=4.374 Time=1.885 Data Time=0.002
+09/08 07:25:48 PM [Epoch 25/150][Step 120/195] Loss=4.475 Time=1.567 Data Time=0.002
+09/08 07:26:33 PM [Epoch 25/150][Step 150/195] Loss=4.603 Time=2.075 Data Time=0.002
+09/08 07:27:18 PM [Epoch 25/150][Step 180/195] Loss=4.451 Time=1.446 Data Time=0.001
+09/08 07:28:04 PM Epoch 24: acc 0.939
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:28:04 PM Temperature: 2.6551275974090065
+09/08 07:28:04 PM [Epoch 26/150] lr=0.046718
+09/08 07:28:04 PM update arch: False
+09/08 07:28:54 PM [Epoch 26/150][Step 30/195] Loss=4.311 Time=1.646 Data Time=0.001
+09/08 07:29:42 PM [Epoch 26/150][Step 60/195] Loss=4.393 Time=1.696 Data Time=0.002
+09/08 07:30:30 PM [Epoch 26/150][Step 90/195] Loss=4.412 Time=1.934 Data Time=0.003
+09/08 07:31:17 PM [Epoch 26/150][Step 120/195] Loss=4.345 Time=1.446 Data Time=0.002
+09/08 07:32:05 PM [Epoch 26/150][Step 150/195] Loss=4.396 Time=1.446 Data Time=0.002
+09/08 07:32:54 PM [Epoch 26/150][Step 180/195] Loss=4.428 Time=1.372 Data Time=0.003
+09/08 07:33:37 PM Epoch 25: acc 1.147
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:33:37 PM Temperature: 2.588749407473781
+09/08 07:33:37 PM [Epoch 27/150] lr=0.046456
+09/08 07:33:37 PM update arch: False
+09/08 07:34:27 PM [Epoch 27/150][Step 30/195] Loss=4.421 Time=1.666 Data Time=0.001
+09/08 07:35:14 PM [Epoch 27/150][Step 60/195] Loss=4.592 Time=1.751 Data Time=0.004
+09/08 07:36:02 PM [Epoch 27/150][Step 90/195] Loss=4.313 Time=1.476 Data Time=0.002
+09/08 07:36:49 PM [Epoch 27/150][Step 120/195] Loss=4.402 Time=1.423 Data Time=0.004
+09/08 07:37:36 PM [Epoch 27/150][Step 150/195] Loss=4.442 Time=1.619 Data Time=0.002
+09/08 07:38:23 PM [Epoch 27/150][Step 180/195] Loss=4.390 Time=1.392 Data Time=0.001
+09/08 07:39:09 PM Epoch 26: acc 1.038
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:39:09 PM Temperature: 2.5240306722869366
+09/08 07:39:09 PM [Epoch 28/150] lr=0.046186
+09/08 07:39:09 PM update arch: False
+09/08 07:39:57 PM [Epoch 28/150][Step 30/195] Loss=4.365 Time=1.638 Data Time=0.001
+09/08 07:40:44 PM [Epoch 28/150][Step 60/195] Loss=4.402 Time=1.838 Data Time=0.002
+09/08 07:41:31 PM [Epoch 28/150][Step 90/195] Loss=4.435 Time=1.134 Data Time=0.002
+09/08 07:42:20 PM [Epoch 28/150][Step 120/195] Loss=4.381 Time=1.922 Data Time=0.002
+09/08 07:43:08 PM [Epoch 28/150][Step 150/195] Loss=4.389 Time=1.650 Data Time=0.003
+09/08 07:43:56 PM [Epoch 28/150][Step 180/195] Loss=4.307 Time=1.524 Data Time=0.002
+09/08 07:44:42 PM Epoch 27: acc 0.999
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:44:42 PM Temperature: 2.4609299054797633
+09/08 07:44:42 PM [Epoch 29/150] lr=0.045907
+09/08 07:44:42 PM update arch: False
+09/08 07:45:30 PM [Epoch 29/150][Step 30/195] Loss=4.600 Time=1.858 Data Time=0.001
+09/08 07:46:19 PM [Epoch 29/150][Step 60/195] Loss=4.605 Time=1.984 Data Time=0.002
+09/08 07:47:05 PM [Epoch 29/150][Step 90/195] Loss=4.388 Time=1.302 Data Time=0.002
+09/08 07:47:54 PM [Epoch 29/150][Step 120/195] Loss=4.320 Time=1.215 Data Time=0.003
+09/08 07:48:41 PM [Epoch 29/150][Step 150/195] Loss=4.620 Time=1.742 Data Time=0.002
+09/08 07:49:28 PM [Epoch 29/150][Step 180/195] Loss=4.237 Time=1.324 Data Time=0.003
+09/08 07:50:16 PM Epoch 28: acc 0.959
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:50:16 PM Temperature: 2.399406657842769
+09/08 07:50:16 PM [Epoch 30/150] lr=0.045618
+09/08 07:50:16 PM update arch: False
+09/08 07:51:05 PM [Epoch 30/150][Step 30/195] Loss=4.612 Time=1.799 Data Time=0.003
+09/08 07:51:52 PM [Epoch 30/150][Step 60/195] Loss=4.329 Time=1.690 Data Time=0.002
+09/08 07:52:39 PM [Epoch 30/150][Step 90/195] Loss=4.341 Time=1.608 Data Time=0.002
+09/08 07:53:26 PM [Epoch 30/150][Step 120/195] Loss=4.398 Time=1.541 Data Time=0.002
+09/08 07:54:14 PM [Epoch 30/150][Step 150/195] Loss=4.341 Time=1.614 Data Time=0.002
+09/08 07:54:59 PM [Epoch 30/150][Step 180/195] Loss=4.358 Time=1.389 Data Time=0.001
+09/08 07:55:44 PM Epoch 29: acc 1.048
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 07:55:44 PM Temperature: 2.3394214913966995
+09/08 07:55:44 PM [Epoch 31/150] lr=0.045321
+09/08 07:55:44 PM update arch: False
+09/08 07:56:27 PM [Epoch 31/150][Step 30/195] Loss=4.608 Time=1.250 Data Time=0.002
+09/08 07:57:06 PM [Epoch 31/150][Step 60/195] Loss=4.379 Time=1.433 Data Time=0.002
+09/08 07:57:46 PM [Epoch 31/150][Step 90/195] Loss=4.614 Time=1.379 Data Time=0.002
+09/08 07:58:27 PM [Epoch 31/150][Step 120/195] Loss=4.608 Time=1.636 Data Time=0.002
+09/08 07:59:06 PM [Epoch 31/150][Step 150/195] Loss=4.605 Time=1.219 Data Time=0.002
+09/08 07:59:47 PM [Epoch 31/150][Step 180/195] Loss=4.601 Time=1.622 Data Time=0.002
+09/08 08:00:31 PM Epoch 30: acc 0.979
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:00:31 PM Temperature: 2.280935954111782
+09/08 08:00:31 PM [Epoch 32/150] lr=0.045015
+09/08 08:00:31 PM update arch: False
+09/08 08:01:12 PM [Epoch 32/150][Step 30/195] Loss=4.612 Time=1.098 Data Time=0.001
+09/08 08:01:51 PM [Epoch 32/150][Step 60/195] Loss=4.464 Time=1.601 Data Time=0.002
+09/08 08:02:29 PM [Epoch 32/150][Step 90/195] Loss=4.416 Time=1.340 Data Time=0.002
+09/08 08:03:08 PM [Epoch 32/150][Step 120/195] Loss=4.610 Time=1.499 Data Time=0.002
+09/08 08:03:49 PM [Epoch 32/150][Step 150/195] Loss=4.377 Time=0.817 Data Time=0.002
+09/08 08:04:29 PM [Epoch 32/150][Step 180/195] Loss=4.426 Time=1.124 Data Time=0.002
+09/08 08:05:10 PM Epoch 31: acc 0.969
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:05:10 PM Temperature: 2.2239125552589876
+09/08 08:05:10 PM [Epoch 33/150] lr=0.044700
+09/08 08:05:10 PM update arch: False
+09/08 08:05:50 PM [Epoch 33/150][Step 30/195] Loss=4.606 Time=1.613 Data Time=0.002
+09/08 08:06:31 PM [Epoch 33/150][Step 60/195] Loss=4.603 Time=1.712 Data Time=0.002
+09/08 08:07:11 PM [Epoch 33/150][Step 90/195] Loss=4.408 Time=1.006 Data Time=0.002
+09/08 08:07:51 PM [Epoch 33/150][Step 120/195] Loss=4.596 Time=1.083 Data Time=0.002
+09/08 08:08:29 PM [Epoch 33/150][Step 150/195] Loss=4.610 Time=1.640 Data Time=0.002
+09/08 08:09:08 PM [Epoch 33/150][Step 180/195] Loss=4.425 Time=1.249 Data Time=0.001
+09/08 08:09:51 PM Epoch 32: acc 0.949
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:09:51 PM Temperature: 2.168314741377513
+09/08 08:09:51 PM [Epoch 34/150] lr=0.044378
+09/08 08:09:51 PM update arch: False
+09/08 08:10:32 PM [Epoch 34/150][Step 30/195] Loss=4.420 Time=0.760 Data Time=0.001
+09/08 08:11:12 PM [Epoch 34/150][Step 60/195] Loss=4.495 Time=1.864 Data Time=0.002
+09/08 08:11:51 PM [Epoch 34/150][Step 90/195] Loss=4.604 Time=1.506 Data Time=0.002
+09/08 08:12:34 PM [Epoch 34/150][Step 120/195] Loss=4.602 Time=1.432 Data Time=0.002
+09/08 08:13:15 PM [Epoch 34/150][Step 150/195] Loss=4.601 Time=1.433 Data Time=0.002
+09/08 08:13:52 PM [Epoch 34/150][Step 180/195] Loss=4.604 Time=1.363 Data Time=0.002
+09/08 08:14:33 PM Epoch 33: acc 0.930
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:14:33 PM Temperature: 2.1141068728430747
+09/08 08:14:33 PM [Epoch 35/150] lr=0.044046
+09/08 08:14:33 PM update arch: False
+09/08 08:15:15 PM [Epoch 35/150][Step 30/195] Loss=4.386 Time=1.374 Data Time=0.001
+09/08 08:15:55 PM [Epoch 35/150][Step 60/195] Loss=4.414 Time=1.025 Data Time=0.002
+09/08 08:16:36 PM [Epoch 35/150][Step 90/195] Loss=4.526 Time=1.648 Data Time=0.002
+09/08 08:17:15 PM [Epoch 35/150][Step 120/195] Loss=4.602 Time=0.994 Data Time=0.002
+09/08 08:17:56 PM [Epoch 35/150][Step 150/195] Loss=4.607 Time=1.336 Data Time=0.002
+09/08 08:18:36 PM [Epoch 35/150][Step 180/195] Loss=4.618 Time=0.929 Data Time=0.001
+09/08 08:19:19 PM Epoch 34: acc 1.028
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:19:19 PM Temperature: 2.061254201021998
+09/08 08:19:19 PM [Epoch 36/150] lr=0.043707
+09/08 08:19:19 PM update arch: False
+09/08 08:20:02 PM [Epoch 36/150][Step 30/195] Loss=4.598 Time=1.373 Data Time=0.001
+09/08 08:20:44 PM [Epoch 36/150][Step 60/195] Loss=4.606 Time=1.298 Data Time=0.002
+09/08 08:21:25 PM [Epoch 36/150][Step 90/195] Loss=4.405 Time=1.371 Data Time=0.002
+09/08 08:22:05 PM [Epoch 36/150][Step 120/195] Loss=4.603 Time=1.547 Data Time=0.002
+09/08 08:22:46 PM [Epoch 36/150][Step 150/195] Loss=4.607 Time=1.419 Data Time=0.002
+09/08 08:23:26 PM [Epoch 36/150][Step 180/195] Loss=4.421 Time=1.121 Data Time=0.001
+09/08 08:24:06 PM Epoch 35: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:24:06 PM Temperature: 2.009722845996448
+09/08 08:24:06 PM [Epoch 37/150] lr=0.043360
+09/08 08:24:06 PM update arch: False
+09/08 08:24:48 PM [Epoch 37/150][Step 30/195] Loss=4.609 Time=1.690 Data Time=0.001
+09/08 08:25:27 PM [Epoch 37/150][Step 60/195] Loss=4.457 Time=1.207 Data Time=0.002
+09/08 08:26:06 PM [Epoch 37/150][Step 90/195] Loss=4.606 Time=1.559 Data Time=0.002
+09/08 08:26:48 PM [Epoch 37/150][Step 120/195] Loss=4.607 Time=1.268 Data Time=0.002
+09/08 08:27:27 PM [Epoch 37/150][Step 150/195] Loss=4.342 Time=0.968 Data Time=0.002
+09/08 08:28:07 PM [Epoch 37/150][Step 180/195] Loss=4.340 Time=0.960 Data Time=0.001
+09/08 08:28:49 PM Epoch 36: acc 1.009
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:28:49 PM Temperature: 1.9594797748465367
+09/08 08:28:49 PM [Epoch 38/150] lr=0.043005
+09/08 08:28:49 PM update arch: False
+09/08 08:29:33 PM [Epoch 38/150][Step 30/195] Loss=4.392 Time=1.118 Data Time=0.001
+09/08 08:30:12 PM [Epoch 38/150][Step 60/195] Loss=4.607 Time=1.200 Data Time=0.002
+09/08 08:30:52 PM [Epoch 38/150][Step 90/195] Loss=4.605 Time=1.057 Data Time=0.002
+09/08 08:31:32 PM [Epoch 38/150][Step 120/195] Loss=4.396 Time=1.736 Data Time=0.002
+09/08 08:32:12 PM [Epoch 38/150][Step 150/195] Loss=4.397 Time=1.401 Data Time=0.002
+09/08 08:32:53 PM [Epoch 38/150][Step 180/195] Loss=4.604 Time=1.143 Data Time=0.001
+09/08 08:33:33 PM Epoch 37: acc 0.910
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:33:33 PM Temperature: 1.9104927804753733
+09/08 08:33:33 PM [Epoch 39/150] lr=0.042642
+09/08 08:33:33 PM update arch: False
+09/08 08:34:16 PM [Epoch 39/150][Step 30/195] Loss=4.411 Time=1.340 Data Time=0.001
+09/08 08:34:55 PM [Epoch 39/150][Step 60/195] Loss=4.371 Time=1.368 Data Time=0.002
+09/08 08:35:36 PM [Epoch 39/150][Step 90/195] Loss=4.348 Time=1.042 Data Time=0.003
+09/08 08:36:17 PM [Epoch 39/150][Step 120/195] Loss=4.324 Time=1.252 Data Time=0.002
+09/08 08:36:56 PM [Epoch 39/150][Step 150/195] Loss=4.602 Time=1.654 Data Time=0.002
+09/08 08:37:37 PM [Epoch 39/150][Step 180/195] Loss=4.371 Time=1.246 Data Time=0.001
+09/08 08:38:18 PM Epoch 38: acc 1.127
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:38:18 PM Temperature: 1.862730460963489
+09/08 08:38:18 PM [Epoch 40/150] lr=0.042271
+09/08 08:38:18 PM update arch: False
+09/08 08:39:01 PM [Epoch 40/150][Step 30/195] Loss=4.331 Time=1.480 Data Time=0.002
+09/08 08:39:40 PM [Epoch 40/150][Step 60/195] Loss=4.394 Time=1.426 Data Time=0.002
+09/08 08:40:19 PM [Epoch 40/150][Step 90/195] Loss=4.433 Time=1.355 Data Time=0.002
+09/08 08:41:03 PM [Epoch 40/150][Step 120/195] Loss=4.600 Time=1.655 Data Time=0.002
+09/08 08:41:43 PM [Epoch 40/150][Step 150/195] Loss=4.606 Time=1.295 Data Time=0.002
+09/08 08:42:26 PM [Epoch 40/150][Step 180/195] Loss=4.369 Time=1.300 Data Time=0.002
+09/08 08:43:06 PM Epoch 39: acc 1.078
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:43:06 PM Temperature: 1.8161621994394017
+09/08 08:43:06 PM [Epoch 41/150] lr=0.041894
+09/08 08:43:06 PM update arch: False
+09/08 08:43:48 PM [Epoch 41/150][Step 30/195] Loss=4.608 Time=1.818 Data Time=0.002
+09/08 08:44:27 PM [Epoch 41/150][Step 60/195] Loss=4.418 Time=1.262 Data Time=0.002
+09/08 08:45:06 PM [Epoch 41/150][Step 90/195] Loss=4.602 Time=1.287 Data Time=0.002
+09/08 08:45:47 PM [Epoch 41/150][Step 120/195] Loss=4.605 Time=1.064 Data Time=0.002
+09/08 08:46:29 PM [Epoch 41/150][Step 150/195] Loss=4.367 Time=0.860 Data Time=0.002
+09/08 08:47:07 PM [Epoch 41/150][Step 180/195] Loss=4.608 Time=1.133 Data Time=0.001
+09/08 08:47:47 PM Epoch 40: acc 0.969
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:47:47 PM Temperature: 1.7707581444534166
+09/08 08:47:47 PM [Epoch 42/150] lr=0.041509
+09/08 08:47:47 PM update arch: False
+09/08 08:48:31 PM [Epoch 42/150][Step 30/195] Loss=4.608 Time=1.474 Data Time=0.001
+09/08 08:49:13 PM [Epoch 42/150][Step 60/195] Loss=4.606 Time=1.359 Data Time=0.005
+09/08 08:49:50 PM [Epoch 42/150][Step 90/195] Loss=4.603 Time=1.663 Data Time=0.003
+09/08 08:50:30 PM [Epoch 42/150][Step 120/195] Loss=4.608 Time=1.606 Data Time=0.002
+09/08 08:51:08 PM [Epoch 42/150][Step 150/195] Loss=4.605 Time=1.307 Data Time=0.002
+09/08 08:51:47 PM [Epoch 42/150][Step 180/195] Loss=4.355 Time=1.234 Data Time=0.001
+09/08 08:52:30 PM Epoch 41: acc 0.999
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:52:30 PM Temperature: 1.7264891908420812
+09/08 08:52:30 PM [Epoch 43/150] lr=0.041117
+09/08 08:52:30 PM update arch: False
+09/08 08:53:14 PM [Epoch 43/150][Step 30/195] Loss=4.597 Time=1.228 Data Time=0.001
+09/08 08:53:52 PM [Epoch 43/150][Step 60/195] Loss=4.601 Time=1.436 Data Time=0.002
+09/08 08:54:33 PM [Epoch 43/150][Step 90/195] Loss=4.607 Time=1.129 Data Time=0.002
+09/08 08:55:13 PM [Epoch 43/150][Step 120/195] Loss=4.445 Time=1.240 Data Time=0.002
+09/08 08:55:54 PM [Epoch 43/150][Step 150/195] Loss=4.604 Time=1.450 Data Time=0.002
+09/08 08:56:34 PM [Epoch 43/150][Step 180/195] Loss=4.605 Time=1.586 Data Time=0.001
+09/08 08:57:15 PM Epoch 42: acc 1.088
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 08:57:15 PM Temperature: 1.683326961071029
+09/08 08:57:15 PM [Epoch 44/150] lr=0.040718
+09/08 08:57:15 PM update arch: False
+09/08 08:58:00 PM [Epoch 44/150][Step 30/195] Loss=4.342 Time=1.427 Data Time=0.001
+09/08 08:58:38 PM [Epoch 44/150][Step 60/195] Loss=4.380 Time=1.031 Data Time=0.002
+09/08 08:59:17 PM [Epoch 44/150][Step 90/195] Loss=4.606 Time=1.399 Data Time=0.002
+09/08 08:59:58 PM [Epoch 44/150][Step 120/195] Loss=4.613 Time=1.326 Data Time=0.003
+09/08 09:00:39 PM [Epoch 44/150][Step 150/195] Loss=4.604 Time=1.620 Data Time=0.002
+09/08 09:01:19 PM [Epoch 44/150][Step 180/195] Loss=4.610 Time=1.351 Data Time=0.001
+09/08 09:02:00 PM Epoch 43: acc 1.028
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:02:00 PM Temperature: 1.6412437870442533
+09/08 09:02:00 PM [Epoch 45/150] lr=0.040313
+09/08 09:02:00 PM update arch: False
+09/08 09:02:43 PM [Epoch 45/150][Step 30/195] Loss=4.401 Time=1.456 Data Time=0.001
+09/08 09:03:24 PM [Epoch 45/150][Step 60/195] Loss=4.606 Time=1.251 Data Time=0.002
+09/08 09:04:03 PM [Epoch 45/150][Step 90/195] Loss=4.368 Time=1.164 Data Time=0.002
+09/08 09:04:46 PM [Epoch 45/150][Step 120/195] Loss=4.405 Time=1.404 Data Time=0.002
+09/08 09:05:28 PM [Epoch 45/150][Step 150/195] Loss=4.604 Time=1.373 Data Time=0.002
+09/08 09:06:09 PM [Epoch 45/150][Step 180/195] Loss=4.430 Time=1.507 Data Time=0.001
+09/08 09:06:51 PM Epoch 44: acc 1.078
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:06:51 PM Temperature: 1.600212692368147
+09/08 09:06:51 PM [Epoch 46/150] lr=0.039901
+09/08 09:06:51 PM update arch: False
+09/08 09:07:33 PM [Epoch 46/150][Step 30/195] Loss=4.603 Time=1.339 Data Time=0.001
+09/08 09:08:12 PM [Epoch 46/150][Step 60/195] Loss=4.607 Time=1.305 Data Time=0.002
+09/08 09:08:51 PM [Epoch 46/150][Step 90/195] Loss=4.606 Time=1.779 Data Time=0.002
+09/08 09:09:31 PM [Epoch 46/150][Step 120/195] Loss=4.605 Time=1.242 Data Time=0.002
+09/08 09:10:11 PM [Epoch 46/150][Step 150/195] Loss=4.361 Time=1.066 Data Time=0.002
+09/08 09:10:53 PM [Epoch 46/150][Step 180/195] Loss=4.343 Time=1.392 Data Time=0.001
+09/08 09:11:34 PM Epoch 45: acc 1.038
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:11:34 PM Temperature: 1.5602073750589431
+09/08 09:11:34 PM [Epoch 47/150] lr=0.039482
+09/08 09:11:34 PM update arch: False
+09/08 09:12:14 PM [Epoch 47/150][Step 30/195] Loss=4.601 Time=1.346 Data Time=0.001
+09/08 09:12:53 PM [Epoch 47/150][Step 60/195] Loss=4.605 Time=0.884 Data Time=0.002
+09/08 09:13:31 PM [Epoch 47/150][Step 90/195] Loss=4.418 Time=1.254 Data Time=0.002
+09/08 09:14:10 PM [Epoch 47/150][Step 120/195] Loss=4.416 Time=1.189 Data Time=0.002
+09/08 09:14:49 PM [Epoch 47/150][Step 150/195] Loss=4.606 Time=1.307 Data Time=0.002
+09/08 09:15:29 PM [Epoch 47/150][Step 180/195] Loss=4.366 Time=1.150 Data Time=0.001
+09/08 09:16:10 PM Epoch 46: acc 1.048
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:16:10 PM Temperature: 1.5212021906824695
+09/08 09:16:10 PM [Epoch 48/150] lr=0.039058
+09/08 09:16:10 PM update arch: False
+09/08 09:16:53 PM [Epoch 48/150][Step 30/195] Loss=4.602 Time=1.318 Data Time=0.002
+09/08 09:17:32 PM [Epoch 48/150][Step 60/195] Loss=4.601 Time=1.231 Data Time=0.002
+09/08 09:18:14 PM [Epoch 48/150][Step 90/195] Loss=4.602 Time=1.777 Data Time=0.002
+09/08 09:18:55 PM [Epoch 48/150][Step 120/195] Loss=4.602 Time=1.294 Data Time=0.002
+09/08 09:19:36 PM [Epoch 48/150][Step 150/195] Loss=4.605 Time=1.377 Data Time=0.002
+09/08 09:20:14 PM [Epoch 48/150][Step 180/195] Loss=4.606 Time=1.309 Data Time=0.001
+09/08 09:20:55 PM Epoch 47: acc 1.197
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:20:55 PM Temperature: 1.483172135915408
+09/08 09:20:55 PM [Epoch 49/150] lr=0.038628
+09/08 09:20:55 PM update arch: False
+09/08 09:21:38 PM [Epoch 49/150][Step 30/195] Loss=4.608 Time=1.118 Data Time=0.001
+09/08 09:22:17 PM [Epoch 49/150][Step 60/195] Loss=4.602 Time=1.252 Data Time=0.002
+09/08 09:22:58 PM [Epoch 49/150][Step 90/195] Loss=4.604 Time=1.606 Data Time=0.002
+09/08 09:23:38 PM [Epoch 49/150][Step 120/195] Loss=4.297 Time=1.416 Data Time=0.002
+09/08 09:24:19 PM [Epoch 49/150][Step 150/195] Loss=4.354 Time=1.593 Data Time=0.002
+09/08 09:24:59 PM [Epoch 49/150][Step 180/195] Loss=4.603 Time=1.685 Data Time=0.001
+09/08 09:25:39 PM Epoch 48: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:25:39 PM Temperature: 1.4460928325175226
+09/08 09:25:39 PM [Epoch 50/150] lr=0.038192
+09/08 09:25:39 PM update arch: False
+09/08 09:26:23 PM [Epoch 50/150][Step 30/195] Loss=4.605 Time=1.527 Data Time=0.002
+09/08 09:27:03 PM [Epoch 50/150][Step 60/195] Loss=4.606 Time=1.501 Data Time=0.002
+09/08 09:27:45 PM [Epoch 50/150][Step 90/195] Loss=4.379 Time=1.290 Data Time=0.003
+09/08 09:28:25 PM [Epoch 50/150][Step 120/195] Loss=4.607 Time=1.442 Data Time=0.002
+09/08 09:29:06 PM [Epoch 50/150][Step 150/195] Loss=4.498 Time=1.209 Data Time=0.002
+09/08 09:29:48 PM [Epoch 50/150][Step 180/195] Loss=4.601 Time=1.341 Data Time=0.001
+09/08 09:30:30 PM Epoch 49: acc 1.058
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:30:30 PM Temperature: 1.4099405117045847
+09/08 09:30:30 PM [Epoch 51/150] lr=0.037750
+09/08 09:30:30 PM update arch: False
+09/08 09:31:10 PM [Epoch 51/150][Step 30/195] Loss=4.603 Time=1.625 Data Time=0.002
+09/08 09:31:50 PM [Epoch 51/150][Step 60/195] Loss=4.416 Time=1.271 Data Time=0.002
+09/08 09:32:29 PM [Epoch 51/150][Step 90/195] Loss=4.605 Time=1.185 Data Time=0.002
+09/08 09:33:11 PM [Epoch 51/150][Step 120/195] Loss=4.360 Time=1.575 Data Time=0.002
+09/08 09:33:52 PM [Epoch 51/150][Step 150/195] Loss=4.601 Time=1.081 Data Time=0.002
+09/08 09:34:31 PM [Epoch 51/150][Step 180/195] Loss=4.396 Time=1.069 Data Time=0.001
+09/08 09:35:13 PM Epoch 50: acc 1.058
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:35:13 PM Temperature: 1.37469199891197
+09/08 09:35:13 PM [Epoch 52/150] lr=0.037303
+09/08 09:35:13 PM update arch: False
+09/08 09:35:54 PM [Epoch 52/150][Step 30/195] Loss=4.377 Time=0.991 Data Time=0.002
+09/08 09:36:34 PM [Epoch 52/150][Step 60/195] Loss=4.605 Time=1.743 Data Time=0.002
+09/08 09:37:14 PM [Epoch 52/150][Step 90/195] Loss=4.604 Time=1.092 Data Time=0.002
+09/08 09:37:53 PM [Epoch 52/150][Step 120/195] Loss=4.474 Time=1.422 Data Time=0.002
+09/08 09:38:33 PM [Epoch 52/150][Step 150/195] Loss=4.607 Time=1.489 Data Time=0.002
+09/08 09:39:13 PM [Epoch 52/150][Step 180/195] Loss=4.604 Time=1.463 Data Time=0.001
+09/08 09:39:55 PM Epoch 51: acc 1.009
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:39:55 PM Temperature: 1.3403246989391706
+09/08 09:39:55 PM [Epoch 53/150] lr=0.036851
+09/08 09:39:55 PM update arch: False
+09/08 09:40:38 PM [Epoch 53/150][Step 30/195] Loss=4.607 Time=1.662 Data Time=0.001
+09/08 09:41:18 PM [Epoch 53/150][Step 60/195] Loss=4.596 Time=1.388 Data Time=0.002
+09/08 09:41:57 PM [Epoch 53/150][Step 90/195] Loss=4.392 Time=0.681 Data Time=0.002
+09/08 09:42:39 PM [Epoch 53/150][Step 120/195] Loss=4.605 Time=1.668 Data Time=0.002
+09/08 09:43:18 PM [Epoch 53/150][Step 150/195] Loss=4.338 Time=1.141 Data Time=0.002
+09/08 09:44:02 PM [Epoch 53/150][Step 180/195] Loss=4.415 Time=1.260 Data Time=0.001
+09/08 09:44:42 PM Epoch 52: acc 0.979
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:44:42 PM Temperature: 1.3068165814656911
+09/08 09:44:42 PM [Epoch 54/150] lr=0.036394
+09/08 09:44:42 PM update arch: False
+09/08 09:45:23 PM [Epoch 54/150][Step 30/195] Loss=4.439 Time=1.271 Data Time=0.001
+09/08 09:46:03 PM [Epoch 54/150][Step 60/195] Loss=4.607 Time=1.370 Data Time=0.002
+09/08 09:46:44 PM [Epoch 54/150][Step 90/195] Loss=4.604 Time=1.541 Data Time=0.002
+09/08 09:47:24 PM [Epoch 54/150][Step 120/195] Loss=4.413 Time=1.399 Data Time=0.002
+09/08 09:48:02 PM [Epoch 54/150][Step 150/195] Loss=4.389 Time=0.904 Data Time=0.002
+09/08 09:48:42 PM [Epoch 54/150][Step 180/195] Loss=4.607 Time=1.437 Data Time=0.001
+09/08 09:49:25 PM Epoch 53: acc 0.989
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:49:25 PM Temperature: 1.274146166929049
+09/08 09:49:25 PM [Epoch 55/150] lr=0.035932
+09/08 09:49:25 PM update arch: False
+09/08 09:50:06 PM [Epoch 55/150][Step 30/195] Loss=4.602 Time=1.723 Data Time=0.001
+09/08 09:50:45 PM [Epoch 55/150][Step 60/195] Loss=4.606 Time=1.079 Data Time=0.002
+09/08 09:51:24 PM [Epoch 55/150][Step 90/195] Loss=4.493 Time=1.128 Data Time=0.002
+09/08 09:52:04 PM [Epoch 55/150][Step 120/195] Loss=4.605 Time=1.479 Data Time=0.002
+09/08 09:52:46 PM [Epoch 55/150][Step 150/195] Loss=4.605 Time=1.416 Data Time=0.002
+09/08 09:53:24 PM [Epoch 55/150][Step 180/195] Loss=4.356 Time=1.384 Data Time=0.001
+09/08 09:54:04 PM Epoch 54: acc 1.009
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:54:04 PM Temperature: 1.2422925127558229
+09/08 09:54:04 PM [Epoch 56/150] lr=0.035465
+09/08 09:54:04 PM update arch: False
+09/08 09:54:46 PM [Epoch 56/150][Step 30/195] Loss=4.420 Time=1.291 Data Time=0.001
+09/08 09:55:28 PM [Epoch 56/150][Step 60/195] Loss=4.390 Time=1.237 Data Time=0.002
+09/08 09:56:08 PM [Epoch 56/150][Step 90/195] Loss=4.426 Time=1.031 Data Time=0.002
+09/08 09:56:49 PM [Epoch 56/150][Step 120/195] Loss=4.615 Time=1.328 Data Time=0.002
+09/08 09:57:30 PM [Epoch 56/150][Step 150/195] Loss=4.602 Time=1.743 Data Time=0.002
+09/08 09:58:11 PM [Epoch 56/150][Step 180/195] Loss=4.479 Time=1.669 Data Time=0.001
+09/08 09:58:52 PM Epoch 55: acc 1.019
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 09:58:52 PM Temperature: 1.211235199936927
+09/08 09:58:52 PM [Epoch 57/150] lr=0.034994
+09/08 09:58:52 PM update arch: False
+09/08 09:59:32 PM [Epoch 57/150][Step 30/195] Loss=4.415 Time=0.964 Data Time=0.001
+09/08 10:00:15 PM [Epoch 57/150][Step 60/195] Loss=4.602 Time=1.694 Data Time=0.002
+09/08 10:00:54 PM [Epoch 57/150][Step 90/195] Loss=4.421 Time=1.595 Data Time=0.002
+09/08 10:01:32 PM [Epoch 57/150][Step 120/195] Loss=4.433 Time=1.413 Data Time=0.002
+09/08 10:02:11 PM [Epoch 57/150][Step 150/195] Loss=4.603 Time=1.308 Data Time=0.002
+09/08 10:02:52 PM [Epoch 57/150][Step 180/195] Loss=4.600 Time=1.093 Data Time=0.001
+09/08 10:03:33 PM Epoch 56: acc 0.910
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 10:03:33 PM Temperature: 1.180954319938504
+09/08 10:03:33 PM [Epoch 58/150] lr=0.034519
+09/08 10:03:33 PM update arch: False
+09/08 10:04:14 PM [Epoch 58/150][Step 30/195] Loss=4.603 Time=1.467 Data Time=0.001
+09/08 10:04:53 PM [Epoch 58/150][Step 60/195] Loss=4.381 Time=1.459 Data Time=0.002
+09/08 10:05:33 PM [Epoch 58/150][Step 90/195] Loss=4.396 Time=1.069 Data Time=0.002
+09/08 10:06:12 PM [Epoch 58/150][Step 120/195] Loss=4.604 Time=1.318 Data Time=0.002
+09/08 10:06:51 PM [Epoch 58/150][Step 150/195] Loss=4.603 Time=1.435 Data Time=0.002
+09/08 10:07:30 PM [Epoch 58/150][Step 180/195] Loss=4.367 Time=1.582 Data Time=0.002
+09/08 10:08:11 PM Epoch 57: acc 0.831
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 10:08:11 PM Temperature: 1.1514304619400413
+09/08 10:08:11 PM [Epoch 59/150] lr=0.034040
+09/08 10:08:11 PM update arch: False
+09/08 10:08:52 PM [Epoch 59/150][Step 30/195] Loss=4.602 Time=1.539 Data Time=0.003
+09/08 10:09:31 PM [Epoch 59/150][Step 60/195] Loss=4.604 Time=1.795 Data Time=0.002
+09/08 10:10:12 PM [Epoch 59/150][Step 90/195] Loss=4.381 Time=1.906 Data Time=0.002
+09/08 10:10:52 PM [Epoch 59/150][Step 120/195] Loss=4.607 Time=1.238 Data Time=0.002
+09/08 10:11:32 PM [Epoch 59/150][Step 150/195] Loss=4.603 Time=1.623 Data Time=0.002
+09/08 10:12:12 PM [Epoch 59/150][Step 180/195] Loss=4.608 Time=0.680 Data Time=0.001
+09/08 10:12:55 PM Epoch 58: acc 1.127
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 10:12:55 PM Temperature: 1.12264470039154
+09/08 10:12:55 PM [Epoch 60/150] lr=0.033557
+09/08 10:12:55 PM update arch: False
+09/08 10:13:36 PM [Epoch 60/150][Step 30/195] Loss=4.341 Time=0.958 Data Time=0.001
+09/08 10:14:16 PM [Epoch 60/150][Step 60/195] Loss=4.609 Time=1.200 Data Time=0.003
+09/08 10:14:58 PM [Epoch 60/150][Step 90/195] Loss=4.606 Time=1.149 Data Time=0.003
+09/08 10:15:39 PM [Epoch 60/150][Step 120/195] Loss=4.418 Time=1.573 Data Time=0.002
+09/08 10:16:18 PM [Epoch 60/150][Step 150/195] Loss=4.602 Time=1.245 Data Time=0.002
+09/08 10:16:57 PM [Epoch 60/150][Step 180/195] Loss=4.603 Time=1.461 Data Time=0.001
+09/08 10:17:37 PM Epoch 59: acc 1.088
+shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 shiftadd_k3_e3 09/08 10:17:38 PM Temperature: 1.0945785828817516
+09/08 10:17:38 PM [Epoch 61/150] lr=0.033071
+09/08 10:17:38 PM update arch: True
+not found in flops_lookup_table: ShiftAddBlock_H32_W32_Cin24_Cout24_exp6_kernel3_stride1_group1
+[91m[WARN] Cannot find rule for <class 'adder.adder.Adder2D'>. Treat it as zero Macs and zero Params.[00m
+[91m[WARN] Cannot find rule for <class 'adder.adder.Adder2D'>. Treat it as zero Macs and zero Params.[00m
+[91m[WARN] Cannot find rule for <class 'adder.adder.Adder2D'>. Treat it as zero Macs and zero Params.[00m
+Traceback (most recent call last):
+  File "search.py", line 837, in <module>
+    main() 
+  File "search.py", line 220, in main
+    main_worker(config.gpu, ngpus_per_node, config)
+  File "search.py", line 537, in main_worker
+    full_kernel=full_kernel, epsilon_alpha=epsilon_alpha, temp=temp, arch_update_frec=config.arch_update_frec)
+  File "search.py", line 736, in train_iterwise
+    loss_arch = architect.step(input_search, target_search, config=config, temp=temp)
+  File "/home/shihonghong/shiftaddNAS/architect.py", line 69, in step
+    loss, loss_flops = self._backward_step_flops(input_valid, target_valid, temp)
+  File "/home/shihonghong/shiftaddNAS/architect.py", line 197, in _backward_step_flops
+    flops = self.model.module.forward_flops((3, self._args.image_height, self._args.image_width), temp)
+  File "/home/shihonghong/shiftaddNAS/model_search_ws.py", line 474, in forward_flops
+    flops, size = cell.forward_flops(size, alpha[i])
+  File "/home/shihonghong/shiftaddNAS/model_search_ws.py", line 312, in forward_flops
+    result = alpha[op_id] * flops
+RuntimeError: CUDA error: an illegal memory access was encountered

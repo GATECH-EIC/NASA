@@ -1,0 +1,1015 @@
+Unable to import CPU and/or CUDA bit-wise shift kernels
+Using /tmp/torch_extensions as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /tmp/torch_extensions/adder_cuda/build.ninja...
+Building extension module adder_cuda...
+ninja: no work to do.
+Loading extension module adder_cuda...
+config.hw_platform_path:  fbnet/edgegpu/
+gpu [0]
+Use GPU: [0] for training
+09/09 11:10:52 AM args = {'seed': 2, 'repo_name': 'DNA', 'world_size': 1, 'multiprocessing_distributed': False, 'rank': 0, 'dist_backend': 'nccl', 'dist_url': 'tcp://eic-2019gpu5.ece.rice.edu:10001', 'gpu': [0], 'dataset': 'cifar100', 'dataset_path': '/media/shared-corpus/CIFAR100', 'num_train_imgs': 50000, 'num_eval_imgs': 10000, 'bn_eps': 1e-05, 'bn_momentum': 0.1, 'opt': 'Sgd', 'momentum': 0.9, 'weight_decay': 0.0001, 'betas': [0.5, 0.999], 'num_workers': 4, 'grad_clip': 5, 'pretrain': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddShiftAdd_PS_scratch_wd1e-4', 'search_space': 'AddShiftAdd', 'num_layer_list': [1, 4, 4, 4, 4, 4, 1], 'num_channel_list': [16, 24, 32, 64, 112, 184, 352], 'stride_list': [1, 1, 2, 2, 1, 2, 1], 'stem_channel': 16, 'header_channel': 1504, 'use_hswish': False, 'use_se': False, 'batch_size': 196, 'niters_per_epoch': 255, 'image_height': 32, 'image_width': 32, 'save': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddShiftAdd_PS_scratch_wd1e-4', 'nepochs': 650, 'eval_epoch': 100, 'lr_schedule': 'cosine', 'lr': 0.02, 'decay_epoch': 100, 'lr_decay': 0.97, 'milestones': [80, 120, 160], 'gamma': 0.1, 'learning_rate_min': 0.001, 'load_path': '/media/shared-corpus/shh/NAS/adder/CIFAR100_AddAdd', 'eval_only': False, 'efficiency_metric': 'latency', 'hw_platform_path': 'fbnet/edgegpu/', 'load_epoch': 240, 'spos': False, 'distillation': False, 'port': '10001', 'distributed': False, 'local_rank': 0, 'num_classes': 100, 'ngpus_per_node': 1}
+239
+k5_e3
+k3_e6
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k5_e3
+k3_e3
+k5_e3
+k3_e6
+shiftadd_k5_e6
+shiftadd_k5_e6
+k3_e6
+k3_e3
+shiftadd_k5_e6
+shiftadd_k5_e6
+shiftadd_k5_e6
+skip
+config.gpu: [0]
+No checkpoint. Train from scratch.
+09/09 11:11:47 AM [Epoch 1/650] lr=0.020000
+09/09 11:12:18 AM [Epoch 1/650][Step 1/256] Loss=4.607 Time=27.136 Data Time=0.000
+09/09 11:12:43 AM [Epoch 1/650][Step 21/256] Loss=4.601 Time=0.886 Data Time=0.000
+09/09 11:13:03 AM [Epoch 1/650][Step 41/256] Loss=4.596 Time=0.884 Data Time=0.000
+09/09 11:13:20 AM [Epoch 1/650][Step 61/256] Loss=4.582 Time=0.884 Data Time=0.000
+09/09 11:13:38 AM [Epoch 1/650][Step 81/256] Loss=4.576 Time=0.887 Data Time=0.000
+09/09 11:13:56 AM [Epoch 1/650][Step 101/256] Loss=4.553 Time=0.885 Data Time=0.000
+09/09 11:14:14 AM [Epoch 1/650][Step 121/256] Loss=4.579 Time=0.886 Data Time=0.000
+09/09 11:14:33 AM [Epoch 1/650][Step 141/256] Loss=4.563 Time=0.891 Data Time=0.000
+09/09 11:14:51 AM [Epoch 1/650][Step 161/256] Loss=4.564 Time=0.882 Data Time=0.000
+09/09 11:15:09 AM [Epoch 1/650][Step 181/256] Loss=4.555 Time=0.881 Data Time=0.000
+09/09 11:15:26 AM [Epoch 1/650][Step 201/256] Loss=4.586 Time=0.882 Data Time=0.000
+09/09 11:15:44 AM [Epoch 1/650][Step 221/256] Loss=4.552 Time=0.888 Data Time=0.000
+09/09 11:16:02 AM [Epoch 1/650][Step 241/256] Loss=4.516 Time=0.885 Data Time=0.000
+09/09 11:16:42 AM Epoch:0 Acc:1.344 Best Acc:1.344 Best Epoch:0
+09/09 11:16:42 AM [Epoch 2/650] lr=0.020000
+09/09 11:16:52 AM [Epoch 2/650][Step 1/256] Loss=4.567 Time=9.683 Data Time=0.000
+09/09 11:17:10 AM [Epoch 2/650][Step 21/256] Loss=4.571 Time=0.883 Data Time=0.000
+09/09 11:17:28 AM [Epoch 2/650][Step 41/256] Loss=4.560 Time=0.883 Data Time=0.000
+09/09 11:17:45 AM [Epoch 2/650][Step 61/256] Loss=4.550 Time=0.889 Data Time=0.000
+09/09 11:18:03 AM [Epoch 2/650][Step 81/256] Loss=4.527 Time=0.882 Data Time=0.000
+09/09 11:18:21 AM [Epoch 2/650][Step 101/256] Loss=4.517 Time=0.882 Data Time=0.000
+09/09 11:18:39 AM [Epoch 2/650][Step 121/256] Loss=4.522 Time=0.882 Data Time=0.000
+09/09 11:18:56 AM [Epoch 2/650][Step 141/256] Loss=4.561 Time=0.886 Data Time=0.000
+09/09 11:19:14 AM [Epoch 2/650][Step 161/256] Loss=4.579 Time=0.883 Data Time=0.000
+09/09 11:19:32 AM [Epoch 2/650][Step 181/256] Loss=4.528 Time=0.885 Data Time=0.000
+09/09 11:19:50 AM [Epoch 2/650][Step 201/256] Loss=4.512 Time=0.884 Data Time=0.000
+09/09 11:20:08 AM [Epoch 2/650][Step 221/256] Loss=4.534 Time=0.882 Data Time=0.000
+09/09 11:20:25 AM [Epoch 2/650][Step 241/256] Loss=4.495 Time=0.884 Data Time=0.000
+09/09 11:20:56 AM Epoch:1 Acc:1.256 Best Acc:1.344 Best Epoch:0
+09/09 11:20:56 AM [Epoch 3/650] lr=0.020000
+09/09 11:21:05 AM [Epoch 3/650][Step 1/256] Loss=4.482 Time=9.306 Data Time=0.000
+09/09 11:21:23 AM [Epoch 3/650][Step 21/256] Loss=4.502 Time=0.888 Data Time=0.000
+09/09 11:21:41 AM [Epoch 3/650][Step 41/256] Loss=4.530 Time=0.884 Data Time=0.000
+09/09 11:21:59 AM [Epoch 3/650][Step 61/256] Loss=4.519 Time=0.882 Data Time=0.000
+09/09 11:22:16 AM [Epoch 3/650][Step 81/256] Loss=4.523 Time=0.883 Data Time=0.000
+09/09 11:22:34 AM [Epoch 3/650][Step 101/256] Loss=4.518 Time=0.883 Data Time=0.000
+09/09 11:22:52 AM [Epoch 3/650][Step 121/256] Loss=4.525 Time=0.923 Data Time=0.000
+09/09 11:23:10 AM [Epoch 3/650][Step 141/256] Loss=4.499 Time=0.884 Data Time=0.000
+09/09 11:23:28 AM [Epoch 3/650][Step 161/256] Loss=4.514 Time=0.886 Data Time=0.000
+09/09 11:23:45 AM [Epoch 3/650][Step 181/256] Loss=4.528 Time=0.884 Data Time=0.000
+09/09 11:24:03 AM [Epoch 3/650][Step 201/256] Loss=4.491 Time=0.904 Data Time=0.000
+09/09 11:24:21 AM [Epoch 3/650][Step 221/256] Loss=4.477 Time=0.884 Data Time=0.000
+09/09 11:24:39 AM [Epoch 3/650][Step 241/256] Loss=4.524 Time=0.882 Data Time=0.000
+09/09 11:25:07 AM Epoch:2 Acc:0.893 Best Acc:1.344 Best Epoch:0
+09/09 11:25:07 AM [Epoch 4/650] lr=0.019999
+09/09 11:25:17 AM [Epoch 4/650][Step 1/256] Loss=4.500 Time=9.547 Data Time=0.000
+09/09 11:25:35 AM [Epoch 4/650][Step 21/256] Loss=4.500 Time=0.880 Data Time=0.000
+09/09 11:25:53 AM [Epoch 4/650][Step 41/256] Loss=4.508 Time=0.883 Data Time=0.000
+09/09 11:26:10 AM [Epoch 4/650][Step 61/256] Loss=4.500 Time=0.882 Data Time=0.000
+09/09 11:26:28 AM [Epoch 4/650][Step 81/256] Loss=4.505 Time=0.881 Data Time=0.000
+09/09 11:26:46 AM [Epoch 4/650][Step 101/256] Loss=4.491 Time=0.883 Data Time=0.000
+09/09 11:27:04 AM [Epoch 4/650][Step 121/256] Loss=4.465 Time=0.883 Data Time=0.000
+09/09 11:27:21 AM [Epoch 4/650][Step 141/256] Loss=4.510 Time=0.884 Data Time=0.000
+09/09 11:27:39 AM [Epoch 4/650][Step 161/256] Loss=4.490 Time=0.884 Data Time=0.000
+09/09 11:27:57 AM [Epoch 4/650][Step 181/256] Loss=4.447 Time=0.884 Data Time=0.000
+09/09 11:28:14 AM [Epoch 4/650][Step 201/256] Loss=4.463 Time=0.883 Data Time=0.000
+09/09 11:28:32 AM [Epoch 4/650][Step 221/256] Loss=4.504 Time=0.890 Data Time=0.000
+09/09 11:28:50 AM [Epoch 4/650][Step 241/256] Loss=4.402 Time=0.882 Data Time=0.000
+09/09 11:29:19 AM Epoch:3 Acc:1.334 Best Acc:1.344 Best Epoch:0
+09/09 11:29:19 AM [Epoch 5/650] lr=0.019998
+09/09 11:29:28 AM [Epoch 5/650][Step 1/256] Loss=4.397 Time=9.145 Data Time=0.000
+09/09 11:29:46 AM [Epoch 5/650][Step 21/256] Loss=4.454 Time=0.916 Data Time=0.000
+09/09 11:30:04 AM [Epoch 5/650][Step 41/256] Loss=4.473 Time=0.884 Data Time=0.000
+09/09 11:30:22 AM [Epoch 5/650][Step 61/256] Loss=4.451 Time=0.882 Data Time=0.000
+09/09 11:30:39 AM [Epoch 5/650][Step 81/256] Loss=4.424 Time=0.882 Data Time=0.000
+09/09 11:30:57 AM [Epoch 5/650][Step 101/256] Loss=4.411 Time=0.886 Data Time=0.000
+09/09 11:31:15 AM [Epoch 5/650][Step 121/256] Loss=4.390 Time=0.884 Data Time=0.000
+09/09 11:31:33 AM [Epoch 5/650][Step 141/256] Loss=4.441 Time=0.883 Data Time=0.000
+09/09 11:31:51 AM [Epoch 5/650][Step 161/256] Loss=4.426 Time=0.886 Data Time=0.000
+09/09 11:32:08 AM [Epoch 5/650][Step 181/256] Loss=4.469 Time=0.882 Data Time=0.000
+09/09 11:32:26 AM [Epoch 5/650][Step 201/256] Loss=4.431 Time=0.885 Data Time=0.000
+09/09 11:32:44 AM [Epoch 5/650][Step 221/256] Loss=4.411 Time=0.887 Data Time=0.000
+09/09 11:33:02 AM [Epoch 5/650][Step 241/256] Loss=4.408 Time=0.884 Data Time=0.000
+09/09 11:33:35 AM Epoch:4 Acc:1.432 Best Acc:1.432 Best Epoch:4
+09/09 11:33:35 AM [Epoch 6/650] lr=0.019997
+09/09 11:33:44 AM [Epoch 6/650][Step 1/256] Loss=4.412 Time=9.507 Data Time=0.001
+09/09 11:34:02 AM [Epoch 6/650][Step 21/256] Loss=4.424 Time=0.889 Data Time=0.000
+09/09 11:34:20 AM [Epoch 6/650][Step 41/256] Loss=4.369 Time=0.884 Data Time=0.000
+09/09 11:34:38 AM [Epoch 6/650][Step 61/256] Loss=4.436 Time=0.881 Data Time=0.000
+09/09 11:34:55 AM [Epoch 6/650][Step 81/256] Loss=4.400 Time=0.896 Data Time=0.000
+09/09 11:35:13 AM [Epoch 6/650][Step 101/256] Loss=4.409 Time=0.882 Data Time=0.000
+09/09 11:35:31 AM [Epoch 6/650][Step 121/256] Loss=4.378 Time=0.883 Data Time=0.000
+09/09 11:35:49 AM [Epoch 6/650][Step 141/256] Loss=4.371 Time=0.889 Data Time=0.000
+09/09 11:36:07 AM [Epoch 6/650][Step 161/256] Loss=4.399 Time=0.886 Data Time=0.000
+09/09 11:36:24 AM [Epoch 6/650][Step 181/256] Loss=4.424 Time=0.894 Data Time=0.000
+09/09 11:36:42 AM [Epoch 6/650][Step 201/256] Loss=4.392 Time=0.883 Data Time=0.000
+09/09 11:37:00 AM [Epoch 6/650][Step 221/256] Loss=4.385 Time=0.894 Data Time=0.000
+09/09 11:37:17 AM [Epoch 6/650][Step 241/256] Loss=4.384 Time=0.883 Data Time=0.000
+09/09 11:37:46 AM Epoch:5 Acc:1.236 Best Acc:1.432 Best Epoch:4
+09/09 11:37:46 AM [Epoch 7/650] lr=0.019996
+09/09 11:37:51 AM [Epoch 7/650][Step 1/256] Loss=4.357 Time=5.079 Data Time=0.000
+09/09 11:38:09 AM [Epoch 7/650][Step 21/256] Loss=4.295 Time=0.883 Data Time=0.000
+09/09 11:38:27 AM [Epoch 7/650][Step 41/256] Loss=4.391 Time=0.882 Data Time=0.000
+09/09 11:38:44 AM [Epoch 7/650][Step 61/256] Loss=4.362 Time=0.884 Data Time=0.000
+09/09 11:39:02 AM [Epoch 7/650][Step 81/256] Loss=4.277 Time=0.885 Data Time=0.000
+09/09 11:39:20 AM [Epoch 7/650][Step 101/256] Loss=4.443 Time=0.884 Data Time=0.000
+09/09 11:39:38 AM [Epoch 7/650][Step 121/256] Loss=4.331 Time=0.896 Data Time=0.000
+09/09 11:39:56 AM [Epoch 7/650][Step 141/256] Loss=4.358 Time=0.883 Data Time=0.000
+09/09 11:40:13 AM [Epoch 7/650][Step 161/256] Loss=4.401 Time=0.899 Data Time=0.000
+09/09 11:40:31 AM [Epoch 7/650][Step 181/256] Loss=4.362 Time=0.887 Data Time=0.000
+09/09 11:40:49 AM [Epoch 7/650][Step 201/256] Loss=4.318 Time=0.898 Data Time=0.000
+09/09 11:41:07 AM [Epoch 7/650][Step 221/256] Loss=4.354 Time=0.885 Data Time=0.000
+09/09 11:41:24 AM [Epoch 7/650][Step 241/256] Loss=4.335 Time=0.882 Data Time=0.000
+09/09 11:41:57 AM Epoch:6 Acc:1.854 Best Acc:1.854 Best Epoch:6
+09/09 11:41:57 AM [Epoch 8/650] lr=0.019995
+09/09 11:42:07 AM [Epoch 8/650][Step 1/256] Loss=4.279 Time=9.449 Data Time=0.000
+09/09 11:42:25 AM [Epoch 8/650][Step 21/256] Loss=4.383 Time=0.880 Data Time=0.000
+09/09 11:42:43 AM [Epoch 8/650][Step 41/256] Loss=4.256 Time=0.882 Data Time=0.000
+09/09 11:43:00 AM [Epoch 8/650][Step 61/256] Loss=4.285 Time=0.880 Data Time=0.000
+09/09 11:43:18 AM [Epoch 8/650][Step 81/256] Loss=4.289 Time=0.881 Data Time=0.000
+09/09 11:43:36 AM [Epoch 8/650][Step 101/256] Loss=4.361 Time=0.883 Data Time=0.000
+09/09 11:43:54 AM [Epoch 8/650][Step 121/256] Loss=4.367 Time=0.883 Data Time=0.000
+09/09 11:44:11 AM [Epoch 8/650][Step 141/256] Loss=4.373 Time=0.884 Data Time=0.000
+09/09 11:44:29 AM [Epoch 8/650][Step 161/256] Loss=4.370 Time=0.888 Data Time=0.000
+09/09 11:44:47 AM [Epoch 8/650][Step 181/256] Loss=4.231 Time=0.884 Data Time=0.000
+09/09 11:45:05 AM [Epoch 8/650][Step 201/256] Loss=4.282 Time=0.896 Data Time=0.000
+09/09 11:45:23 AM [Epoch 8/650][Step 221/256] Loss=4.295 Time=0.883 Data Time=0.000
+09/09 11:45:41 AM [Epoch 8/650][Step 241/256] Loss=4.234 Time=0.931 Data Time=0.000
+09/09 11:46:08 AM Epoch:7 Acc:2.404 Best Acc:2.404 Best Epoch:7
+09/09 11:46:08 AM [Epoch 9/650] lr=0.019993
+09/09 11:46:17 AM [Epoch 9/650][Step 1/256] Loss=4.288 Time=9.154 Data Time=0.001
+09/09 11:46:35 AM [Epoch 9/650][Step 21/256] Loss=4.248 Time=0.885 Data Time=0.000
+09/09 11:46:53 AM [Epoch 9/650][Step 41/256] Loss=4.393 Time=0.890 Data Time=0.000
+09/09 11:47:11 AM [Epoch 9/650][Step 61/256] Loss=4.316 Time=0.887 Data Time=0.000
+09/09 11:47:29 AM [Epoch 9/650][Step 81/256] Loss=4.248 Time=0.892 Data Time=0.000
+09/09 11:47:46 AM [Epoch 9/650][Step 101/256] Loss=4.259 Time=0.882 Data Time=0.000
+09/09 11:48:04 AM [Epoch 9/650][Step 121/256] Loss=4.212 Time=0.884 Data Time=0.000
+09/09 11:48:22 AM [Epoch 9/650][Step 141/256] Loss=4.226 Time=0.882 Data Time=0.000
+09/09 11:48:40 AM [Epoch 9/650][Step 161/256] Loss=4.228 Time=0.885 Data Time=0.000
+09/09 11:48:57 AM [Epoch 9/650][Step 181/256] Loss=4.209 Time=0.884 Data Time=0.000
+09/09 11:49:15 AM [Epoch 9/650][Step 201/256] Loss=4.302 Time=0.896 Data Time=0.000
+09/09 11:49:33 AM [Epoch 9/650][Step 221/256] Loss=4.253 Time=0.880 Data Time=0.000
+09/09 11:49:51 AM [Epoch 9/650][Step 241/256] Loss=4.314 Time=0.884 Data Time=0.000
+09/09 11:50:24 AM Epoch:8 Acc:2.060 Best Acc:2.404 Best Epoch:7
+09/09 11:50:24 AM [Epoch 10/650] lr=0.019991
+09/09 11:50:33 AM [Epoch 10/650][Step 1/256] Loss=4.202 Time=9.569 Data Time=0.000
+09/09 11:50:51 AM [Epoch 10/650][Step 21/256] Loss=4.281 Time=0.886 Data Time=0.000
+09/09 11:51:09 AM [Epoch 10/650][Step 41/256] Loss=4.280 Time=0.881 Data Time=0.000
+09/09 11:51:27 AM [Epoch 10/650][Step 61/256] Loss=4.256 Time=0.882 Data Time=0.000
+09/09 11:51:44 AM [Epoch 10/650][Step 81/256] Loss=4.208 Time=0.884 Data Time=0.000
+09/09 11:52:02 AM [Epoch 10/650][Step 101/256] Loss=4.187 Time=0.880 Data Time=0.000
+09/09 11:52:20 AM [Epoch 10/650][Step 121/256] Loss=4.255 Time=0.882 Data Time=0.000
+09/09 11:52:38 AM [Epoch 10/650][Step 141/256] Loss=4.247 Time=0.883 Data Time=0.000
+09/09 11:52:55 AM [Epoch 10/650][Step 161/256] Loss=4.274 Time=0.886 Data Time=0.000
+09/09 11:53:13 AM [Epoch 10/650][Step 181/256] Loss=4.324 Time=0.886 Data Time=0.000
+09/09 11:53:31 AM [Epoch 10/650][Step 201/256] Loss=4.210 Time=0.885 Data Time=0.000
+09/09 11:53:49 AM [Epoch 10/650][Step 221/256] Loss=4.210 Time=0.884 Data Time=0.000
+09/09 11:54:06 AM [Epoch 10/650][Step 241/256] Loss=4.218 Time=0.886 Data Time=0.000
+09/09 11:54:39 AM Epoch:9 Acc:2.423 Best Acc:2.423 Best Epoch:9
+09/09 11:54:39 AM [Epoch 11/650] lr=0.019989
+09/09 11:54:49 AM [Epoch 11/650][Step 1/256] Loss=4.205 Time=9.455 Data Time=0.000
+09/09 11:55:07 AM [Epoch 11/650][Step 21/256] Loss=4.241 Time=0.880 Data Time=0.000
+09/09 11:55:25 AM [Epoch 11/650][Step 41/256] Loss=4.232 Time=0.884 Data Time=0.000
+09/09 11:55:42 AM [Epoch 11/650][Step 61/256] Loss=4.255 Time=0.883 Data Time=0.000
+09/09 11:56:00 AM [Epoch 11/650][Step 81/256] Loss=4.243 Time=0.885 Data Time=0.000
+09/09 11:56:18 AM [Epoch 11/650][Step 101/256] Loss=4.227 Time=0.884 Data Time=0.000
+09/09 11:56:35 AM [Epoch 11/650][Step 121/256] Loss=4.162 Time=0.880 Data Time=0.000
+09/09 11:56:53 AM [Epoch 11/650][Step 141/256] Loss=4.255 Time=0.881 Data Time=0.000
+09/09 11:57:11 AM [Epoch 11/650][Step 161/256] Loss=4.251 Time=0.883 Data Time=0.000
+09/09 11:57:28 AM [Epoch 11/650][Step 181/256] Loss=4.236 Time=0.879 Data Time=0.000
+09/09 11:57:46 AM [Epoch 11/650][Step 201/256] Loss=4.165 Time=0.878 Data Time=0.000
+09/09 11:58:04 AM [Epoch 11/650][Step 221/256] Loss=4.126 Time=0.881 Data Time=0.000
+09/09 11:58:22 AM [Epoch 11/650][Step 241/256] Loss=4.294 Time=0.886 Data Time=0.000
+09/09 11:58:55 AM Epoch:10 Acc:3.454 Best Acc:3.454 Best Epoch:10
+09/09 11:58:55 AM [Epoch 12/650] lr=0.019987
+09/09 11:59:05 AM [Epoch 12/650][Step 1/256] Loss=4.196 Time=9.473 Data Time=0.000
+09/09 11:59:22 AM [Epoch 12/650][Step 21/256] Loss=4.203 Time=0.881 Data Time=0.000
+09/09 11:59:40 AM [Epoch 12/650][Step 41/256] Loss=4.265 Time=0.881 Data Time=0.000
+09/09 11:59:58 AM [Epoch 12/650][Step 61/256] Loss=4.190 Time=0.884 Data Time=0.000
+09/09 12:00:16 PM [Epoch 12/650][Step 81/256] Loss=4.245 Time=0.884 Data Time=0.000
+09/09 12:00:33 PM [Epoch 12/650][Step 101/256] Loss=4.150 Time=0.881 Data Time=0.000
+09/09 12:00:51 PM [Epoch 12/650][Step 121/256] Loss=4.183 Time=0.884 Data Time=0.000
+09/09 12:01:09 PM [Epoch 12/650][Step 141/256] Loss=4.197 Time=0.882 Data Time=0.000
+09/09 12:01:27 PM [Epoch 12/650][Step 161/256] Loss=4.169 Time=0.896 Data Time=0.000
+09/09 12:01:44 PM [Epoch 12/650][Step 181/256] Loss=4.249 Time=0.882 Data Time=0.000
+09/09 12:02:02 PM [Epoch 12/650][Step 201/256] Loss=4.223 Time=0.884 Data Time=0.000
+09/09 12:02:20 PM [Epoch 12/650][Step 221/256] Loss=4.106 Time=0.887 Data Time=0.000
+09/09 12:02:38 PM [Epoch 12/650][Step 241/256] Loss=4.242 Time=0.883 Data Time=0.000
+09/09 12:03:07 PM Epoch:11 Acc:2.973 Best Acc:3.454 Best Epoch:10
+09/09 12:03:07 PM [Epoch 13/650] lr=0.019984
+09/09 12:03:12 PM [Epoch 13/650][Step 1/256] Loss=4.134 Time=5.000 Data Time=0.000
+09/09 12:03:30 PM [Epoch 13/650][Step 21/256] Loss=4.184 Time=0.884 Data Time=0.000
+09/09 12:03:47 PM [Epoch 13/650][Step 41/256] Loss=4.214 Time=0.881 Data Time=0.000
+09/09 12:04:05 PM [Epoch 13/650][Step 61/256] Loss=4.248 Time=0.886 Data Time=0.000
+09/09 12:04:23 PM [Epoch 13/650][Step 81/256] Loss=4.264 Time=0.883 Data Time=0.000
+09/09 12:04:41 PM [Epoch 13/650][Step 101/256] Loss=4.195 Time=0.887 Data Time=0.000
+09/09 12:04:58 PM [Epoch 13/650][Step 121/256] Loss=4.165 Time=0.887 Data Time=0.000
+09/09 12:05:16 PM [Epoch 13/650][Step 141/256] Loss=4.110 Time=0.882 Data Time=0.000
+09/09 12:05:34 PM [Epoch 13/650][Step 161/256] Loss=4.186 Time=0.889 Data Time=0.000
+09/09 12:05:52 PM [Epoch 13/650][Step 181/256] Loss=4.331 Time=0.882 Data Time=0.000
+09/09 12:06:09 PM [Epoch 13/650][Step 201/256] Loss=4.151 Time=0.883 Data Time=0.000
+09/09 12:06:27 PM [Epoch 13/650][Step 221/256] Loss=4.097 Time=0.884 Data Time=0.000
+09/09 12:06:45 PM [Epoch 13/650][Step 241/256] Loss=4.158 Time=0.881 Data Time=0.000
+09/09 12:07:17 PM Epoch:12 Acc:3.434 Best Acc:3.454 Best Epoch:10
+09/09 12:07:17 PM [Epoch 14/650] lr=0.019981
+09/09 12:07:27 PM [Epoch 14/650][Step 1/256] Loss=4.158 Time=9.498 Data Time=0.000
+09/09 12:07:45 PM [Epoch 14/650][Step 21/256] Loss=4.238 Time=0.886 Data Time=0.000
+09/09 12:08:03 PM [Epoch 14/650][Step 41/256] Loss=4.194 Time=0.895 Data Time=0.000
+09/09 12:08:20 PM [Epoch 14/650][Step 61/256] Loss=4.183 Time=0.889 Data Time=0.000
+09/09 12:08:38 PM [Epoch 14/650][Step 81/256] Loss=4.195 Time=0.886 Data Time=0.000
+09/09 12:08:56 PM [Epoch 14/650][Step 101/256] Loss=4.176 Time=0.884 Data Time=0.000
+09/09 12:09:14 PM [Epoch 14/650][Step 121/256] Loss=4.201 Time=0.886 Data Time=0.000
+09/09 12:09:31 PM [Epoch 14/650][Step 141/256] Loss=4.107 Time=0.882 Data Time=0.000
+09/09 12:09:49 PM [Epoch 14/650][Step 161/256] Loss=4.189 Time=0.893 Data Time=0.000
+09/09 12:10:07 PM [Epoch 14/650][Step 181/256] Loss=4.170 Time=0.894 Data Time=0.000
+09/09 12:10:25 PM [Epoch 14/650][Step 201/256] Loss=4.216 Time=0.891 Data Time=0.000
+09/09 12:10:43 PM [Epoch 14/650][Step 221/256] Loss=4.172 Time=0.885 Data Time=0.000
+09/09 12:11:00 PM [Epoch 14/650][Step 241/256] Loss=4.165 Time=0.885 Data Time=0.000
+09/09 12:11:26 PM Epoch:13 Acc:4.239 Best Acc:4.239 Best Epoch:13
+09/09 12:11:26 PM [Epoch 15/650] lr=0.019978
+09/09 12:11:32 PM [Epoch 15/650][Step 1/256] Loss=4.047 Time=5.301 Data Time=0.000
+09/09 12:11:51 PM [Epoch 15/650][Step 21/256] Loss=4.202 Time=1.686 Data Time=0.000
+09/09 12:12:08 PM [Epoch 15/650][Step 41/256] Loss=4.114 Time=0.884 Data Time=0.000
+09/09 12:12:26 PM [Epoch 15/650][Step 61/256] Loss=4.100 Time=0.896 Data Time=0.000
+09/09 12:12:44 PM [Epoch 15/650][Step 81/256] Loss=4.187 Time=0.882 Data Time=0.000
+09/09 12:13:02 PM [Epoch 15/650][Step 101/256] Loss=4.055 Time=0.895 Data Time=0.000
+09/09 12:13:20 PM [Epoch 15/650][Step 121/256] Loss=4.206 Time=0.888 Data Time=0.000
+09/09 12:13:37 PM [Epoch 15/650][Step 141/256] Loss=4.107 Time=0.886 Data Time=0.000
+09/09 12:13:55 PM [Epoch 15/650][Step 161/256] Loss=4.129 Time=0.883 Data Time=0.000
+09/09 12:14:13 PM [Epoch 15/650][Step 181/256] Loss=4.163 Time=0.883 Data Time=0.000
+09/09 12:14:31 PM [Epoch 15/650][Step 201/256] Loss=4.087 Time=0.884 Data Time=0.000
+09/09 12:14:48 PM [Epoch 15/650][Step 221/256] Loss=4.133 Time=0.883 Data Time=0.000
+09/09 12:15:06 PM [Epoch 15/650][Step 241/256] Loss=4.067 Time=0.887 Data Time=0.000
+09/09 12:15:34 PM Epoch:14 Acc:4.504 Best Acc:4.504 Best Epoch:14
+09/09 12:15:34 PM [Epoch 16/650] lr=0.019975
+09/09 12:15:39 PM [Epoch 16/650][Step 1/256] Loss=4.103 Time=4.739 Data Time=0.000
+09/09 12:15:57 PM [Epoch 16/650][Step 21/256] Loss=4.058 Time=0.884 Data Time=0.000
+09/09 12:16:15 PM [Epoch 16/650][Step 41/256] Loss=4.240 Time=0.880 Data Time=0.000
+09/09 12:16:33 PM [Epoch 16/650][Step 61/256] Loss=4.055 Time=0.880 Data Time=0.000
+09/09 12:16:50 PM [Epoch 16/650][Step 81/256] Loss=4.108 Time=0.884 Data Time=0.000
+09/09 12:17:08 PM [Epoch 16/650][Step 101/256] Loss=4.191 Time=0.884 Data Time=0.000
+09/09 12:17:26 PM [Epoch 16/650][Step 121/256] Loss=4.097 Time=0.884 Data Time=0.000
+09/09 12:17:43 PM [Epoch 16/650][Step 141/256] Loss=4.091 Time=0.889 Data Time=0.000
+09/09 12:18:01 PM [Epoch 16/650][Step 161/256] Loss=4.103 Time=0.881 Data Time=0.000
+09/09 12:18:19 PM [Epoch 16/650][Step 181/256] Loss=4.023 Time=0.879 Data Time=0.000
+09/09 12:18:37 PM [Epoch 16/650][Step 201/256] Loss=4.111 Time=0.882 Data Time=0.000
+09/09 12:18:54 PM [Epoch 16/650][Step 221/256] Loss=4.257 Time=0.889 Data Time=0.000
+09/09 12:19:12 PM [Epoch 16/650][Step 241/256] Loss=4.106 Time=0.879 Data Time=0.000
+09/09 12:19:38 PM Epoch:15 Acc:4.396 Best Acc:4.504 Best Epoch:14
+09/09 12:19:38 PM [Epoch 17/650] lr=0.019972
+09/09 12:19:43 PM [Epoch 17/650][Step 1/256] Loss=4.075 Time=5.380 Data Time=0.000
+09/09 12:20:01 PM [Epoch 17/650][Step 21/256] Loss=4.183 Time=0.884 Data Time=0.000
+09/09 12:20:19 PM [Epoch 17/650][Step 41/256] Loss=4.037 Time=0.881 Data Time=0.000
+09/09 12:20:36 PM [Epoch 17/650][Step 61/256] Loss=4.130 Time=0.898 Data Time=0.000
+09/09 12:20:54 PM [Epoch 17/650][Step 81/256] Loss=4.068 Time=0.883 Data Time=0.000
+09/09 12:21:12 PM [Epoch 17/650][Step 101/256] Loss=4.144 Time=0.885 Data Time=0.000
+09/09 12:21:29 PM [Epoch 17/650][Step 121/256] Loss=4.068 Time=0.881 Data Time=0.000
+09/09 12:21:47 PM [Epoch 17/650][Step 141/256] Loss=4.058 Time=0.881 Data Time=0.000
+09/09 12:22:05 PM [Epoch 17/650][Step 161/256] Loss=4.092 Time=0.881 Data Time=0.000
+09/09 12:22:22 PM [Epoch 17/650][Step 181/256] Loss=3.991 Time=0.881 Data Time=0.000
+09/09 12:22:40 PM [Epoch 17/650][Step 201/256] Loss=4.076 Time=0.884 Data Time=0.000
+09/09 12:22:58 PM [Epoch 17/650][Step 221/256] Loss=4.076 Time=0.883 Data Time=0.000
+09/09 12:23:16 PM [Epoch 17/650][Step 241/256] Loss=4.126 Time=0.910 Data Time=0.000
+09/09 12:23:46 PM Epoch:16 Acc:4.386 Best Acc:4.504 Best Epoch:14
+09/09 12:23:46 PM [Epoch 18/650] lr=0.019968
+09/09 12:23:51 PM [Epoch 18/650][Step 1/256] Loss=4.103 Time=5.450 Data Time=0.000
+09/09 12:24:09 PM [Epoch 18/650][Step 21/256] Loss=4.032 Time=0.885 Data Time=0.000
+09/09 12:24:27 PM [Epoch 18/650][Step 41/256] Loss=4.097 Time=0.880 Data Time=0.000
+09/09 12:24:45 PM [Epoch 18/650][Step 61/256] Loss=4.088 Time=0.882 Data Time=0.000
+09/09 12:25:02 PM [Epoch 18/650][Step 81/256] Loss=4.076 Time=0.899 Data Time=0.000
+09/09 12:25:20 PM [Epoch 18/650][Step 101/256] Loss=4.013 Time=0.893 Data Time=0.000
+09/09 12:25:38 PM [Epoch 18/650][Step 121/256] Loss=4.090 Time=0.885 Data Time=0.000
+09/09 12:25:56 PM [Epoch 18/650][Step 141/256] Loss=3.962 Time=0.885 Data Time=0.000
+09/09 12:26:13 PM [Epoch 18/650][Step 161/256] Loss=4.049 Time=0.883 Data Time=0.000
+09/09 12:26:31 PM [Epoch 18/650][Step 181/256] Loss=4.056 Time=0.883 Data Time=0.000
+09/09 12:26:49 PM [Epoch 18/650][Step 201/256] Loss=4.063 Time=0.882 Data Time=0.000
+09/09 12:27:07 PM [Epoch 18/650][Step 221/256] Loss=4.041 Time=0.885 Data Time=0.000
+09/09 12:27:24 PM [Epoch 18/650][Step 241/256] Loss=4.146 Time=0.898 Data Time=0.000
+09/09 12:27:54 PM Epoch:17 Acc:4.356 Best Acc:4.504 Best Epoch:14
+09/09 12:27:54 PM [Epoch 19/650] lr=0.019964
+09/09 12:27:59 PM [Epoch 19/650][Step 1/256] Loss=4.079 Time=5.369 Data Time=0.001
+09/09 12:28:17 PM [Epoch 19/650][Step 21/256] Loss=4.096 Time=0.886 Data Time=0.000
+09/09 12:28:35 PM [Epoch 19/650][Step 41/256] Loss=4.022 Time=0.886 Data Time=0.000
+09/09 12:28:52 PM [Epoch 19/650][Step 61/256] Loss=4.016 Time=0.880 Data Time=0.000
+09/09 12:29:10 PM [Epoch 19/650][Step 81/256] Loss=4.134 Time=0.880 Data Time=0.000
+09/09 12:29:28 PM [Epoch 19/650][Step 101/256] Loss=3.988 Time=0.882 Data Time=0.000
+09/09 12:29:46 PM [Epoch 19/650][Step 121/256] Loss=4.084 Time=0.883 Data Time=0.000
+09/09 12:30:03 PM [Epoch 19/650][Step 141/256] Loss=4.120 Time=0.879 Data Time=0.000
+09/09 12:30:21 PM [Epoch 19/650][Step 161/256] Loss=4.071 Time=0.881 Data Time=0.000
+09/09 12:30:39 PM [Epoch 19/650][Step 181/256] Loss=4.018 Time=0.884 Data Time=0.000
+09/09 12:30:56 PM [Epoch 19/650][Step 201/256] Loss=4.044 Time=0.882 Data Time=0.000
+09/09 12:31:14 PM [Epoch 19/650][Step 221/256] Loss=4.000 Time=0.885 Data Time=0.000
+09/09 12:31:32 PM [Epoch 19/650][Step 241/256] Loss=4.099 Time=0.880 Data Time=0.000
+09/09 12:32:01 PM Epoch:18 Acc:3.611 Best Acc:4.504 Best Epoch:14
+09/09 12:32:01 PM [Epoch 20/650] lr=0.019960
+09/09 12:32:07 PM [Epoch 20/650][Step 1/256] Loss=4.088 Time=5.632 Data Time=0.000
+09/09 12:32:25 PM [Epoch 20/650][Step 21/256] Loss=4.053 Time=0.880 Data Time=0.000
+09/09 12:32:43 PM [Epoch 20/650][Step 41/256] Loss=3.958 Time=0.880 Data Time=0.000
+09/09 12:33:00 PM [Epoch 20/650][Step 61/256] Loss=4.099 Time=0.882 Data Time=0.000
+09/09 12:33:18 PM [Epoch 20/650][Step 81/256] Loss=4.033 Time=0.883 Data Time=0.000
+09/09 12:33:36 PM [Epoch 20/650][Step 101/256] Loss=4.126 Time=0.880 Data Time=0.000
+09/09 12:33:53 PM [Epoch 20/650][Step 121/256] Loss=3.969 Time=0.882 Data Time=0.000
+09/09 12:34:11 PM [Epoch 20/650][Step 141/256] Loss=3.980 Time=0.881 Data Time=0.000
+09/09 12:34:29 PM [Epoch 20/650][Step 161/256] Loss=3.976 Time=0.883 Data Time=0.000
+09/09 12:34:46 PM [Epoch 20/650][Step 181/256] Loss=3.981 Time=0.882 Data Time=0.000
+09/09 12:35:04 PM [Epoch 20/650][Step 201/256] Loss=4.032 Time=0.882 Data Time=0.000
+09/09 12:35:22 PM [Epoch 20/650][Step 221/256] Loss=4.113 Time=0.883 Data Time=0.000
+09/09 12:35:39 PM [Epoch 20/650][Step 241/256] Loss=4.078 Time=0.879 Data Time=0.000
+09/09 12:36:05 PM Epoch:19 Acc:4.091 Best Acc:4.504 Best Epoch:14
+09/09 12:36:05 PM [Epoch 21/650] lr=0.019956
+09/09 12:36:11 PM [Epoch 21/650][Step 1/256] Loss=4.154 Time=5.325 Data Time=0.000
+09/09 12:36:29 PM [Epoch 21/650][Step 21/256] Loss=4.126 Time=0.881 Data Time=0.000
+09/09 12:36:46 PM [Epoch 21/650][Step 41/256] Loss=3.990 Time=0.881 Data Time=0.000
+09/09 12:37:04 PM [Epoch 21/650][Step 61/256] Loss=3.971 Time=0.882 Data Time=0.000
+09/09 12:37:22 PM [Epoch 21/650][Step 81/256] Loss=4.006 Time=0.882 Data Time=0.000
+09/09 12:37:39 PM [Epoch 21/650][Step 101/256] Loss=3.979 Time=0.886 Data Time=0.000
+09/09 12:37:57 PM [Epoch 21/650][Step 121/256] Loss=4.049 Time=0.880 Data Time=0.000
+09/09 12:38:15 PM [Epoch 21/650][Step 141/256] Loss=3.998 Time=0.882 Data Time=0.000
+09/09 12:38:32 PM [Epoch 21/650][Step 161/256] Loss=3.958 Time=0.879 Data Time=0.000
+09/09 12:38:50 PM [Epoch 21/650][Step 181/256] Loss=4.040 Time=0.882 Data Time=0.000
+09/09 12:39:08 PM [Epoch 21/650][Step 201/256] Loss=4.063 Time=0.885 Data Time=0.000
+09/09 12:39:26 PM [Epoch 21/650][Step 221/256] Loss=4.095 Time=0.882 Data Time=0.000
+09/09 12:39:43 PM [Epoch 21/650][Step 241/256] Loss=3.934 Time=0.895 Data Time=0.000
+09/09 12:40:09 PM Epoch:20 Acc:5.249 Best Acc:5.249 Best Epoch:20
+09/09 12:40:09 PM [Epoch 22/650] lr=0.019951
+09/09 12:40:15 PM [Epoch 22/650][Step 1/256] Loss=3.939 Time=5.086 Data Time=0.000
+09/09 12:40:32 PM [Epoch 22/650][Step 21/256] Loss=4.055 Time=0.882 Data Time=0.000
+09/09 12:40:50 PM [Epoch 22/650][Step 41/256] Loss=3.987 Time=0.880 Data Time=0.000
+09/09 12:41:08 PM [Epoch 22/650][Step 61/256] Loss=3.936 Time=0.880 Data Time=0.000
+09/09 12:41:26 PM [Epoch 22/650][Step 81/256] Loss=3.922 Time=0.883 Data Time=0.000
+09/09 12:41:43 PM [Epoch 22/650][Step 101/256] Loss=4.048 Time=0.884 Data Time=0.000
+09/09 12:42:01 PM [Epoch 22/650][Step 121/256] Loss=3.890 Time=0.897 Data Time=0.000
+09/09 12:42:19 PM [Epoch 22/650][Step 141/256] Loss=4.146 Time=0.889 Data Time=0.000
+09/09 12:42:39 PM [Epoch 22/650][Step 161/256] Loss=4.123 Time=0.881 Data Time=0.000
+09/09 12:42:56 PM [Epoch 22/650][Step 181/256] Loss=4.061 Time=0.884 Data Time=0.000
+09/09 12:43:14 PM [Epoch 22/650][Step 201/256] Loss=4.161 Time=0.885 Data Time=0.000
+09/09 12:43:32 PM [Epoch 22/650][Step 221/256] Loss=3.979 Time=0.882 Data Time=0.000
+09/09 12:43:49 PM [Epoch 22/650][Step 241/256] Loss=3.981 Time=0.883 Data Time=0.000
+09/09 12:44:17 PM Epoch:21 Acc:5.377 Best Acc:5.377 Best Epoch:21
+09/09 12:44:17 PM [Epoch 23/650] lr=0.019946
+09/09 12:44:22 PM [Epoch 23/650][Step 1/256] Loss=3.927 Time=5.204 Data Time=0.000
+09/09 12:44:40 PM [Epoch 23/650][Step 21/256] Loss=3.968 Time=0.882 Data Time=0.000
+09/09 12:44:58 PM [Epoch 23/650][Step 41/256] Loss=4.034 Time=0.886 Data Time=0.000
+09/09 12:45:16 PM [Epoch 23/650][Step 61/256] Loss=4.014 Time=0.880 Data Time=0.000
+09/09 12:45:33 PM [Epoch 23/650][Step 81/256] Loss=3.959 Time=0.881 Data Time=0.000
+09/09 12:45:51 PM [Epoch 23/650][Step 101/256] Loss=4.011 Time=0.882 Data Time=0.000
+09/09 12:46:09 PM [Epoch 23/650][Step 121/256] Loss=3.997 Time=0.894 Data Time=0.000
+09/09 12:46:27 PM [Epoch 23/650][Step 141/256] Loss=4.025 Time=0.880 Data Time=0.000
+09/09 12:46:44 PM [Epoch 23/650][Step 161/256] Loss=4.034 Time=0.881 Data Time=0.000
+09/09 12:47:02 PM [Epoch 23/650][Step 181/256] Loss=3.957 Time=0.880 Data Time=0.000
+09/09 12:47:20 PM [Epoch 23/650][Step 201/256] Loss=4.017 Time=0.879 Data Time=0.000
+09/09 12:47:37 PM [Epoch 23/650][Step 221/256] Loss=3.924 Time=0.881 Data Time=0.000
+09/09 12:47:55 PM [Epoch 23/650][Step 241/256] Loss=4.054 Time=0.881 Data Time=0.000
+09/09 12:48:21 PM Epoch:22 Acc:5.073 Best Acc:5.377 Best Epoch:21
+09/09 12:48:21 PM [Epoch 24/650] lr=0.019941
+09/09 12:48:26 PM [Epoch 24/650][Step 1/256] Loss=3.907 Time=5.340 Data Time=0.000
+09/09 12:48:44 PM [Epoch 24/650][Step 21/256] Loss=3.947 Time=0.883 Data Time=0.000
+09/09 12:49:02 PM [Epoch 24/650][Step 41/256] Loss=3.929 Time=0.887 Data Time=0.000
+09/09 12:49:20 PM [Epoch 24/650][Step 61/256] Loss=3.931 Time=0.881 Data Time=0.000
+09/09 12:49:37 PM [Epoch 24/650][Step 81/256] Loss=3.961 Time=0.880 Data Time=0.000
+09/09 12:49:55 PM [Epoch 24/650][Step 101/256] Loss=4.029 Time=0.881 Data Time=0.000
+09/09 12:50:13 PM [Epoch 24/650][Step 121/256] Loss=4.046 Time=0.882 Data Time=0.000
+09/09 12:50:31 PM [Epoch 24/650][Step 141/256] Loss=3.913 Time=0.884 Data Time=0.000
+09/09 12:50:48 PM [Epoch 24/650][Step 161/256] Loss=4.018 Time=0.882 Data Time=0.000
+09/09 12:51:07 PM [Epoch 24/650][Step 181/256] Loss=3.928 Time=0.885 Data Time=0.000
+09/09 12:51:24 PM [Epoch 24/650][Step 201/256] Loss=3.890 Time=0.880 Data Time=0.000
+09/09 12:51:42 PM [Epoch 24/650][Step 221/256] Loss=3.955 Time=0.881 Data Time=0.000
+09/09 12:52:00 PM [Epoch 24/650][Step 241/256] Loss=3.997 Time=0.883 Data Time=0.000
+09/09 12:52:29 PM Epoch:23 Acc:2.708 Best Acc:5.377 Best Epoch:21
+09/09 12:52:29 PM [Epoch 25/650] lr=0.019936
+09/09 12:52:34 PM [Epoch 25/650][Step 1/256] Loss=3.859 Time=5.005 Data Time=0.000
+09/09 12:52:52 PM [Epoch 25/650][Step 21/256] Loss=3.976 Time=0.884 Data Time=0.000
+09/09 12:53:10 PM [Epoch 25/650][Step 41/256] Loss=3.918 Time=0.882 Data Time=0.000
+09/09 12:53:27 PM [Epoch 25/650][Step 61/256] Loss=3.973 Time=0.880 Data Time=0.000
+09/09 12:53:45 PM [Epoch 25/650][Step 81/256] Loss=3.951 Time=0.881 Data Time=0.000
+09/09 12:54:03 PM [Epoch 25/650][Step 101/256] Loss=3.874 Time=0.885 Data Time=0.000
+09/09 12:54:21 PM [Epoch 25/650][Step 121/256] Loss=3.853 Time=0.882 Data Time=0.000
+09/09 12:54:38 PM [Epoch 25/650][Step 141/256] Loss=4.009 Time=0.890 Data Time=0.000
+09/09 12:54:56 PM [Epoch 25/650][Step 161/256] Loss=3.933 Time=0.880 Data Time=0.000
+09/09 12:55:14 PM [Epoch 25/650][Step 181/256] Loss=3.959 Time=0.894 Data Time=0.000
+09/09 12:55:32 PM [Epoch 25/650][Step 201/256] Loss=3.922 Time=0.892 Data Time=0.000
+09/09 12:55:49 PM [Epoch 25/650][Step 221/256] Loss=3.935 Time=0.881 Data Time=0.000
+09/09 12:56:07 PM [Epoch 25/650][Step 241/256] Loss=3.846 Time=0.884 Data Time=0.000
+09/09 12:56:37 PM Epoch:24 Acc:5.073 Best Acc:5.377 Best Epoch:21
+09/09 12:56:37 PM [Epoch 26/650] lr=0.019931
+09/09 12:56:42 PM [Epoch 26/650][Step 1/256] Loss=4.003 Time=5.041 Data Time=0.000
+09/09 12:57:00 PM [Epoch 26/650][Step 21/256] Loss=3.950 Time=0.883 Data Time=0.000
+09/09 12:57:18 PM [Epoch 26/650][Step 41/256] Loss=3.909 Time=0.882 Data Time=0.000
+09/09 12:57:35 PM [Epoch 26/650][Step 61/256] Loss=3.935 Time=0.886 Data Time=0.000
+09/09 12:57:53 PM [Epoch 26/650][Step 81/256] Loss=3.913 Time=0.906 Data Time=0.000
+09/09 12:58:11 PM [Epoch 26/650][Step 101/256] Loss=3.988 Time=0.897 Data Time=0.000
+09/09 12:58:29 PM [Epoch 26/650][Step 121/256] Loss=3.950 Time=0.883 Data Time=0.000
+09/09 12:58:47 PM [Epoch 26/650][Step 141/256] Loss=3.898 Time=0.887 Data Time=0.000
+09/09 12:59:04 PM [Epoch 26/650][Step 161/256] Loss=3.934 Time=0.882 Data Time=0.000
+09/09 12:59:22 PM [Epoch 26/650][Step 181/256] Loss=3.916 Time=0.882 Data Time=0.000
+09/09 12:59:40 PM [Epoch 26/650][Step 201/256] Loss=3.873 Time=0.891 Data Time=0.000
+09/09 12:59:58 PM [Epoch 26/650][Step 221/256] Loss=3.961 Time=0.882 Data Time=0.000
+09/09 01:00:15 PM [Epoch 26/650][Step 241/256] Loss=3.856 Time=0.891 Data Time=0.000
+09/09 01:00:45 PM Epoch:25 Acc:4.965 Best Acc:5.377 Best Epoch:21
+09/09 01:00:45 PM [Epoch 27/650] lr=0.019925
+09/09 01:00:50 PM [Epoch 27/650][Step 1/256] Loss=3.792 Time=5.415 Data Time=0.000
+09/09 01:01:08 PM [Epoch 27/650][Step 21/256] Loss=3.992 Time=0.883 Data Time=0.000
+09/09 01:01:26 PM [Epoch 27/650][Step 41/256] Loss=3.924 Time=0.884 Data Time=0.000
+09/09 01:01:43 PM [Epoch 27/650][Step 61/256] Loss=3.931 Time=0.878 Data Time=0.000
+09/09 01:02:01 PM [Epoch 27/650][Step 81/256] Loss=3.863 Time=0.908 Data Time=0.000
+09/09 01:02:19 PM [Epoch 27/650][Step 101/256] Loss=3.881 Time=0.881 Data Time=0.000
+09/09 01:02:37 PM [Epoch 27/650][Step 121/256] Loss=3.889 Time=0.884 Data Time=0.000
+09/09 01:02:54 PM [Epoch 27/650][Step 141/256] Loss=3.815 Time=0.881 Data Time=0.000
+09/09 01:03:12 PM [Epoch 27/650][Step 161/256] Loss=3.916 Time=0.882 Data Time=0.000
+09/09 01:03:30 PM [Epoch 27/650][Step 181/256] Loss=3.925 Time=0.880 Data Time=0.000
+09/09 01:03:48 PM [Epoch 27/650][Step 201/256] Loss=3.868 Time=0.884 Data Time=0.000
+09/09 01:04:05 PM [Epoch 27/650][Step 221/256] Loss=3.866 Time=0.886 Data Time=0.000
+09/09 01:04:23 PM [Epoch 27/650][Step 241/256] Loss=3.931 Time=0.888 Data Time=0.000
+09/09 01:04:53 PM Epoch:26 Acc:5.877 Best Acc:5.877 Best Epoch:26
+09/09 01:04:53 PM [Epoch 28/650] lr=0.019919
+09/09 01:04:58 PM [Epoch 28/650][Step 1/256] Loss=3.849 Time=5.188 Data Time=0.000
+09/09 01:05:16 PM [Epoch 28/650][Step 21/256] Loss=3.895 Time=0.883 Data Time=0.000
+09/09 01:05:34 PM [Epoch 28/650][Step 41/256] Loss=3.815 Time=0.897 Data Time=0.000
+09/09 01:05:51 PM [Epoch 28/650][Step 61/256] Loss=3.782 Time=0.880 Data Time=0.000
+09/09 01:06:09 PM [Epoch 28/650][Step 81/256] Loss=3.917 Time=0.885 Data Time=0.000
+09/09 01:06:27 PM [Epoch 28/650][Step 101/256] Loss=3.871 Time=0.883 Data Time=0.000
+09/09 01:06:45 PM [Epoch 28/650][Step 121/256] Loss=3.869 Time=0.886 Data Time=0.000
+09/09 01:07:02 PM [Epoch 28/650][Step 141/256] Loss=3.834 Time=0.884 Data Time=0.000
+09/09 01:07:20 PM [Epoch 28/650][Step 161/256] Loss=4.113 Time=0.889 Data Time=0.000
+09/09 01:07:38 PM [Epoch 28/650][Step 181/256] Loss=3.873 Time=0.894 Data Time=0.000
+09/09 01:07:56 PM [Epoch 28/650][Step 201/256] Loss=3.934 Time=0.881 Data Time=0.000
+09/09 01:08:13 PM [Epoch 28/650][Step 221/256] Loss=3.832 Time=0.886 Data Time=0.000
+09/09 01:08:31 PM [Epoch 28/650][Step 241/256] Loss=3.930 Time=0.882 Data Time=0.000
+09/09 01:09:01 PM Epoch:27 Acc:5.907 Best Acc:5.907 Best Epoch:27
+09/09 01:09:01 PM [Epoch 29/650] lr=0.019913
+09/09 01:09:06 PM [Epoch 29/650][Step 1/256] Loss=3.871 Time=5.531 Data Time=0.000
+09/09 01:09:24 PM [Epoch 29/650][Step 21/256] Loss=3.921 Time=0.881 Data Time=0.000
+09/09 01:09:42 PM [Epoch 29/650][Step 41/256] Loss=3.832 Time=0.882 Data Time=0.000
+09/09 01:10:00 PM [Epoch 29/650][Step 61/256] Loss=3.944 Time=0.880 Data Time=0.000
+09/09 01:10:17 PM [Epoch 29/650][Step 81/256] Loss=3.938 Time=0.880 Data Time=0.000
+09/09 01:10:35 PM [Epoch 29/650][Step 101/256] Loss=3.896 Time=0.880 Data Time=0.000
+09/09 01:10:53 PM [Epoch 29/650][Step 121/256] Loss=3.892 Time=0.881 Data Time=0.000
+09/09 01:11:10 PM [Epoch 29/650][Step 141/256] Loss=3.886 Time=0.880 Data Time=0.000
+09/09 01:11:28 PM [Epoch 29/650][Step 161/256] Loss=3.800 Time=0.883 Data Time=0.000
+09/09 01:11:46 PM [Epoch 29/650][Step 181/256] Loss=3.856 Time=0.886 Data Time=0.000
+09/09 01:12:03 PM [Epoch 29/650][Step 201/256] Loss=3.908 Time=0.880 Data Time=0.000
+09/09 01:12:21 PM [Epoch 29/650][Step 221/256] Loss=3.801 Time=0.882 Data Time=0.000
+09/09 01:12:39 PM [Epoch 29/650][Step 241/256] Loss=3.935 Time=0.882 Data Time=0.000
+09/09 01:13:05 PM Epoch:28 Acc:5.181 Best Acc:5.907 Best Epoch:27
+09/09 01:13:05 PM [Epoch 30/650] lr=0.019907
+09/09 01:13:10 PM [Epoch 30/650][Step 1/256] Loss=3.837 Time=5.340 Data Time=0.000
+09/09 01:13:28 PM [Epoch 30/650][Step 21/256] Loss=4.001 Time=0.884 Data Time=0.000
+09/09 01:13:46 PM [Epoch 30/650][Step 41/256] Loss=3.922 Time=0.886 Data Time=0.000
+09/09 01:14:03 PM [Epoch 30/650][Step 61/256] Loss=3.846 Time=0.881 Data Time=0.000
+09/09 01:14:21 PM [Epoch 30/650][Step 81/256] Loss=3.908 Time=0.882 Data Time=0.000
+09/09 01:14:39 PM [Epoch 30/650][Step 101/256] Loss=3.945 Time=0.885 Data Time=0.000
+09/09 01:14:57 PM [Epoch 30/650][Step 121/256] Loss=3.743 Time=0.898 Data Time=0.000
+09/09 01:15:16 PM [Epoch 30/650][Step 141/256] Loss=4.017 Time=0.881 Data Time=0.000
+09/09 01:15:34 PM [Epoch 30/650][Step 161/256] Loss=3.853 Time=0.886 Data Time=0.000
+09/09 01:15:52 PM [Epoch 30/650][Step 181/256] Loss=3.847 Time=0.883 Data Time=0.000
+09/09 01:16:09 PM [Epoch 30/650][Step 201/256] Loss=3.891 Time=0.887 Data Time=0.000
+09/09 01:16:27 PM [Epoch 30/650][Step 221/256] Loss=3.841 Time=0.881 Data Time=0.000
+09/09 01:16:45 PM [Epoch 30/650][Step 241/256] Loss=3.648 Time=0.881 Data Time=0.000
+09/09 01:17:13 PM Epoch:29 Acc:6.642 Best Acc:6.642 Best Epoch:29
+09/09 01:17:13 PM [Epoch 31/650] lr=0.019900
+09/09 01:17:18 PM [Epoch 31/650][Step 1/256] Loss=3.967 Time=5.134 Data Time=0.000
+09/09 01:17:36 PM [Epoch 31/650][Step 21/256] Loss=3.747 Time=0.880 Data Time=0.000
+09/09 01:17:54 PM [Epoch 31/650][Step 41/256] Loss=3.993 Time=0.880 Data Time=0.000
+09/09 01:18:11 PM [Epoch 31/650][Step 61/256] Loss=3.929 Time=0.883 Data Time=0.000
+09/09 01:18:29 PM [Epoch 31/650][Step 81/256] Loss=3.883 Time=0.881 Data Time=0.000
+09/09 01:18:47 PM [Epoch 31/650][Step 101/256] Loss=3.895 Time=0.880 Data Time=0.000
+09/09 01:19:04 PM [Epoch 31/650][Step 121/256] Loss=3.828 Time=0.878 Data Time=0.000
+09/09 01:19:22 PM [Epoch 31/650][Step 141/256] Loss=3.860 Time=0.879 Data Time=0.000
+09/09 01:19:40 PM [Epoch 31/650][Step 161/256] Loss=3.833 Time=0.882 Data Time=0.000
+09/09 01:19:57 PM [Epoch 31/650][Step 181/256] Loss=3.870 Time=0.884 Data Time=0.000
+09/09 01:20:15 PM [Epoch 31/650][Step 201/256] Loss=3.965 Time=0.880 Data Time=0.000
+09/09 01:20:33 PM [Epoch 31/650][Step 221/256] Loss=3.908 Time=0.880 Data Time=0.000
+09/09 01:20:50 PM [Epoch 31/650][Step 241/256] Loss=3.830 Time=0.883 Data Time=0.000
+09/09 01:21:16 PM Epoch:30 Acc:7.810 Best Acc:7.810 Best Epoch:30
+09/09 01:21:16 PM [Epoch 32/650] lr=0.019894
+09/09 01:21:22 PM [Epoch 32/650][Step 1/256] Loss=3.860 Time=5.337 Data Time=0.000
+09/09 01:21:40 PM [Epoch 32/650][Step 21/256] Loss=3.882 Time=0.882 Data Time=0.000
+09/09 01:21:57 PM [Epoch 32/650][Step 41/256] Loss=3.751 Time=0.880 Data Time=0.000
+09/09 01:22:15 PM [Epoch 32/650][Step 61/256] Loss=3.838 Time=0.880 Data Time=0.000
+09/09 01:22:33 PM [Epoch 32/650][Step 81/256] Loss=3.930 Time=0.881 Data Time=0.000
+09/09 01:22:50 PM [Epoch 32/650][Step 101/256] Loss=3.758 Time=0.881 Data Time=0.000
+09/09 01:23:08 PM [Epoch 32/650][Step 121/256] Loss=3.833 Time=0.880 Data Time=0.000
+09/09 01:23:26 PM [Epoch 32/650][Step 141/256] Loss=3.846 Time=0.879 Data Time=0.000
+09/09 01:23:43 PM [Epoch 32/650][Step 161/256] Loss=3.842 Time=0.884 Data Time=0.000
+09/09 01:24:01 PM [Epoch 32/650][Step 181/256] Loss=3.828 Time=0.880 Data Time=0.000
+09/09 01:24:19 PM [Epoch 32/650][Step 201/256] Loss=3.983 Time=0.888 Data Time=0.000
+09/09 01:24:37 PM [Epoch 32/650][Step 221/256] Loss=3.812 Time=0.884 Data Time=0.000
+09/09 01:24:54 PM [Epoch 32/650][Step 241/256] Loss=3.738 Time=0.889 Data Time=0.000
+09/09 01:25:20 PM Epoch:31 Acc:6.790 Best Acc:7.810 Best Epoch:30
+09/09 01:25:20 PM [Epoch 33/650] lr=0.019887
+09/09 01:25:26 PM [Epoch 33/650][Step 1/256] Loss=3.702 Time=5.261 Data Time=0.000
+09/09 01:25:43 PM [Epoch 33/650][Step 21/256] Loss=3.795 Time=0.880 Data Time=0.000
+09/09 01:26:01 PM [Epoch 33/650][Step 41/256] Loss=3.762 Time=0.880 Data Time=0.000
+09/09 01:26:19 PM [Epoch 33/650][Step 61/256] Loss=3.837 Time=0.884 Data Time=0.000
+09/09 01:26:37 PM [Epoch 33/650][Step 81/256] Loss=3.831 Time=0.884 Data Time=0.000
+09/09 01:26:54 PM [Epoch 33/650][Step 101/256] Loss=3.900 Time=0.882 Data Time=0.000
+09/09 01:27:12 PM [Epoch 33/650][Step 121/256] Loss=3.741 Time=0.883 Data Time=0.000
+09/09 01:27:30 PM [Epoch 33/650][Step 141/256] Loss=3.893 Time=0.891 Data Time=0.000
+09/09 01:27:48 PM [Epoch 33/650][Step 161/256] Loss=3.730 Time=0.883 Data Time=0.000
+09/09 01:28:05 PM [Epoch 33/650][Step 181/256] Loss=3.832 Time=0.921 Data Time=0.000
+09/09 01:28:23 PM [Epoch 33/650][Step 201/256] Loss=3.808 Time=0.899 Data Time=0.000
+09/09 01:28:41 PM [Epoch 33/650][Step 221/256] Loss=3.824 Time=0.884 Data Time=0.000
+09/09 01:28:59 PM [Epoch 33/650][Step 241/256] Loss=3.820 Time=0.881 Data Time=0.000
+09/09 01:29:28 PM Epoch:32 Acc:6.544 Best Acc:7.810 Best Epoch:30
+09/09 01:29:28 PM [Epoch 34/650] lr=0.019879
+09/09 01:29:34 PM [Epoch 34/650][Step 1/256] Loss=3.797 Time=5.326 Data Time=0.000
+09/09 01:29:51 PM [Epoch 34/650][Step 21/256] Loss=3.852 Time=0.886 Data Time=0.000
+09/09 01:30:09 PM [Epoch 34/650][Step 41/256] Loss=3.708 Time=0.885 Data Time=0.000
+09/09 01:30:27 PM [Epoch 34/650][Step 61/256] Loss=3.807 Time=0.881 Data Time=0.000
+09/09 01:30:45 PM [Epoch 34/650][Step 81/256] Loss=3.810 Time=0.882 Data Time=0.000
+09/09 01:31:02 PM [Epoch 34/650][Step 101/256] Loss=3.924 Time=0.881 Data Time=0.000
+09/09 01:31:22 PM [Epoch 34/650][Step 121/256] Loss=3.715 Time=0.881 Data Time=0.000
+09/09 01:31:40 PM [Epoch 34/650][Step 141/256] Loss=3.798 Time=0.879 Data Time=0.000
+09/09 01:31:57 PM [Epoch 34/650][Step 161/256] Loss=3.881 Time=0.883 Data Time=0.000
+09/09 01:32:15 PM [Epoch 34/650][Step 181/256] Loss=3.731 Time=0.881 Data Time=0.000
+09/09 01:32:33 PM [Epoch 34/650][Step 201/256] Loss=3.902 Time=0.880 Data Time=0.000
+09/09 01:32:51 PM [Epoch 34/650][Step 221/256] Loss=3.899 Time=0.881 Data Time=0.000
+09/09 01:33:08 PM [Epoch 34/650][Step 241/256] Loss=3.830 Time=0.897 Data Time=0.000
+09/09 01:33:36 PM Epoch:33 Acc:6.152 Best Acc:7.810 Best Epoch:30
+09/09 01:33:36 PM [Epoch 35/650] lr=0.019872
+09/09 01:33:41 PM [Epoch 35/650][Step 1/256] Loss=3.887 Time=5.087 Data Time=0.000
+09/09 01:33:59 PM [Epoch 35/650][Step 21/256] Loss=3.895 Time=0.883 Data Time=0.000
+09/09 01:34:17 PM [Epoch 35/650][Step 41/256] Loss=3.724 Time=0.882 Data Time=0.000
+09/09 01:34:34 PM [Epoch 35/650][Step 61/256] Loss=3.665 Time=0.882 Data Time=0.000
+09/09 01:34:52 PM [Epoch 35/650][Step 81/256] Loss=3.662 Time=0.883 Data Time=0.000
+09/09 01:35:10 PM [Epoch 35/650][Step 101/256] Loss=3.668 Time=0.884 Data Time=0.000
+09/09 01:35:28 PM [Epoch 35/650][Step 121/256] Loss=3.605 Time=0.883 Data Time=0.000
+09/09 01:35:45 PM [Epoch 35/650][Step 141/256] Loss=3.724 Time=0.885 Data Time=0.000
+09/09 01:36:03 PM [Epoch 35/650][Step 161/256] Loss=3.714 Time=0.883 Data Time=0.000
+09/09 01:36:21 PM [Epoch 35/650][Step 181/256] Loss=3.816 Time=0.885 Data Time=0.000
+09/09 01:36:39 PM [Epoch 35/650][Step 201/256] Loss=3.635 Time=0.881 Data Time=0.000
+09/09 01:36:56 PM [Epoch 35/650][Step 221/256] Loss=3.761 Time=0.881 Data Time=0.000
+09/09 01:37:14 PM [Epoch 35/650][Step 241/256] Loss=3.797 Time=0.917 Data Time=0.000
+09/09 01:37:43 PM Epoch:34 Acc:8.104 Best Acc:8.104 Best Epoch:34
+09/09 01:37:43 PM [Epoch 36/650] lr=0.019864
+09/09 01:37:49 PM [Epoch 36/650][Step 1/256] Loss=3.689 Time=5.184 Data Time=0.000
+09/09 01:38:07 PM [Epoch 36/650][Step 21/256] Loss=3.774 Time=0.884 Data Time=0.000
+09/09 01:38:24 PM [Epoch 36/650][Step 41/256] Loss=3.789 Time=0.882 Data Time=0.000
+09/09 01:38:42 PM [Epoch 36/650][Step 61/256] Loss=3.940 Time=0.885 Data Time=0.000
+09/09 01:39:00 PM [Epoch 36/650][Step 81/256] Loss=3.684 Time=0.882 Data Time=0.000
+09/09 01:39:18 PM [Epoch 36/650][Step 101/256] Loss=3.675 Time=0.882 Data Time=0.000
+09/09 01:39:35 PM [Epoch 36/650][Step 121/256] Loss=3.699 Time=0.880 Data Time=0.000
+09/09 01:39:53 PM [Epoch 36/650][Step 141/256] Loss=3.712 Time=0.880 Data Time=0.000
+09/09 01:40:11 PM [Epoch 36/650][Step 161/256] Loss=3.692 Time=0.880 Data Time=0.000
+09/09 01:40:30 PM [Epoch 36/650][Step 181/256] Loss=3.791 Time=0.880 Data Time=0.000
+09/09 01:40:48 PM [Epoch 36/650][Step 201/256] Loss=3.767 Time=0.882 Data Time=0.000
+09/09 01:41:06 PM [Epoch 36/650][Step 221/256] Loss=3.634 Time=0.883 Data Time=0.000
+09/09 01:41:24 PM [Epoch 36/650][Step 241/256] Loss=3.918 Time=0.884 Data Time=0.000
+09/09 01:41:51 PM Epoch:35 Acc:7.820 Best Acc:8.104 Best Epoch:34
+09/09 01:41:51 PM [Epoch 37/650] lr=0.019857
+09/09 01:41:57 PM [Epoch 37/650][Step 1/256] Loss=3.683 Time=5.373 Data Time=0.000
+09/09 01:42:14 PM [Epoch 37/650][Step 21/256] Loss=3.688 Time=0.896 Data Time=0.000
+09/09 01:42:32 PM [Epoch 37/650][Step 41/256] Loss=3.746 Time=0.886 Data Time=0.000
+09/09 01:42:50 PM [Epoch 37/650][Step 61/256] Loss=3.717 Time=0.897 Data Time=0.000
+09/09 01:43:08 PM [Epoch 37/650][Step 81/256] Loss=3.753 Time=0.896 Data Time=0.000
+09/09 01:43:25 PM [Epoch 37/650][Step 101/256] Loss=3.760 Time=0.881 Data Time=0.000
+09/09 01:43:43 PM [Epoch 37/650][Step 121/256] Loss=3.824 Time=0.882 Data Time=0.000
+09/09 01:44:01 PM [Epoch 37/650][Step 141/256] Loss=3.759 Time=0.880 Data Time=0.000
+09/09 01:44:19 PM [Epoch 37/650][Step 161/256] Loss=3.713 Time=0.899 Data Time=0.000
+09/09 01:44:36 PM [Epoch 37/650][Step 181/256] Loss=3.729 Time=0.882 Data Time=0.000
+09/09 01:44:56 PM [Epoch 37/650][Step 201/256] Loss=3.711 Time=2.471 Data Time=0.000
+09/09 01:45:14 PM [Epoch 37/650][Step 221/256] Loss=3.832 Time=0.885 Data Time=0.000
+09/09 01:45:31 PM [Epoch 37/650][Step 241/256] Loss=3.686 Time=0.881 Data Time=0.000
+09/09 01:45:59 PM Epoch:36 Acc:9.125 Best Acc:9.125 Best Epoch:36
+09/09 01:45:59 PM [Epoch 38/650] lr=0.019849
+09/09 01:46:05 PM [Epoch 38/650][Step 1/256] Loss=3.648 Time=5.317 Data Time=0.001
+09/09 01:46:22 PM [Epoch 38/650][Step 21/256] Loss=3.706 Time=0.882 Data Time=0.000
+09/09 01:46:40 PM [Epoch 38/650][Step 41/256] Loss=3.708 Time=0.881 Data Time=0.000
+09/09 01:46:58 PM [Epoch 38/650][Step 61/256] Loss=3.723 Time=0.880 Data Time=0.000
+09/09 01:47:15 PM [Epoch 38/650][Step 81/256] Loss=3.694 Time=0.880 Data Time=0.000
+09/09 01:47:33 PM [Epoch 38/650][Step 101/256] Loss=3.742 Time=0.880 Data Time=0.000
+09/09 01:47:51 PM [Epoch 38/650][Step 121/256] Loss=3.724 Time=0.880 Data Time=0.000
+09/09 01:48:08 PM [Epoch 38/650][Step 141/256] Loss=3.730 Time=0.884 Data Time=0.000
+09/09 01:48:26 PM [Epoch 38/650][Step 161/256] Loss=3.829 Time=0.882 Data Time=0.000
+09/09 01:48:44 PM [Epoch 38/650][Step 181/256] Loss=3.757 Time=0.885 Data Time=0.000
+09/09 01:49:01 PM [Epoch 38/650][Step 201/256] Loss=3.770 Time=0.882 Data Time=0.000
+09/09 01:49:19 PM [Epoch 38/650][Step 221/256] Loss=3.661 Time=0.882 Data Time=0.000
+09/09 01:49:37 PM [Epoch 38/650][Step 241/256] Loss=3.842 Time=0.884 Data Time=0.000
+09/09 01:50:02 PM Epoch:37 Acc:8.046 Best Acc:9.125 Best Epoch:36
+09/09 01:50:02 PM [Epoch 39/650] lr=0.019840
+09/09 01:50:08 PM [Epoch 39/650][Step 1/256] Loss=3.832 Time=5.352 Data Time=0.000
+09/09 01:50:26 PM [Epoch 39/650][Step 21/256] Loss=3.805 Time=0.881 Data Time=0.000
+09/09 01:50:43 PM [Epoch 39/650][Step 41/256] Loss=3.850 Time=0.881 Data Time=0.000
+09/09 01:51:01 PM [Epoch 39/650][Step 61/256] Loss=3.799 Time=0.883 Data Time=0.000
+09/09 01:51:19 PM [Epoch 39/650][Step 81/256] Loss=3.768 Time=0.881 Data Time=0.000
+09/09 01:51:36 PM [Epoch 39/650][Step 101/256] Loss=3.875 Time=0.884 Data Time=0.000
+09/09 01:51:54 PM [Epoch 39/650][Step 121/256] Loss=3.712 Time=0.909 Data Time=0.000
+09/09 01:52:12 PM [Epoch 39/650][Step 141/256] Loss=3.700 Time=0.881 Data Time=0.000
+09/09 01:52:30 PM [Epoch 39/650][Step 161/256] Loss=3.623 Time=0.882 Data Time=0.000
+09/09 01:52:48 PM [Epoch 39/650][Step 181/256] Loss=3.677 Time=0.882 Data Time=0.000
+09/09 01:53:05 PM [Epoch 39/650][Step 201/256] Loss=3.601 Time=0.883 Data Time=0.000
+09/09 01:53:23 PM [Epoch 39/650][Step 221/256] Loss=3.738 Time=0.890 Data Time=0.000
+09/09 01:53:41 PM [Epoch 39/650][Step 241/256] Loss=3.799 Time=0.883 Data Time=0.000
+09/09 01:54:10 PM Epoch:38 Acc:7.427 Best Acc:9.125 Best Epoch:36
+09/09 01:54:10 PM [Epoch 40/650] lr=0.019832
+09/09 01:54:16 PM [Epoch 40/650][Step 1/256] Loss=3.657 Time=5.057 Data Time=0.000
+09/09 01:54:33 PM [Epoch 40/650][Step 21/256] Loss=3.782 Time=0.880 Data Time=0.000
+09/09 01:54:51 PM [Epoch 40/650][Step 41/256] Loss=3.664 Time=0.882 Data Time=0.000
+09/09 01:55:09 PM [Epoch 40/650][Step 61/256] Loss=3.818 Time=0.884 Data Time=0.000
+09/09 01:55:27 PM [Epoch 40/650][Step 81/256] Loss=3.677 Time=0.890 Data Time=0.000
+09/09 01:55:44 PM [Epoch 40/650][Step 101/256] Loss=3.611 Time=0.881 Data Time=0.000
+09/09 01:56:02 PM [Epoch 40/650][Step 121/256] Loss=3.712 Time=0.883 Data Time=0.000
+09/09 01:56:20 PM [Epoch 40/650][Step 141/256] Loss=3.664 Time=0.891 Data Time=0.000
+09/09 01:56:38 PM [Epoch 40/650][Step 161/256] Loss=3.679 Time=0.881 Data Time=0.000
+09/09 01:56:55 PM [Epoch 40/650][Step 181/256] Loss=3.646 Time=0.881 Data Time=0.000
+09/09 01:57:13 PM [Epoch 40/650][Step 201/256] Loss=3.708 Time=0.885 Data Time=0.000
+09/09 01:57:31 PM [Epoch 40/650][Step 221/256] Loss=3.649 Time=0.883 Data Time=0.000
+09/09 01:57:49 PM [Epoch 40/650][Step 241/256] Loss=3.534 Time=0.885 Data Time=0.000
+09/09 01:58:19 PM Epoch:39 Acc:9.223 Best Acc:9.223 Best Epoch:39
+09/09 01:58:19 PM [Epoch 41/650] lr=0.019823
+09/09 01:58:24 PM [Epoch 41/650][Step 1/256] Loss=3.648 Time=5.392 Data Time=0.000
+09/09 01:58:42 PM [Epoch 41/650][Step 21/256] Loss=3.757 Time=0.886 Data Time=0.000
+09/09 01:59:00 PM [Epoch 41/650][Step 41/256] Loss=3.760 Time=0.881 Data Time=0.000
+09/09 01:59:17 PM [Epoch 41/650][Step 61/256] Loss=3.652 Time=0.882 Data Time=0.000
+09/09 01:59:35 PM [Epoch 41/650][Step 81/256] Loss=3.775 Time=0.879 Data Time=0.000
+09/09 01:59:53 PM [Epoch 41/650][Step 101/256] Loss=3.641 Time=0.887 Data Time=0.000
+09/09 02:00:11 PM [Epoch 41/650][Step 121/256] Loss=3.677 Time=0.886 Data Time=0.000
+09/09 02:00:29 PM [Epoch 41/650][Step 141/256] Loss=3.618 Time=0.894 Data Time=0.000
+09/09 02:00:46 PM [Epoch 41/650][Step 161/256] Loss=3.622 Time=0.885 Data Time=0.000
+09/09 02:01:04 PM [Epoch 41/650][Step 181/256] Loss=3.517 Time=0.882 Data Time=0.000
+09/09 02:01:22 PM [Epoch 41/650][Step 201/256] Loss=3.624 Time=0.881 Data Time=0.000
+09/09 02:01:40 PM [Epoch 41/650][Step 221/256] Loss=3.646 Time=0.882 Data Time=0.000
+09/09 02:01:57 PM [Epoch 41/650][Step 241/256] Loss=3.755 Time=0.885 Data Time=0.000
+09/09 02:02:26 PM Epoch:40 Acc:8.467 Best Acc:9.223 Best Epoch:39
+09/09 02:02:26 PM [Epoch 42/650] lr=0.019814
+09/09 02:02:32 PM [Epoch 42/650][Step 1/256] Loss=3.535 Time=5.317 Data Time=0.000
+09/09 02:02:49 PM [Epoch 42/650][Step 21/256] Loss=3.935 Time=0.882 Data Time=0.000
+09/09 02:03:09 PM [Epoch 42/650][Step 41/256] Loss=3.684 Time=0.883 Data Time=0.000
+09/09 02:03:26 PM [Epoch 42/650][Step 61/256] Loss=3.723 Time=0.882 Data Time=0.000
+09/09 02:03:44 PM [Epoch 42/650][Step 81/256] Loss=3.714 Time=0.881 Data Time=0.000
+09/09 02:04:02 PM [Epoch 42/650][Step 101/256] Loss=3.572 Time=0.887 Data Time=0.000
+09/09 02:04:20 PM [Epoch 42/650][Step 121/256] Loss=3.657 Time=0.880 Data Time=0.000
+09/09 02:04:37 PM [Epoch 42/650][Step 141/256] Loss=3.656 Time=0.881 Data Time=0.000
+09/09 02:04:55 PM [Epoch 42/650][Step 161/256] Loss=3.649 Time=0.882 Data Time=0.000
+09/09 02:05:13 PM [Epoch 42/650][Step 181/256] Loss=3.660 Time=0.884 Data Time=0.000
+09/09 02:05:31 PM [Epoch 42/650][Step 201/256] Loss=3.705 Time=0.881 Data Time=0.000
+09/09 02:05:49 PM [Epoch 42/650][Step 221/256] Loss=3.572 Time=0.886 Data Time=0.000
+09/09 02:06:09 PM [Epoch 42/650][Step 241/256] Loss=3.751 Time=0.885 Data Time=0.000
+09/09 02:06:39 PM Epoch:41 Acc:9.468 Best Acc:9.468 Best Epoch:41
+09/09 02:06:39 PM [Epoch 43/650] lr=0.019805
+09/09 02:06:44 PM [Epoch 43/650][Step 1/256] Loss=3.523 Time=5.159 Data Time=0.000
+09/09 02:07:02 PM [Epoch 43/650][Step 21/256] Loss=3.666 Time=0.884 Data Time=0.000
+09/09 02:07:20 PM [Epoch 43/650][Step 41/256] Loss=3.758 Time=0.883 Data Time=0.000
+09/09 02:07:37 PM [Epoch 43/650][Step 61/256] Loss=3.852 Time=0.882 Data Time=0.000
+09/09 02:07:55 PM [Epoch 43/650][Step 81/256] Loss=3.643 Time=0.883 Data Time=0.000
+09/09 02:08:13 PM [Epoch 43/650][Step 101/256] Loss=3.516 Time=0.884 Data Time=0.000
+09/09 02:08:31 PM [Epoch 43/650][Step 121/256] Loss=3.725 Time=0.879 Data Time=0.000
+09/09 02:08:48 PM [Epoch 43/650][Step 141/256] Loss=3.484 Time=0.883 Data Time=0.000
+09/09 02:09:06 PM [Epoch 43/650][Step 161/256] Loss=3.731 Time=0.880 Data Time=0.000
+09/09 02:09:24 PM [Epoch 43/650][Step 181/256] Loss=3.631 Time=0.879 Data Time=0.000
+09/09 02:09:41 PM [Epoch 43/650][Step 201/256] Loss=3.696 Time=0.880 Data Time=0.000
+09/09 02:09:59 PM [Epoch 43/650][Step 221/256] Loss=3.528 Time=0.880 Data Time=0.000
+09/09 02:10:17 PM [Epoch 43/650][Step 241/256] Loss=3.513 Time=0.881 Data Time=0.000
+09/09 02:10:46 PM Epoch:42 Acc:9.694 Best Acc:9.694 Best Epoch:42
+09/09 02:10:46 PM [Epoch 44/650] lr=0.019796
+09/09 02:10:52 PM [Epoch 44/650][Step 1/256] Loss=3.548 Time=5.648 Data Time=0.000
+09/09 02:11:10 PM [Epoch 44/650][Step 21/256] Loss=3.791 Time=0.882 Data Time=0.000
+09/09 02:11:28 PM [Epoch 44/650][Step 41/256] Loss=3.674 Time=0.881 Data Time=0.000
+09/09 02:11:45 PM [Epoch 44/650][Step 61/256] Loss=3.683 Time=0.879 Data Time=0.000
+09/09 02:12:03 PM [Epoch 44/650][Step 81/256] Loss=3.594 Time=0.880 Data Time=0.000
+09/09 02:12:21 PM [Epoch 44/650][Step 101/256] Loss=3.550 Time=0.882 Data Time=0.000
+09/09 02:12:38 PM [Epoch 44/650][Step 121/256] Loss=3.748 Time=0.884 Data Time=0.000
+09/09 02:12:56 PM [Epoch 44/650][Step 141/256] Loss=3.680 Time=0.883 Data Time=0.000
+09/09 02:13:14 PM [Epoch 44/650][Step 161/256] Loss=3.543 Time=0.884 Data Time=0.000
+09/09 02:13:32 PM [Epoch 44/650][Step 181/256] Loss=3.519 Time=0.884 Data Time=0.000
+09/09 02:13:49 PM [Epoch 44/650][Step 201/256] Loss=3.651 Time=0.886 Data Time=0.000
+09/09 02:14:07 PM [Epoch 44/650][Step 221/256] Loss=3.548 Time=0.878 Data Time=0.000
+09/09 02:14:25 PM [Epoch 44/650][Step 241/256] Loss=3.612 Time=0.883 Data Time=0.000
+09/09 02:14:50 PM Epoch:43 Acc:10.351 Best Acc:10.351 Best Epoch:43
+09/09 02:14:50 PM [Epoch 45/650] lr=0.019786
+09/09 02:14:56 PM [Epoch 45/650][Step 1/256] Loss=3.606 Time=4.919 Data Time=0.000
+09/09 02:15:13 PM [Epoch 45/650][Step 21/256] Loss=3.606 Time=0.893 Data Time=0.000
+09/09 02:15:31 PM [Epoch 45/650][Step 41/256] Loss=3.579 Time=0.886 Data Time=0.000
+09/09 02:15:49 PM [Epoch 45/650][Step 61/256] Loss=3.523 Time=0.885 Data Time=0.000
+09/09 02:16:07 PM [Epoch 45/650][Step 81/256] Loss=3.716 Time=0.882 Data Time=0.000
+09/09 02:16:24 PM [Epoch 45/650][Step 101/256] Loss=3.650 Time=0.884 Data Time=0.000
+09/09 02:16:42 PM [Epoch 45/650][Step 121/256] Loss=3.476 Time=0.884 Data Time=0.000
+09/09 02:17:00 PM [Epoch 45/650][Step 141/256] Loss=3.557 Time=0.892 Data Time=0.000
+09/09 02:17:18 PM [Epoch 45/650][Step 161/256] Loss=3.673 Time=0.881 Data Time=0.000
+09/09 02:17:35 PM [Epoch 45/650][Step 181/256] Loss=3.711 Time=0.881 Data Time=0.000
+09/09 02:17:53 PM [Epoch 45/650][Step 201/256] Loss=3.560 Time=0.882 Data Time=0.000
+09/09 02:18:11 PM [Epoch 45/650][Step 221/256] Loss=3.780 Time=0.880 Data Time=0.000
+09/09 02:18:28 PM [Epoch 45/650][Step 241/256] Loss=3.618 Time=0.881 Data Time=0.000
+09/09 02:18:54 PM Epoch:44 Acc:10.037 Best Acc:10.351 Best Epoch:43
+09/09 02:18:54 PM [Epoch 46/650] lr=0.019776
+09/09 02:19:00 PM [Epoch 46/650][Step 1/256] Loss=3.598 Time=5.401 Data Time=0.000
+09/09 02:19:17 PM [Epoch 46/650][Step 21/256] Loss=3.672 Time=0.886 Data Time=0.000
+09/09 02:19:35 PM [Epoch 46/650][Step 41/256] Loss=3.594 Time=0.879 Data Time=0.000
+09/09 02:19:53 PM [Epoch 46/650][Step 61/256] Loss=3.528 Time=0.883 Data Time=0.000
+09/09 02:20:11 PM [Epoch 46/650][Step 81/256] Loss=3.490 Time=0.883 Data Time=0.000
+09/09 02:20:28 PM [Epoch 46/650][Step 101/256] Loss=3.752 Time=0.882 Data Time=0.000
+09/09 02:20:46 PM [Epoch 46/650][Step 121/256] Loss=3.429 Time=0.883 Data Time=0.000
+09/09 02:21:04 PM [Epoch 46/650][Step 141/256] Loss=3.630 Time=0.881 Data Time=0.000
+09/09 02:21:22 PM [Epoch 46/650][Step 161/256] Loss=3.501 Time=0.886 Data Time=0.000
+09/09 02:21:39 PM [Epoch 46/650][Step 181/256] Loss=3.576 Time=0.899 Data Time=0.000
+09/09 02:21:57 PM [Epoch 46/650][Step 201/256] Loss=3.608 Time=0.884 Data Time=0.000
+09/09 02:22:15 PM [Epoch 46/650][Step 221/256] Loss=3.708 Time=0.891 Data Time=0.000
+09/09 02:22:33 PM [Epoch 46/650][Step 241/256] Loss=3.695 Time=0.883 Data Time=0.000
+09/09 02:23:02 PM Epoch:45 Acc:9.792 Best Acc:10.351 Best Epoch:43
+09/09 02:23:02 PM [Epoch 47/650] lr=0.019766
+09/09 02:23:08 PM [Epoch 47/650][Step 1/256] Loss=3.614 Time=5.448 Data Time=0.000
+09/09 02:23:26 PM [Epoch 47/650][Step 21/256] Loss=3.534 Time=0.882 Data Time=0.000
+09/09 02:23:43 PM [Epoch 47/650][Step 41/256] Loss=3.724 Time=0.881 Data Time=0.000
+09/09 02:24:01 PM [Epoch 47/650][Step 61/256] Loss=3.512 Time=0.883 Data Time=0.000
+09/09 02:24:19 PM [Epoch 47/650][Step 81/256] Loss=3.595 Time=0.911 Data Time=0.000
+09/09 02:24:36 PM [Epoch 47/650][Step 101/256] Loss=3.466 Time=0.883 Data Time=0.000
+09/09 02:24:54 PM [Epoch 47/650][Step 121/256] Loss=3.540 Time=0.883 Data Time=0.000
+09/09 02:25:12 PM [Epoch 47/650][Step 141/256] Loss=3.330 Time=0.884 Data Time=0.000
+09/09 02:25:30 PM [Epoch 47/650][Step 161/256] Loss=3.463 Time=0.886 Data Time=0.000
+09/09 02:25:48 PM [Epoch 47/650][Step 181/256] Loss=3.531 Time=0.885 Data Time=0.000
+09/09 02:26:05 PM [Epoch 47/650][Step 201/256] Loss=3.427 Time=0.881 Data Time=0.000
+09/09 02:26:23 PM [Epoch 47/650][Step 221/256] Loss=3.489 Time=0.886 Data Time=0.000
+09/09 02:26:41 PM [Epoch 47/650][Step 241/256] Loss=3.647 Time=0.882 Data Time=0.000
+09/09 02:27:11 PM Epoch:46 Acc:10.891 Best Acc:10.891 Best Epoch:46
+09/09 02:27:11 PM [Epoch 48/650] lr=0.019756
+09/09 02:27:16 PM [Epoch 48/650][Step 1/256] Loss=3.596 Time=5.217 Data Time=0.000
+09/09 02:27:34 PM [Epoch 48/650][Step 21/256] Loss=3.607 Time=0.882 Data Time=0.000
+09/09 02:27:52 PM [Epoch 48/650][Step 41/256] Loss=3.515 Time=0.882 Data Time=0.000
+09/09 02:28:09 PM [Epoch 48/650][Step 61/256] Loss=3.461 Time=0.885 Data Time=0.000
+09/09 02:28:27 PM [Epoch 48/650][Step 81/256] Loss=3.558 Time=0.883 Data Time=0.000
+09/09 02:28:45 PM [Epoch 48/650][Step 101/256] Loss=3.584 Time=0.884 Data Time=0.000
+09/09 02:29:03 PM [Epoch 48/650][Step 121/256] Loss=3.570 Time=0.883 Data Time=0.000
+09/09 02:29:20 PM [Epoch 48/650][Step 141/256] Loss=3.716 Time=0.887 Data Time=0.000
+09/09 02:29:38 PM [Epoch 48/650][Step 161/256] Loss=3.496 Time=0.886 Data Time=0.000
+09/09 02:29:56 PM [Epoch 48/650][Step 181/256] Loss=3.424 Time=0.883 Data Time=0.000
+09/09 02:30:14 PM [Epoch 48/650][Step 201/256] Loss=3.654 Time=0.884 Data Time=0.000
+09/09 02:30:32 PM [Epoch 48/650][Step 221/256] Loss=3.624 Time=0.895 Data Time=0.000
+09/09 02:30:49 PM [Epoch 48/650][Step 241/256] Loss=3.740 Time=0.885 Data Time=0.000
+09/09 02:31:19 PM Epoch:47 Acc:11.009 Best Acc:11.009 Best Epoch:47
+09/09 02:31:19 PM [Epoch 49/650] lr=0.019745
+09/09 02:31:24 PM [Epoch 49/650][Step 1/256] Loss=3.394 Time=4.757 Data Time=0.000
+09/09 02:31:41 PM [Epoch 49/650][Step 21/256] Loss=3.505 Time=0.880 Data Time=0.000
+09/09 02:31:59 PM [Epoch 49/650][Step 41/256] Loss=3.466 Time=0.881 Data Time=0.000
+09/09 02:32:17 PM [Epoch 49/650][Step 61/256] Loss=3.419 Time=0.881 Data Time=0.000
+09/09 02:32:34 PM [Epoch 49/650][Step 81/256] Loss=3.580 Time=0.887 Data Time=0.000
+09/09 02:32:52 PM [Epoch 49/650][Step 101/256] Loss=3.691 Time=0.884 Data Time=0.000
+09/09 02:33:10 PM [Epoch 49/650][Step 121/256] Loss=3.382 Time=0.879 Data Time=0.000
+09/09 02:33:27 PM [Epoch 49/650][Step 141/256] Loss=3.689 Time=0.882 Data Time=0.000
+09/09 02:33:45 PM [Epoch 49/650][Step 161/256] Loss=3.538 Time=0.879 Data Time=0.000
+09/09 02:34:03 PM [Epoch 49/650][Step 181/256] Loss=3.659 Time=0.881 Data Time=0.000
+09/09 02:34:20 PM [Epoch 49/650][Step 201/256] Loss=3.510 Time=0.881 Data Time=0.000
+09/09 02:34:38 PM [Epoch 49/650][Step 221/256] Loss=3.462 Time=0.883 Data Time=0.000
+09/09 02:34:56 PM [Epoch 49/650][Step 241/256] Loss=3.599 Time=0.881 Data Time=0.000
+09/09 02:35:22 PM Epoch:48 Acc:9.949 Best Acc:11.009 Best Epoch:47
+09/09 02:35:22 PM [Epoch 50/650] lr=0.019735
+09/09 02:35:28 PM [Epoch 50/650][Step 1/256] Loss=3.443 Time=5.386 Data Time=0.000
+09/09 02:35:45 PM [Epoch 50/650][Step 21/256] Loss=3.510 Time=0.882 Data Time=0.000
+09/09 02:36:03 PM [Epoch 50/650][Step 41/256] Loss=3.532 Time=0.888 Data Time=0.000
+09/09 02:36:21 PM [Epoch 50/650][Step 61/256] Loss=3.556 Time=0.884 Data Time=0.000
+09/09 02:36:39 PM [Epoch 50/650][Step 81/256] Loss=3.717 Time=0.882 Data Time=0.000
+09/09 02:36:56 PM [Epoch 50/650][Step 101/256] Loss=3.500 Time=0.881 Data Time=0.000
+09/09 02:37:14 PM [Epoch 50/650][Step 121/256] Loss=3.656 Time=0.880 Data Time=0.000
+09/09 02:37:32 PM [Epoch 50/650][Step 141/256] Loss=3.396 Time=0.883 Data Time=0.000
+09/09 02:37:50 PM [Epoch 50/650][Step 161/256] Loss=3.458 Time=0.884 Data Time=0.000
+09/09 02:38:07 PM [Epoch 50/650][Step 181/256] Loss=3.517 Time=0.886 Data Time=0.000
+09/09 02:38:25 PM [Epoch 50/650][Step 201/256] Loss=3.501 Time=0.879 Data Time=0.000
+09/09 02:38:43 PM [Epoch 50/650][Step 221/256] Loss=3.471 Time=0.885 Data Time=0.000
+09/09 02:39:01 PM [Epoch 50/650][Step 241/256] Loss=3.526 Time=0.884 Data Time=0.000
+09/09 02:39:30 PM Epoch:49 Acc:11.264 Best Acc:11.264 Best Epoch:49
+09/09 02:39:30 PM [Epoch 51/650] lr=0.019724
+09/09 02:39:36 PM [Epoch 51/650][Step 1/256] Loss=3.445 Time=5.473 Data Time=0.000
+09/09 02:39:54 PM [Epoch 51/650][Step 21/256] Loss=3.429 Time=0.880 Data Time=0.000
+09/09 02:40:12 PM [Epoch 51/650][Step 41/256] Loss=3.514 Time=0.883 Data Time=0.000
+09/09 02:40:29 PM [Epoch 51/650][Step 61/256] Loss=3.588 Time=0.883 Data Time=0.000
+09/09 02:40:47 PM [Epoch 51/650][Step 81/256] Loss=3.336 Time=0.883 Data Time=0.000
+09/09 02:41:05 PM [Epoch 51/650][Step 101/256] Loss=3.609 Time=0.883 Data Time=0.000
+09/09 02:41:23 PM [Epoch 51/650][Step 121/256] Loss=3.491 Time=0.883 Data Time=0.000
+09/09 02:41:40 PM [Epoch 51/650][Step 141/256] Loss=3.542 Time=0.888 Data Time=0.000
+09/09 02:41:58 PM [Epoch 51/650][Step 161/256] Loss=3.344 Time=0.883 Data Time=0.000
+09/09 02:42:16 PM [Epoch 51/650][Step 181/256] Loss=3.445 Time=0.882 Data Time=0.000
+09/09 02:42:34 PM [Epoch 51/650][Step 201/256] Loss=3.591 Time=0.883 Data Time=0.000
+09/09 02:42:51 PM [Epoch 51/650][Step 221/256] Loss=3.521 Time=0.882 Data Time=0.000
+09/09 02:43:09 PM [Epoch 51/650][Step 241/256] Loss=3.557 Time=0.881 Data Time=0.000
+09/09 02:43:39 PM Epoch:50 Acc:10.243 Best Acc:11.264 Best Epoch:49
+09/09 02:43:39 PM [Epoch 52/650] lr=0.019713
+09/09 02:43:44 PM [Epoch 52/650][Step 1/256] Loss=3.626 Time=5.301 Data Time=0.000
+09/09 02:44:02 PM [Epoch 52/650][Step 21/256] Loss=3.418 Time=0.883 Data Time=0.000
+09/09 02:44:20 PM [Epoch 52/650][Step 41/256] Loss=3.560 Time=0.884 Data Time=0.000
+09/09 02:44:37 PM [Epoch 52/650][Step 61/256] Loss=3.382 Time=0.901 Data Time=0.000
+09/09 02:44:55 PM [Epoch 52/650][Step 81/256] Loss=3.544 Time=0.882 Data Time=0.000
+09/09 02:45:13 PM [Epoch 52/650][Step 101/256] Loss=3.545 Time=0.945 Data Time=0.000
+09/09 02:45:31 PM [Epoch 52/650][Step 121/256] Loss=3.550 Time=0.886 Data Time=0.000
+09/09 02:45:49 PM [Epoch 52/650][Step 141/256] Loss=3.564 Time=0.886 Data Time=0.000
+09/09 02:46:06 PM [Epoch 52/650][Step 161/256] Loss=3.553 Time=0.889 Data Time=0.000
+09/09 02:46:24 PM [Epoch 52/650][Step 181/256] Loss=3.522 Time=0.885 Data Time=0.000
+09/09 02:46:42 PM [Epoch 52/650][Step 201/256] Loss=3.718 Time=0.883 Data Time=0.000
+09/09 02:47:00 PM [Epoch 52/650][Step 221/256] Loss=3.388 Time=0.886 Data Time=0.000
+09/09 02:47:17 PM [Epoch 52/650][Step 241/256] Loss=3.474 Time=0.883 Data Time=0.000
+09/09 02:47:46 PM Epoch:51 Acc:11.009 Best Acc:11.264 Best Epoch:49
+09/09 02:47:46 PM [Epoch 53/650] lr=0.019702
+09/09 02:47:52 PM [Epoch 53/650][Step 1/256] Loss=3.381 Time=5.331 Data Time=0.000
+09/09 02:48:09 PM [Epoch 53/650][Step 21/256] Loss=3.432 Time=0.884 Data Time=0.000
+09/09 02:48:27 PM [Epoch 53/650][Step 41/256] Loss=3.520 Time=0.882 Data Time=0.000
+09/09 02:48:45 PM [Epoch 53/650][Step 61/256] Loss=3.490 Time=0.880 Data Time=0.000
+09/09 02:49:03 PM [Epoch 53/650][Step 81/256] Loss=3.540 Time=0.882 Data Time=0.000
+09/09 02:49:20 PM [Epoch 53/650][Step 101/256] Loss=3.684 Time=0.880 Data Time=0.000
+09/09 02:49:38 PM [Epoch 53/650][Step 121/256] Loss=3.351 Time=0.882 Data Time=0.000
+09/09 02:49:56 PM [Epoch 53/650][Step 141/256] Loss=3.362 Time=0.887 Data Time=0.000
+09/09 02:50:14 PM [Epoch 53/650][Step 161/256] Loss=3.533 Time=0.889 Data Time=0.000
+09/09 02:50:32 PM [Epoch 53/650][Step 181/256] Loss=3.468 Time=0.893 Data Time=0.000
+09/09 02:50:49 PM [Epoch 53/650][Step 201/256] Loss=3.462 Time=0.886 Data Time=0.000
+09/09 02:51:10 PM [Epoch 53/650][Step 221/256] Loss=3.551 Time=0.884 Data Time=0.000
+09/09 02:51:28 PM [Epoch 53/650][Step 241/256] Loss=3.440 Time=0.884 Data Time=0.000
+09/09 02:51:58 PM Epoch:52 Acc:10.498 Best Acc:11.264 Best Epoch:49
+09/09 02:51:58 PM [Epoch 54/650] lr=0.019690
+09/09 02:52:04 PM [Epoch 54/650][Step 1/256] Loss=3.370 Time=5.580 Data Time=0.000
+09/09 02:52:22 PM [Epoch 54/650][Step 21/256] Loss=3.450 Time=0.884 Data Time=0.000
+09/09 02:52:39 PM [Epoch 54/650][Step 41/256] Loss=3.485 Time=0.879 Data Time=0.000
+09/09 02:52:57 PM [Epoch 54/650][Step 61/256] Loss=3.358 Time=0.884 Data Time=0.000
+09/09 02:53:15 PM [Epoch 54/650][Step 81/256] Loss=3.527 Time=0.891 Data Time=0.000
+09/09 02:53:33 PM [Epoch 54/650][Step 101/256] Loss=3.327 Time=0.896 Data Time=0.000
+09/09 02:53:50 PM [Epoch 54/650][Step 121/256] Loss=3.576 Time=0.884 Data Time=0.000
+09/09 02:54:08 PM [Epoch 54/650][Step 141/256] Loss=3.400 Time=0.880 Data Time=0.000
+09/09 02:54:26 PM [Epoch 54/650][Step 161/256] Loss=3.405 Time=0.882 Data Time=0.000
+09/09 02:54:44 PM [Epoch 54/650][Step 181/256] Loss=3.443 Time=0.883 Data Time=0.000
+09/09 02:55:01 PM [Epoch 54/650][Step 201/256] Loss=3.522 Time=0.882 Data Time=0.000
+09/09 02:55:19 PM [Epoch 54/650][Step 221/256] Loss=3.454 Time=0.881 Data Time=0.000
+09/09 02:55:37 PM [Epoch 54/650][Step 241/256] Loss=3.469 Time=0.885 Data Time=0.000
+09/09 02:56:07 PM Epoch:53 Acc:8.163 Best Acc:11.264 Best Epoch:49
+09/09 02:56:07 PM [Epoch 55/650] lr=0.019678
+09/09 02:56:12 PM [Epoch 55/650][Step 1/256] Loss=3.360 Time=5.279 Data Time=0.000
+09/09 02:56:30 PM [Epoch 55/650][Step 21/256] Loss=3.467 Time=0.880 Data Time=0.000
+09/09 02:56:48 PM [Epoch 55/650][Step 41/256] Loss=3.385 Time=0.884 Data Time=0.000
+09/09 02:57:05 PM [Epoch 55/650][Step 61/256] Loss=3.543 Time=0.883 Data Time=0.000
+09/09 02:57:23 PM [Epoch 55/650][Step 81/256] Loss=3.328 Time=0.883 Data Time=0.000
+09/09 02:57:41 PM [Epoch 55/650][Step 101/256] Loss=3.325 Time=0.881 Data Time=0.000
+09/09 02:57:59 PM [Epoch 55/650][Step 121/256] Loss=3.335 Time=0.883 Data Time=0.000
+09/09 02:58:16 PM [Epoch 55/650][Step 141/256] Loss=3.360 Time=0.909 Data Time=0.000
+09/09 02:58:34 PM [Epoch 55/650][Step 161/256] Loss=3.372 Time=0.882 Data Time=0.000
+09/09 02:58:52 PM [Epoch 55/650][Step 181/256] Loss=3.326 Time=0.879 Data Time=0.000
+09/09 02:59:09 PM [Epoch 55/650][Step 201/256] Loss=3.392 Time=0.889 Data Time=0.000
+09/09 02:59:27 PM [Epoch 55/650][Step 221/256] Loss=3.381 Time=0.883 Data Time=0.000
+09/09 02:59:45 PM [Epoch 55/650][Step 241/256] Loss=3.443 Time=0.882 Data Time=0.000
+09/09 03:00:11 PM Epoch:54 Acc:9.733 Best Acc:11.264 Best Epoch:49
+09/09 03:00:11 PM [Epoch 56/650] lr=0.019666
+09/09 03:00:16 PM [Epoch 56/650][Step 1/256] Loss=3.571 Time=4.975 Data Time=0.000
+09/09 03:00:34 PM [Epoch 56/650][Step 21/256] Loss=3.443 Time=0.883 Data Time=0.000
+09/09 03:00:51 PM [Epoch 56/650][Step 41/256] Loss=3.406 Time=0.885 Data Time=0.000
+09/09 03:01:09 PM [Epoch 56/650][Step 61/256] Loss=3.298 Time=0.882 Data Time=0.000
+09/09 03:01:27 PM [Epoch 56/650][Step 81/256] Loss=3.507 Time=0.882 Data Time=0.000
+09/09 03:01:45 PM [Epoch 56/650][Step 101/256] Loss=3.525 Time=0.882 Data Time=0.000
+09/09 03:02:02 PM [Epoch 56/650][Step 121/256] Loss=3.438 Time=0.885 Data Time=0.000
+09/09 03:02:20 PM [Epoch 56/650][Step 141/256] Loss=3.434 Time=0.880 Data Time=0.000
+09/09 03:02:38 PM [Epoch 56/650][Step 161/256] Loss=3.592 Time=0.886 Data Time=0.000
+09/09 03:02:55 PM [Epoch 56/650][Step 181/256] Loss=3.357 Time=0.883 Data Time=0.000
+09/09 03:03:13 PM [Epoch 56/650][Step 201/256] Loss=3.337 Time=0.886 Data Time=0.000
+09/09 03:03:31 PM [Epoch 56/650][Step 221/256] Loss=3.399 Time=0.882 Data Time=0.000
+09/09 03:03:49 PM [Epoch 56/650][Step 241/256] Loss=3.337 Time=0.882 Data Time=0.000
+09/09 03:04:19 PM Epoch:55 Acc:9.861 Best Acc:11.264 Best Epoch:49
+09/09 03:04:19 PM [Epoch 57/650] lr=0.019654
+09/09 03:04:28 PM [Epoch 57/650][Step 1/256] Loss=3.503 Time=8.863 Data Time=0.000
+09/09 03:04:46 PM [Epoch 57/650][Step 21/256] Loss=3.362 Time=0.882 Data Time=0.000
+09/09 03:05:04 PM [Epoch 57/650][Step 41/256] Loss=3.377 Time=0.892 Data Time=0.000
+09/09 03:05:22 PM [Epoch 57/650][Step 61/256] Loss=3.418 Time=0.883 Data Time=0.000
+09/09 03:05:39 PM [Epoch 57/650][Step 81/256] Loss=3.408 Time=0.884 Data Time=0.000
+09/09 03:05:57 PM [Epoch 57/650][Step 101/256] Loss=3.329 Time=0.881 Data Time=0.000
+09/09 03:06:15 PM [Epoch 57/650][Step 121/256] Loss=3.501 Time=0.887 Data Time=0.000
+09/09 03:06:33 PM [Epoch 57/650][Step 141/256] Loss=3.428 Time=0.885 Data Time=0.000
+09/09 03:06:50 PM [Epoch 57/650][Step 161/256] Loss=3.388 Time=0.883 Data Time=0.000
+09/09 03:07:08 PM [Epoch 57/650][Step 181/256] Loss=3.307 Time=0.892 Data Time=0.000
+09/09 03:07:26 PM [Epoch 57/650][Step 201/256] Loss=3.376 Time=0.884 Data Time=0.000
+09/09 03:07:44 PM [Epoch 57/650][Step 221/256] Loss=3.492 Time=0.883 Data Time=0.000
+09/09 03:08:01 PM [Epoch 57/650][Step 241/256] Loss=3.343 Time=0.890 Data Time=0.000
+09/09 03:08:31 PM Epoch:56 Acc:11.058 Best Acc:11.264 Best Epoch:49
+09/09 03:08:31 PM [Epoch 58/650] lr=0.019642
+09/09 03:08:37 PM [Epoch 58/650][Step 1/256] Loss=3.249 Time=5.580 Data Time=0.000
+09/09 03:08:54 PM [Epoch 58/650][Step 21/256] Loss=3.567 Time=0.880 Data Time=0.000
+09/09 03:09:12 PM [Epoch 58/650][Step 41/256] Loss=3.343 Time=0.884 Data Time=0.000
+09/09 03:09:30 PM [Epoch 58/650][Step 61/256] Loss=3.385 Time=0.881 Data Time=0.000
+09/09 03:09:47 PM [Epoch 58/650][Step 81/256] Loss=3.329 Time=0.882 Data Time=0.000
+09/09 03:10:05 PM [Epoch 58/650][Step 101/256] Loss=3.488 Time=0.881 Data Time=0.000
+09/09 03:10:23 PM [Epoch 58/650][Step 121/256] Loss=3.348 Time=0.881 Data Time=0.000
+09/09 03:10:41 PM [Epoch 58/650][Step 141/256] Loss=3.438 Time=0.879 Data Time=0.000
+09/09 03:10:58 PM [Epoch 58/650][Step 161/256] Loss=3.425 Time=0.883 Data Time=0.000
+09/09 03:11:16 PM [Epoch 58/650][Step 181/256] Loss=3.401 Time=0.884 Data Time=0.000
+09/09 03:11:34 PM [Epoch 58/650][Step 201/256] Loss=3.412 Time=0.884 Data Time=0.000
+09/09 03:11:52 PM [Epoch 58/650][Step 221/256] Loss=3.472 Time=0.898 Data Time=0.000
+09/09 03:12:09 PM [Epoch 58/650][Step 241/256] Loss=3.282 Time=0.882 Data Time=0.000
+09/09 03:12:35 PM Epoch:57 Acc:10.891 Best Acc:11.264 Best Epoch:49
+09/09 03:12:35 PM [Epoch 59/650] lr=0.019629
+09/09 03:12:39 PM [Epoch 59/650][Step 1/256] Loss=3.323 Time=3.414 Data Time=0.000
+09/09 03:12:57 PM [Epoch 59/650][Step 21/256] Loss=3.419 Time=0.884 Data Time=0.000
+09/09 03:13:15 PM [Epoch 59/650][Step 41/256] Loss=3.417 Time=0.879 Data Time=0.000
+09/09 03:13:32 PM [Epoch 59/650][Step 61/256] Loss=3.402 Time=0.904 Data Time=0.000
+09/09 03:13:50 PM [Epoch 59/650][Step 81/256] Loss=3.347 Time=0.883 Data Time=0.000
+09/09 03:14:08 PM [Epoch 59/650][Step 101/256] Loss=3.344 Time=0.884 Data Time=0.000
+09/09 03:14:25 PM [Epoch 59/650][Step 121/256] Loss=3.359 Time=0.885 Data Time=0.000
+09/09 03:14:43 PM [Epoch 59/650][Step 141/256] Loss=3.327 Time=0.884 Data Time=0.000
+09/09 03:15:01 PM [Epoch 59/650][Step 161/256] Loss=3.415 Time=0.895 Data Time=0.000
+09/09 03:15:19 PM [Epoch 59/650][Step 181/256] Loss=3.228 Time=0.886 Data Time=0.000
+09/09 03:15:37 PM [Epoch 59/650][Step 201/256] Loss=3.250 Time=0.882 Data Time=0.000
+09/09 03:15:54 PM [Epoch 59/650][Step 221/256] Loss=3.344 Time=0.891 Data Time=0.000
+09/09 03:16:12 PM [Epoch 59/650][Step 241/256] Loss=3.280 Time=0.887 Data Time=0.000
+09/09 03:16:41 PM Epoch:58 Acc:11.892 Best Acc:11.892 Best Epoch:58
+09/09 03:16:41 PM [Epoch 60/650] lr=0.019616
+09/09 03:16:46 PM [Epoch 60/650][Step 1/256] Loss=3.298 Time=5.055 Data Time=0.000
+09/09 03:17:04 PM [Epoch 60/650][Step 21/256] Loss=3.544 Time=0.884 Data Time=0.000
+09/09 03:17:22 PM [Epoch 60/650][Step 41/256] Loss=3.318 Time=0.889 Data Time=0.000
+09/09 03:17:40 PM [Epoch 60/650][Step 61/256] Loss=3.237 Time=0.888 Data Time=0.000
+09/09 03:17:58 PM [Epoch 60/650][Step 81/256] Loss=3.356 Time=0.882 Data Time=0.000
+09/09 03:18:15 PM [Epoch 60/650][Step 101/256] Loss=3.372 Time=0.885 Data Time=0.000
+09/09 03:18:35 PM [Epoch 60/650][Step 121/256] Loss=3.362 Time=0.884 Data Time=0.000
+09/09 03:18:53 PM [Epoch 60/650][Step 141/256] Loss=3.434 Time=0.882 Data Time=0.000
+09/09 03:19:10 PM [Epoch 60/650][Step 161/256] Loss=3.295 Time=0.888 Data Time=0.000
+09/09 03:19:28 PM [Epoch 60/650][Step 181/256] Loss=3.451 Time=0.884 Data Time=0.000
+09/09 03:19:46 PM [Epoch 60/650][Step 201/256] Loss=3.397 Time=0.885 Data Time=0.000
+09/09 03:20:04 PM [Epoch 60/650][Step 221/256] Loss=3.248 Time=0.883 Data Time=0.000
+09/09 03:20:21 PM [Epoch 60/650][Step 241/256] Loss=3.511 Time=0.901 Data Time=0.000
+09/09 03:20:48 PM Epoch:59 Acc:11.951 Best Acc:11.951 Best Epoch:59
+09/09 03:20:48 PM [Epoch 61/650] lr=0.019603
+09/09 03:20:53 PM [Epoch 61/650][Step 1/256] Loss=3.252 Time=5.240 Data Time=0.000
+09/09 03:21:11 PM [Epoch 61/650][Step 21/256] Loss=3.292 Time=0.887 Data Time=0.000
+09/09 03:21:29 PM [Epoch 61/650][Step 41/256] Loss=3.344 Time=0.884 Data Time=0.000
+09/09 03:21:47 PM [Epoch 61/650][Step 61/256] Loss=3.456 Time=0.886 Data Time=0.000
+09/09 03:22:04 PM [Epoch 61/650][Step 81/256] Loss=3.293 Time=0.882 Data Time=0.000
+09/09 03:22:22 PM [Epoch 61/650][Step 101/256] Loss=3.477 Time=0.880 Data Time=0.000
+09/09 03:22:40 PM [Epoch 61/650][Step 121/256] Loss=3.511 Time=0.887 Data Time=0.000
+09/09 03:22:58 PM [Epoch 61/650][Step 141/256] Loss=3.331 Time=0.883 Data Time=0.000
+09/09 03:23:16 PM [Epoch 61/650][Step 161/256] Loss=3.221 Time=0.882 Data Time=0.000
+09/09 03:23:33 PM [Epoch 61/650][Step 181/256] Loss=3.218 Time=0.882 Data Time=0.000
+09/09 03:23:51 PM [Epoch 61/650][Step 201/256] Loss=3.472 Time=0.887 Data Time=0.000
+09/09 03:24:09 PM [Epoch 61/650][Step 221/256] Loss=3.261 Time=0.880 Data Time=0.000
+09/09 03:24:27 PM [Epoch 61/650][Step 241/256] Loss=3.326 Time=0.880 Data Time=0.000
+09/09 03:24:58 PM Epoch:60 Acc:10.969 Best Acc:11.951 Best Epoch:59
+09/09 03:24:58 PM [Epoch 62/650] lr=0.019590
+09/09 03:25:04 PM [Epoch 62/650][Step 1/256] Loss=3.308 Time=5.517 Data Time=0.000
+09/09 03:25:21 PM [Epoch 62/650][Step 21/256] Loss=3.366 Time=0.882 Data Time=0.000
+09/09 03:25:39 PM [Epoch 62/650][Step 41/256] Loss=3.318 Time=0.883 Data Time=0.000
+09/09 03:25:57 PM [Epoch 62/650][Step 61/256] Loss=3.293 Time=0.881 Data Time=0.000
+09/09 03:26:14 PM [Epoch 62/650][Step 81/256] Loss=3.240 Time=0.881 Data Time=0.000
+09/09 03:26:32 PM [Epoch 62/650][Step 101/256] Loss=3.445 Time=0.880 Data Time=0.000
+09/09 03:26:50 PM [Epoch 62/650][Step 121/256] Loss=3.287 Time=0.882 Data Time=0.000
+09/09 03:27:08 PM [Epoch 62/650][Step 141/256] Loss=3.399 Time=0.882 Data Time=0.000
+09/09 03:27:25 PM [Epoch 62/650][Step 161/256] Loss=3.383 Time=0.881 Data Time=0.000
+09/09 03:27:43 PM [Epoch 62/650][Step 181/256] Loss=3.269 Time=0.884 Data Time=0.000
+09/09 03:28:01 PM [Epoch 62/650][Step 201/256] Loss=3.251 Time=0.882 Data Time=0.000
+09/09 03:28:18 PM [Epoch 62/650][Step 221/256] Loss=3.261 Time=0.881 Data Time=0.000
+09/09 03:28:36 PM [Epoch 62/650][Step 241/256] Loss=3.340 Time=0.880 Data Time=0.000
+09/09 03:29:06 PM Epoch:61 Acc:10.754 Best Acc:11.951 Best Epoch:59
+09/09 03:29:06 PM [Epoch 63/650] lr=0.019577
+09/09 03:29:14 PM [Epoch 63/650][Step 1/256] Loss=3.387 Time=8.128 Data Time=0.000
+09/09 03:29:32 PM [Epoch 63/650][Step 21/256] Loss=3.304 Time=0.879 Data Time=0.000
+09/09 03:29:50 PM [Epoch 63/650][Step 41/256] Loss=3.268 Time=0.880 Data Time=0.000
+09/09 03:30:07 PM [Epoch 63/650][Step 61/256] Loss=3.376 Time=0.881 Data Time=0.000
+09/09 03:30:25 PM [Epoch 63/650][Step 81/256] Loss=3.348 Time=0.884 Data Time=0.000
+09/09 03:30:43 PM [Epoch 63/650][Step 101/256] Loss=3.261 Time=0.883 Data Time=0.000
+09/09 03:31:01 PM [Epoch 63/650][Step 121/256] Loss=3.463 Time=0.883 Data Time=0.000
+09/09 03:31:18 PM [Epoch 63/650][Step 141/256] Loss=3.307 Time=0.880 Data Time=0.000
+09/09 03:31:36 PM [Epoch 63/650][Step 161/256] Loss=3.321 Time=0.883 Data Time=0.000
+09/09 03:31:54 PM [Epoch 63/650][Step 181/256] Loss=3.406 Time=0.885 Data Time=0.000
+09/09 03:32:12 PM [Epoch 63/650][Step 201/256] Loss=3.325 Time=0.917 Data Time=0.000
+09/09 03:32:29 PM [Epoch 63/650][Step 221/256] Loss=3.272 Time=0.887 Data Time=0.000
+09/09 03:32:47 PM [Epoch 63/650][Step 241/256] Loss=3.406 Time=0.882 Data Time=0.000
+09/09 03:33:14 PM Epoch:62 Acc:11.126 Best Acc:11.951 Best Epoch:59
+09/09 03:33:14 PM [Epoch 64/650] lr=0.019563
+09/09 03:33:20 PM [Epoch 64/650][Step 1/256] Loss=3.270 Time=5.574 Data Time=0.000
+09/09 03:33:38 PM [Epoch 64/650][Step 21/256] Loss=3.235 Time=0.886 Data Time=0.000
+09/09 03:33:55 PM [Epoch 64/650][Step 41/256] Loss=3.265 Time=0.882 Data Time=0.000
+09/09 03:34:13 PM [Epoch 64/650][Step 61/256] Loss=3.360 Time=0.884 Data Time=0.000
+09/09 03:34:31 PM [Epoch 64/650][Step 81/256] Loss=3.306 Time=0.881 Data Time=0.000
+09/09 03:34:49 PM [Epoch 64/650][Step 101/256] Loss=3.378 Time=0.887 Data Time=0.000
+09/09 03:35:06 PM [Epoch 64/650][Step 121/256] Loss=3.229 Time=0.884 Data Time=0.000
+09/09 03:35:24 PM [Epoch 64/650][Step 141/256] Loss=3.450 Time=0.884 Data Time=0.000
+09/09 03:35:43 PM [Epoch 64/650][Step 161/256] Loss=3.404 Time=0.890 Data Time=0.000
+09/09 03:36:01 PM [Epoch 64/650][Step 181/256] Loss=3.149 Time=0.890 Data Time=0.000
+09/09 03:36:19 PM [Epoch 64/650][Step 201/256] Loss=3.352 Time=0.884 Data Time=0.000
+09/09 03:36:36 PM [Epoch 64/650][Step 221/256] Loss=3.311 Time=0.885 Data Time=0.000
+09/09 03:36:54 PM [Epoch 64/650][Step 241/256] Loss=3.173 Time=0.891 Data Time=0.000
+09/09 03:37:21 PM Epoch:63 Acc:11.499 Best Acc:11.951 Best Epoch:59
+09/09 03:37:21 PM [Epoch 65/650] lr=0.019549
+09/09 03:37:27 PM [Epoch 65/650][Step 1/256] Loss=3.467 Time=5.288 Data Time=0.000
+09/09 03:37:44 PM [Epoch 65/650][Step 21/256] Loss=3.356 Time=0.879 Data Time=0.000
+09/09 03:38:02 PM [Epoch 65/650][Step 41/256] Loss=3.340 Time=0.883 Data Time=0.000
+09/09 03:38:20 PM [Epoch 65/650][Step 61/256] Loss=3.350 Time=0.912 Data Time=0.000
+09/09 03:38:38 PM [Epoch 65/650][Step 81/256] Loss=3.342 Time=0.881 Data Time=0.000
+09/09 03:38:55 PM [Epoch 65/650][Step 101/256] Loss=3.358 Time=0.893 Data Time=0.000
+09/09 03:39:13 PM [Epoch 65/650][Step 121/256] Loss=3.241 Time=0.883 Data Time=0.000
+09/09 03:39:31 PM [Epoch 65/650][Step 141/256] Loss=3.312 Time=0.880 Data Time=0.000
+09/09 03:39:49 PM [Epoch 65/650][Step 161/256] Loss=3.327 Time=0.884 Data Time=0.000
+09/09 03:40:06 PM [Epoch 65/650][Step 181/256] Loss=3.385 Time=0.881 Data Time=0.000
+09/09 03:40:24 PM [Epoch 65/650][Step 201/256] Loss=3.333 Time=0.883 Data Time=0.000
+09/09 03:40:42 PM [Epoch 65/650][Step 221/256] Loss=3.382 Time=0.888 Data Time=0.000
+09/09 03:41:00 PM [Epoch 65/650][Step 241/256] Loss=3.276 Time=0.884 Data Time=0.000
+09/09 03:41:29 PM Epoch:64 Acc:11.970 Best Acc:11.970 Best Epoch:64
+09/09 03:41:29 PM [Epoch 66/650] lr=0.019535
+09/09 03:41:34 PM [Epoch 66/650][Step 1/256] Loss=3.222 Time=5.413 Data Time=0.000
+09/09 03:41:52 PM [Epoch 66/650][Step 21/256] Loss=3.448 Time=0.882 Data Time=0.000
+09/09 03:42:10 PM [Epoch 66/650][Step 41/256] Loss=3.250 Time=0.885 Data Time=0.000

@@ -112,7 +112,8 @@ if 'cifar' in C.dataset:
     # exponential
     C.lr_decay = 0.97
     # multistep
-    C.milestones = [80, 120, 160]
+    # C.milestones = [80, 120, 160]
+    C.milestones = [80, 120]
     C.gamma = 0.1
     # cosine
     C.learning_rate_min = 0.001

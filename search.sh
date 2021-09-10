@@ -63,19 +63,19 @@
 # --pretrain /Datadisk/shihh/NAS/hw/CIFAR100_AddShift3 \
 # --gpu 0 > hw/CIFAR100_AddShift3_130 2>&1 &
 
-CUDA_VISIBLE_DEVICES=6 nohup python -u search.py \
+CUDA_VISIBLE_DEVICES=3 nohup python -u search.py \
 --ngpus_per_node 2 \
 --port 4657 \
 --dataset cifar100 \
---search_space AddShift \
+--search_space AddShiftAdd \
 --dataset_path /Datadisk/datasets/CIFAR100 \
---pretrain_epoch 40 \
+--pretrain_epoch 60 \
 --act_num 2 \
---flops_weight 0.5e-10 \
+--flops_weight 1e-10 \
 --efficiency_metric flops \
 --flops_max 1e8 \
 --flops_min 5e7 \
 --lr 0.05 \
 --batch_size 128 \
---pretrain /Datadisk/shihh/NAS/baseline/CIFAR100_AddShift_2_0.5e-10 \
---gpu 0 > baseline/CIFAR100_AddShift_2_0.5e-10 2>&1 &
+--pretrain /Datadisk/shihh/NAS/adder/CIFAR100_AddShiftAdd_60_1e-10_shiftq \
+--gpu 0 > adder_log/CIFAR100_AddShiftAdd_60_1e-10_shiftq 2>&1 &

@@ -15,18 +15,18 @@
 
 
 
-CUDA_VISIBLE_DEVICES=6 nohup python -u train_resnet20_add.py \
+CUDA_VISIBLE_DEVICES=3 nohup python -u train.py \
 --ngpus_per_node 8 \
 --dataset cifar100 \
---search_space AddAdd \
+--search_space AddShiftAdd \
 --dataset_path /Datadisk/datasets/CIFAR100 \
---pretrain /Datadisk/shihh/NAS/baseline/CIFAR100_resnet20_add \
+--pretrain /Datadisk/shihh/NAS/adder/CIFAR100_AddShiftAdd_shiftq_scratch \
 --nepochs 650 \
 --batch_size 196 \
 --lr 0.02 \
---load_path /Datadisk/shihh/NAS/hw/CIFAR100_AddAdd \
---load_epoch 240 \
---gpu 0 > baseline/CIFAR100_resnet20_add 2>&1 &
+--load_path /Datadisk/shihh/NAS/ckpt/AddShiftAdd_90 \
+--load_epoch 180 \
+--gpu 0 > adder_log/CIFAR100_AddShiftAdd_shiftq_scratch 2>&1 &
 
 # --distillation True \
 # --transfer_epoch 400 \

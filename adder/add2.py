@@ -2,18 +2,25 @@
 Refer to AdderNet code.
 Efficient CUDA implementation for AdderNet training.
 '''
+from os import closerange
 import torch
 import torch.nn as nn
 # import adder_cuda
 import numpy as np
 from torch.autograd import Function
-from .quantize import quantize, quantize_grad, QuantMeasure, calculate_qparams
+from adder.quantize import quantize, quantize_grad, QuantMeasure, calculate_qparams
 import deepshift.ste as ste
 
 from torch.utils.cpp_extension import load
 adder_cuda = load(
   'adder_cuda', ['adder/adder_cuda.cpp', 'adder/adder_cuda_kernel.cu'], verbose=True)
 
+def sub_filter_start_end(kernel_size, sub_kernel_size):
+    center = kernel_size // 2
+    dev = sub_kernel_size // 2
+    start, end = center - dev, center + dev + 1
+    assert end - start == sub_kernel_size
+    return start, end
 
 def get_conv2d_output_shape(input, weight, stride, padding):
     n_filters, d_filter, h_filter, w_filter = weight.size()
@@ -244,7 +251,8 @@ class Adder2DFunction(torch.autograd.Function):
                            kernel_size, kernel_size,
                            stride, stride,
                            padding, padding,
-                           groups)
+                           groups, groups
+                           )
 
         return output
 
@@ -270,28 +278,47 @@ class Adder2DFunction(torch.autograd.Function):
                                       kernel_size, kernel_size,
                                       stride, stride,
                                       padding, padding,
-                                      groups)
+                                      groups, groups
+                                      )
 
         # weight
         if ctx.needs_input_grad[1]:
-            grad_weight = torch.zeros_like(weight)
-            adder_cuda.backward_weight(grad_output,
-                                       input,
-                                       weight,
-                                       grad_weight,
-                                       kernel_size, kernel_size,
-                                       stride, stride,
-                                       padding, padding,
-                                       groups)
-            grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight) * grad_weight
-
-            if ctx.quantize == True and ctx.quantize_v == 'wageubn':
+            if ctx.groups == input.shape[1]:
+                grad_weight = torch.zeros_like(weight)
+                # print("weight.shape[0]",weight.shape[0])
+                for i in range(weight.shape[0]):
+                    adder_cuda.backward_weight(
+                        grad_output[:,i,:,:].view(grad_output.shape[0], 1, grad_output.shape[2], grad_output.shape[3]),
+                    input[:,i,:,:].view(input.shape[0], 1, input.shape[2], input.shape[3]),
+                    weight[i,:,:,:].view(1, 1, weight.shape[2], weight.shape[3]),
+                    grad_weight[i,:,:,:].view(1, 1, weight.shape[2], weight.shape[3]),
+                    kernel_size, kernel_size,
+                    stride, stride,
+                    padding, padding,
+                    1, 1)
+            else:
+                grad_weight = torch.zeros_like(weight)
+                adder_cuda.backward_weight(
+                    grad_output,
+                    input,
+                    weight,
+                    grad_weight,
+                    kernel_size, kernel_size,
+                    stride, stride,
+                    padding, padding,
+                    groups, groups)
+                
+            grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight).clamp(min=1e-12) * grad_weight
+            # grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight).clamp(min=1e-3) * grad_weight/5
+            if ctx.quantize == True and ctx.quantize_v =='wageubn':
                 grad_weight = qg(grad_weight, ctx.weight_bits)
 
+
         return grad_input, grad_weight, None, None, None, None, None, None, None, None
+        # return grad_input, grad_weight
 
 
-class Adder2D(nn.Module):
+class Adder2D_2(nn.Module):
 
     def __init__(self,
                  input_channel,
@@ -303,7 +330,7 @@ class Adder2D(nn.Module):
                  bias = False,
                  eta = 0.2,
                  quantize=False, weight_bits=8, sparsity=0, momentum=0.9, quantize_v='sbm'):
-        super(Adder2D, self).__init__()
+        super(Adder2D_2, self).__init__()
         self.stride = stride
         self.padding = padding
         self.groups = groups
@@ -311,7 +338,7 @@ class Adder2D(nn.Module):
         self.output_channel = output_channel
         self.kernel_size = kernel_size
         self.eta = eta
-        self.quantize = False
+        self.quantize = quantize
         self.weight_bits = weight_bits
         self.sparsity = sparsity
         self.quantize_v = quantize_v
@@ -322,7 +349,7 @@ class Adder2D(nn.Module):
 
         self.adder = torch.nn.Parameter(
             nn.init.normal_(torch.randn(
-                output_channel, input_channel// groups, kernel_size, kernel_size)))
+                output_channel, input_channel // groups, kernel_size, kernel_size)))
         # self.weight = Parameter(torch.Tensor(
         #         out_channels, in_channels // groups, *kernel_size))
         
@@ -340,11 +367,12 @@ class Adder2D(nn.Module):
             self.register_buffer('adder_mask', torch.Tensor(*self.adder.size()).float())
             self.set_mask()
 
-        if self.quantize is True:
-            print(self.quantize)
-            print('quantize adder layer to {} bits.'.format(self.weight_bits))
+        # if self.quantize is True:
+            # print(self.quantize)
+            # print('quantize adder layer to {} bits.'.format(self.weight_bits))
 
-    def forward(self, input):
+
+    def forward(self, input, ratio_out=1, ratio_in=1, ratio_g=1, kernel=None):
         if self.sparsity != 0:
             # apply mask
             self.adder.data = self.adder.data * self.adder_mask.data
@@ -356,34 +384,50 @@ class Adder2D(nn.Module):
 
             # quantization v1
             if self.quantize_v == 'wageubn':
-                self.qadder = round_weight_fixed_point(self.adder, self.weight_bits)
+                self.qadder = round_weight_fixed_point(self.adder[:(self.output_channel//ratio_out),:(self.input_channel//ratio_in),:,:], self.weight_bits)
                 input_q = round_act_fixed_point(input, self.weight_bits)
 
             # quantization v2
             if self.quantize_v == 'sbm':
                 input_q = self.quantize_input_fw(input, self.weight_bits)
-                weight_qparams = calculate_qparams(self.adder, num_bits=self.weight_bits, flatten_dims=(1, -1), reduce_dim=None)
-                self.qadder = quantize(self.adder, qparams=weight_qparams)
+                weight_qparams = calculate_qparams(self.adder[:(self.output_channel//ratio_out),:(self.input_channel//ratio_in),:,:], num_bits=self.weight_bits, flatten_dims=(1, -1), reduce_dim=None)
+                self.qadder = quantize(self.adder[:(self.output_channel//ratio_out),:(self.input_channel//ratio_in),:,:], qparams=weight_qparams)
             bias_fixed_point = None
+            sample_weight = self.qadder
+            if (kernel!=None):
+                start, end = sub_filter_start_end(5, kernel)
+                sample_weight = self.qadder[:,:, start:end, start:end]
+                padding = kernel//2
+            else:
+                padding = self.padding
             output = Adder2DFunction.apply(input_q,
-                                           self.qadder,
-                                           self.kernel_size,
-                                           self.stride,
-                                           self.padding,
-                                           self.groups,
-                                           self.eta,
-                                           self.quantize,
-                                           self.weight_bits,
-                                           self.quantize_v)
+                                        sample_weight,
+                                        self.kernel_size,
+                                        self.stride,
+                                        padding,
+                                        (self.groups//ratio_g),
+                                        self.eta,
+                                        self.quantize,
+                                        self.weight_bits,
+                                        self.quantize_v)
             if self.quantize_v == 'sbm':
+                # TODO:
                 output = quantize_grad(output, num_bits=self.weight_bits, flatten_dims=(1, -1))
+                # output = output
         else:
+            sample_weight = self.adder[:(self.output_channel//ratio_out),:(self.input_channel//ratio_in),:,:]
+            if (kernel!=None):
+                start, end = sub_filter_start_end(5, kernel)
+                sample_weight = sample_weight[:,:, start:end, start:end]
+                padding = kernel//2
+            else:
+                padding = self.padding
             output = Adder2DFunction.apply(input,
-                                           self.adder,
+                                           sample_weight,
                                            self.kernel_size,
                                            self.stride,
-                                           self.padding,
-                                           self.groups,
+                                           padding,
+                                           (self.groups//ratio_g),
                                            self.eta,
                                            self.quantize,
                                            self.weight_bits,
@@ -393,29 +437,29 @@ class Adder2D(nn.Module):
 
         return output
 
-    def round_weight_each_step(self, weight, bits=16):
-        # print('before quantize: ', input)
-        # quantization v1
-        # if bits == 1:
-        #     return torch.sign(weight)
-        # S = 2. ** (bits - 1)
-        # if bits > 15 or bits == 1:
-        #   delta = 0
-        # else:
-        #   delta = 1. / S
-        # max_val = 1 - delta
-        # min_val = delta - 1
+    # def round_weight_each_step(self, weight, bits=16):
+    #     # print('before quantize: ', input)
+    #     # quantization v1
+    #     # if bits == 1:
+    #     #     return torch.sign(weight)
+    #     # S = 2. ** (bits - 1)
+    #     # if bits > 15 or bits == 1:
+    #     #   delta = 0
+    #     # else:
+    #     #   delta = 1. / S
+    #     # max_val = 1 - delta
+    #     # min_val = delta - 1
 
-        # weight_clamp = torch.clamp(weight, min_val, max_val)
-        # qweight = torch.round(weight_clamp * S) / S
-        # print('after quantize: ', input_round)
+    #     # weight_clamp = torch.clamp(weight, min_val, max_val)
+    #     # qweight = torch.round(weight_clamp * S) / S
+    #     # print('after quantize: ', input_round)
 
-        # quantization v2
-        weight_qparams = calculate_qparams(weight, num_bits=bits, flatten_dims=(1, -1), reduce_dim=None)
-        qweight = quantize(weight, qparams=weight_qparams)
-        weight_unique = torch.unique(qweight[0])
-        print('add weight range:', weight_unique.size()[0]-1)
-        return qweight
+    #     # quantization v2
+    #     weight_qparams = calculate_qparams(weight, num_bits=bits, flatten_dims=(1, -1), reduce_dim=None)
+    #     qweight = quantize(weight, qparams=weight_qparams)
+    #     weight_unique = torch.unique(qweight[0])
+    #     print('add weight range:', weight_unique.size()[0]-1)
+    #     return qweight
 
     def set_mask(self):
         # random fix zero

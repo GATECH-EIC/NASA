@@ -2,10 +2,12 @@
 Refer to AdderNet code.
 Efficient CUDA implementation for AdderNet training.
 '''
+from os import closerange
 import torch
 import torch.nn as nn
-# import adder_cuda
+# from adder import adder_cuda
 import numpy as np
+import imp
 from torch.autograd import Function
 from adder.quantize import quantize, quantize_grad, QuantMeasure, calculate_qparams
 import deepshift.ste as ste
@@ -13,6 +15,19 @@ import deepshift.ste as ste
 from torch.utils.cpp_extension import load
 adder_cuda = load(
   'adder_cuda', ['adder/adder_cuda.cpp', 'adder/adder_cuda_kernel.cu'], verbose=True)
+
+def _import_module_from_library(module_name, path, is_python_module):
+    # https://stackoverflow.com/questions/67631/how-to-import-a-module-given-the-full-path
+    file, path, description = imp.find_module(module_name, [path])
+    # Close the .so file after load.
+    with file:
+        if is_python_module:
+            return imp.load_module(module_name, file, path, description)
+        else:
+            torch.ops.load_library(path)
+
+
+# adder_cuda = _import_module_from_library('adder_cuda', '/tmp/torch_extensions/adder_cuda', True)
 
 def sub_filter_start_end(kernel_size, sub_kernel_size):
     center = kernel_size // 2
@@ -264,8 +279,8 @@ class Adder2DFunction(torch.autograd.Function):
         )
 
         # quantize grad_output v1
-        if ctx.quantize == True and ctx.quantize_v == 'wageubn':
-            grad_output = qe(grad_output, ctx.weight_bits)
+        # if ctx.quantize == True and ctx.quantize_v == 'wageubn':
+        #     grad_output = qe(grad_output, ctx.weight_bits)
 
         # input
         if ctx.needs_input_grad[0]:
@@ -282,24 +297,40 @@ class Adder2DFunction(torch.autograd.Function):
 
         # weight
         if ctx.needs_input_grad[1]:
+            # if ctx.groups == input.shape[1]:
+            #     grad_weight = torch.zeros_like(weight)
+            #     # print("weight.shape[0]",weight.shape[0])
+            #     for i in range(weight.shape[0]):
+            #         adder_cuda.backward_weight(
+            #             grad_output[:,i,:,:].view(grad_output.shape[0], 1, grad_output.shape[2], grad_output.shape[3]),
+            #         input[:,i,:,:].view(input.shape[0], 1, input.shape[2], input.shape[3]),
+            #         weight[i,:,:,:].view(1, 1, weight.shape[2], weight.shape[3]),
+            #         grad_weight[i,:,:,:].view(1, 1, weight.shape[2], weight.shape[3]),
+            #         kernel_size, kernel_size,
+            #         stride, stride,
+            #         padding, padding,
+            #         1, 1)
+            # else:
             grad_weight = torch.zeros_like(weight)
-            adder_cuda.backward_weight(grad_output,
-                                       input,
-                                       weight,
-                                       grad_weight,
-                                       kernel_size, kernel_size,
-                                       stride, stride,
-                                       padding, padding,
-                                       groups, groups
-                                       )
-            # grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight) * grad_weight
+            adder_cuda.backward_weight(
+                grad_output,
+                input,
+                weight,
+                grad_weight,
+                kernel_size, kernel_size,
+                stride, stride,
+                padding, padding,
+                groups, groups)
+            # print(eta)
             grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight).clamp(min=1e-12) * grad_weight
+            
             # grad_weight = eta * np.sqrt(grad_weight.numel()) / torch.norm(grad_weight).clamp(min=1e-3) * grad_weight/5
-            if ctx.quantize == True and ctx.quantize_v == 'wageubn':
-                grad_weight = qg(grad_weight, ctx.weight_bits)
+            # if ctx.quantize == True and ctx.quantize_v =='wageubn':
+            #     grad_weight = qg(grad_weight, ctx.weight_bits)
 
 
         return grad_input, grad_weight, None, None, None, None, None, None, None, None
+        # return grad_input, grad_weight
 
 
 class Adder2D(nn.Module):
@@ -394,10 +425,10 @@ class Adder2D(nn.Module):
                                         self.quantize,
                                         self.weight_bits,
                                         self.quantize_v)
-            if self.quantize_v == 'sbm':
-                # TODO:
-                output = quantize_grad(output, num_bits=self.weight_bits, flatten_dims=(1, -1))
-                # output = output
+            # if self.quantize_v == 'sbm':
+            #     # TODO:
+            #     output = quantize_grad(output, num_bits=self.weight_bits, flatten_dims=(1, -1))
+            #     # output = output
         else:
             sample_weight = self.adder[:(self.output_channel//ratio_out),:(self.input_channel//ratio_in),:,:]
             if (kernel!=None):

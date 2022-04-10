@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.autograd import Variable
 from resnet_add import resnet20_add
+from resnet_shiftadd import resnet20_shiftadd
 # import optim
 import torch.backends.cudnn as cudnn
 from cyclicLR import CyclicCosAnnealingLR
@@ -26,7 +27,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3,4,5,6,7'
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch AdderNet Trainning')
 parser.add_argument('--data', type=str, default='/data3/imagenet-data/raw-data/', help='path to imagenet')
-parser.add_argument('--dataset', type=str, default='cifar10', help='training dataset')
+parser.add_argument('--dataset', type=str, default='cifar100', help='training dataset')
 parser.add_argument('--data_path', type=str, default=None, help='path to dataset')
 parser.add_argument('--batch_size', type=int, default=256, metavar='N', help='batch size for training')
 parser.add_argument('--test_batch_size', type=int, default=256, metavar='N', help='batch size for testing')
@@ -41,15 +42,15 @@ parser.add_argument('--momentum', type=float, default=0.9, metavar='M', help='SG
 parser.add_argument('--weight-decay', '--wd', default=1e-4, type=float, metavar='W', help='weight decay')
 parser.add_argument('--resume', default='', type=str, metavar='PATH', help='path to latest checkpoint')
 parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed')
-parser.add_argument('--save', default='./logs', type=str, metavar='PATH', help='path to save prune model')
+parser.add_argument('--save', default='./temp', type=str, metavar='PATH', help='path to save prune model')
 parser.add_argument('--arch', default='resnet20', type=str, help='architecture to use')
 parser.add_argument('--no-cuda', action='store_true', default=False, help='disables CUDA training')
 parser.add_argument('--log_interval', type=int, default=100, metavar='N', help='how many batches to wait before logging training status')
 # multi-gpus
 parser.add_argument('--gpu_ids', type=str, default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
 # shift hyper-parameters
-parser.add_argument('--shift_depth', type=int, default=0, help='how many layers to convert to shift')
-parser.add_argument('--shift_type', type=str, choices=['Q', 'PS'], help='shift type for representing weights')
+parser.add_argument('--shift_depth', type=int, default=100, help='how many layers to convert to shift')
+parser.add_argument('--shift_type', type=str, choices=['Q', 'PS'], default='PS', help='shift type for representing weights')
 parser.add_argument('--rounding', default='deterministic', choices=['deterministic', 'stochastic'])
 parser.add_argument('--weight_bits', type=int, default=5, help='number of bits to represent the shift weights')
 parser.add_argument('--sign_threshold_ps', type=float, default=None, help='can be controled')
@@ -96,7 +97,7 @@ if args.distributed:
 kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 if args.dataset == 'cifar10':
     train_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('/media/shared-corpus/CIFAR10', train=True, download=False,
+        datasets.CIFAR10('/Datadisk/datasets/CIFAR10', train=True, download=False,
                        transform=transforms.Compose([
                            transforms.Pad(4),
                            transforms.RandomCrop(32),
@@ -106,14 +107,14 @@ if args.dataset == 'cifar10':
                        ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR10('/media/shared-corpus/CIFAR10', train=False, transform=transforms.Compose([
+        datasets.CIFAR10('/Datadisk/datasets/CIFAR10', train=False, transform=transforms.Compose([
                            transforms.ToTensor(),
                            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
                        ])),
         batch_size=args.test_batch_size, shuffle=True, **kwargs)
 elif args.dataset == 'cifar100':
     train_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR100('/media/shared-corpus/CIFAR100', train=True, download=False,
+        datasets.CIFAR100('/Datadisk/datasets/CIFAR100', train=True, download=False,
                        transform=transforms.Compose([
                            transforms.Pad(4),
                            transforms.RandomCrop(32),
@@ -123,7 +124,7 @@ elif args.dataset == 'cifar100':
                        ])),
         batch_size=args.batch_size, shuffle=True, **kwargs)
     test_loader = torch.utils.data.DataLoader(
-        datasets.CIFAR100('/media/shared-corpus/CIFAR100', train=False, transform=transforms.Compose([
+        datasets.CIFAR100('/Datadisk/datasets/CIFAR100', train=False, transform=transforms.Compose([
                            transforms.ToTensor(),
                            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
                        ])),
@@ -182,7 +183,8 @@ elif args.dataset == 'cifar10':
     model = resnet20_shiftadd(num_classes=10, quantize=args.add_quant, weight_bits=args.add_bits, quantize_v=args.quantize_v)
 elif args.dataset == 'cifar100':
     num_classes = 100
-    model = resnet20_add(num_classes=100, quantize=args.add_quant, weight_bits=args.add_bits, quantize_v=args.quantize_v)
+    # model = resnet20_add(num_classes=100, quantize=args.add_quant, weight_bits=args.add_bits, quantize_v=args.quantize_v)
+    model = resnet20_shiftadd(num_classes=100, quantize=args.add_quant, weight_bits=args.add_bits)
 elif args.dataset == 'mnist':
     model = resnet20_shiftadd(num_classes=10, quantize=args.add_quant, weight_bits=args.add_bits)
 else:
@@ -342,7 +344,7 @@ except:
 # name model sub-directory "shift_all" if all layers are converted to shift layers
 conv2d_layers_count = count_layer_type(model, nn.Conv2d) #+ count_layer_type(model, unoptimized.UnoptimizedConv2d)
 linear_layers_count = count_layer_type(model, nn.Linear) #+ count_layer_type(model, unoptimized.UnoptimizedLinear)
-print(conv2d_layers_count)
+# print(conv2d_layers_count)
 
 if (args.shift_depth > 0):
     if (args.shift_type == 'Q'):

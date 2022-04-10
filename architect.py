@@ -55,7 +55,8 @@ class Architect(object):
         self.optimizer.zero_grad()
 
         if self.mode == 'proxy_hard' and self.offset:
-            alpha_old = self.model.module._arch_params['alpha'].data.clone()
+            alpha_end_old = self.model.module._arch_params['alpha_end'].data.clone()
+            alpha_middle_old = self.model.module._arch_params['alpha_middle'].data.clone()
             # print('alpha_old',alpha_old)
         
         # self.model.module.unused_modules_off(temp)
@@ -113,20 +114,23 @@ class Architect(object):
             
 
         if self.mode == 'proxy_hard' and self.offset:
-            alpha_new = self.model.module._arch_params['alpha'].data
+            alpha_end_new = self.model.module._arch_params['alpha_end'].data
+            alpha_middle_new = self.model.module._arch_params['alpha_middle'].data
             # print(alpha_new)
 
+            count_end = 0
+            count_middle = 0
             for i, cell in enumerate(self.model.module.cells):
-
-                # print('cell.active_list',alpha_new[i][cell.active_list])
-                # print(alpha_new[i][cell.active_list])
-
-                offset = torch.log(sum(torch.exp(alpha_old[i][cell.active_list])) / sum(torch.exp(alpha_new[i][cell.active_list])))
-
-                for active_op in cell.active_list:
-                    self.model.module._arch_params['alpha'][i][active_op].data += offset.data
-
-
+                if i < 3 or i > 18:
+                    offset = torch.log(sum(torch.exp(alpha_end_old[count_end][cell.active_list])) / sum(torch.exp(alpha_end_new[count_end][cell.active_list])))
+                    for active_op in cell.active_list:
+                        self.model.module._arch_params['alpha_end'][count_end][active_op].data += offset.data
+                    count_end += 1
+                else:
+                    offset = torch.log(sum(torch.exp(alpha_middle_old[count_middle][cell.active_list])) / sum(torch.exp(alpha_middle_new[count_middle][cell.active_list])))
+                    for active_op in cell.active_list:
+                        self.model.module._arch_params['alpha_middle'][count_middle][active_op].data += offset.data
+                    count_middle += 1
 
         return loss
 
@@ -185,6 +189,8 @@ class Architect(object):
 
     def _backward_step_flops(self, input_valid, target_valid, temp=1):
 
+        # TODO:
+        # logit, kl_loss = self.model(input_valid, temp)
         logit = self.model(input_valid, temp)
         loss = self.model.module._criterion(logit, target_valid)
 
@@ -200,7 +206,7 @@ class Architect(object):
 
         self.flops_supernet = flops
         loss_flops = self.flops_weight * flops
-
+        
         return loss, loss_flops
 
 

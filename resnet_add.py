@@ -103,7 +103,7 @@ class ResNet(nn.Module):
         x = self.layer3(x)
 
         x = self.avgpool(x)
-        print(x.shape)
+        # print(x.shape)
         x = self.fc(x)
         x = self.bn2(x)
         return x.view(x.size(0), -1)

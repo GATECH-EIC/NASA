@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import numpy as np
 from thop import profile
 # from thop.count_hooks import count_convNd
-from torch.nn import init
+
 import sys
 from torch.nn.modules.utils import _pair
 import os.path as osp
@@ -17,6 +17,8 @@ from deepshift import modules
 from deepshift import modules_q
 from deepshift import utils as utils
 from adder.quantize import quantize, quantize_grad, QuantMeasure, calculate_qparams
+from torch.distributions.laplace import Laplace
+from torch.distributions.normal import Normal
 
 
 __all__ = ['ConvBlock', 'Skip', 'ConvNorm', 'OPS']
@@ -81,6 +83,8 @@ class QConv2d(nn.Conv2d):
 # Conv2d = nn.Conv2d
 # Conv2d = QConv2d
 # BatchNorm2d = nn.BatchNorm2d
+
+# FIXME: depthwise conv
 
 class ChannelShuffle(nn.Module):
     def __init__(self, groups):
@@ -173,7 +177,7 @@ class ConvBlock(nn.Module):
     conv => norm => activation
     use native Conv2d, not slimmable
     '''
-    def __init__(self, C_in, C_out,  layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False):
+    def __init__(self, C_in, C_out,  layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False, shared_weight=None):
         super(ConvBlock, self).__init__()
         self.C_in = C_in
         self.C_out = C_out
@@ -197,58 +201,61 @@ class ConvBlock(nn.Module):
         assert type(groups) == int
         self.groups = groups
         self.bias = bias
+        self.shared_weight = shared_weight
 
         if self.groups > 1:
             self.shuffle = ChannelShuffle(self.groups)
 
         self.conv1 = Conv2d(C_in, C_in*expansion, kernel_size=1, stride=1, padding=0, dilation=1, groups=self.groups, bias=bias)
+        del self.conv1.weight
         self.bn1 = BatchNorm2d(C_in*expansion)
 
         self.conv2 = Conv2d(C_in*expansion, C_in*expansion, kernel_size=self.kernel_size, stride=self.stride, padding=self.padding, dilation=1, groups=C_in*expansion, bias=bias)
+        del self.conv2.weight
         self.bn2 = BatchNorm2d(C_in*expansion)
+        
         self.conv3 = Conv2d(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, dilation=1, groups=self.groups, bias=bias)
+        del self.conv3.weight
         self.bn3 = BatchNorm2d(C_out)
 
         self.nl = nn.ReLU(inplace=True)
 
-        # initialization BN
-        init.constant_(self.bn1.bn.weight, 1)
-        init.constant_(self.bn1.bn.bias, 0)
-        init.constant_(self.bn2.bn.weight, 1)
-        init.constant_(self.bn2.bn.bias, 0)
-        init.constant_(self.bn3.bn.weight, 0)
-        init.constant_(self.bn3.bn.bias, 0)
+        self.normal = Normal(0, 1)
 
     # beta, mode, act_num, beta_param are for bit-widths search
-    def forward(self, x, ratio=1, kernel=None, grad=True):
+    def forward(self, x, ratio=1, kernel=None):
         # print('ok')
-        identity = x
-
-        if grad == False:
-            self.conv1.weight.requires_grad = False
-            self.conv2.weight.requires_grad = False
-            self.conv3.weight.requires_grad = False
-        else:
-            self.conv1.weight.requires_grad = True
-            self.conv2.weight.requires_grad = True
-            self.conv3.weight.requires_grad = True
-
-        x = self.nl(self.bn1(self.conv1(x,ratio_out=ratio),ratio))
         
+        kl_loss = 0
+        
+        identity = x
+        # print(x.size())
+        # print('forward')
+        # print(self.conv1(x,ratio_out=ratio))
+        self.conv1.weight = self.shared_weight.conv1
+        x = self.nl(self.bn1(self.conv1(x,ratio_out=ratio),ratio))
+        # kl_loss += F.kl_div(F.log_softmax(self.shared_weight.conv1.reshape(-1), 0),
+        #                     F.softmax(self.normal.sample(self.shared_weight.conv1.reshape(-1).shape).cuda(), 0), reduction="none").mean()
 
         if self.groups > 1:
             x = self.shuffle(x)
 
+        self.conv2.weight = self.shared_weight.conv2
         x = self.nl(self.bn2(self.conv2(x,ratio_out=ratio,ratio_g=ratio, kernel=kernel),ratio))
         # print(x.size())
+        # TODO:
+        # kl_loss += F.kl_div(F.log_softmax(self.shared_weight.conv2.reshape(-1), 0), F.softmax(self.normal.sample(self.shared_weight.conv2.reshape(-1).shape).cuda(), 0), reduction="none").mean()
 
+        self.conv3.weight = self.shared_weight.conv3
         x = self.bn3(self.conv3(x,ratio_in=ratio))
         # print(x.size())
+        # kl_loss += F.kl_div(F.log_softmax(self.shared_weight.conv3.reshape(-1), 0),
+        #                     F.softmax(self.normal.sample(self.shared_weight.conv3.reshape(-1).shape).cuda(), 0), reduction="none").mean()
+
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
 
-
-        return x
+        return x, 0
 
     def set_stage(self, stage):
         assert stage == 'update_weight' or stage == 'update_arch'
@@ -340,19 +347,15 @@ class Skip(nn.Module):
             self.relu = nn.ReLU(inplace=True)
 
 
-    def forward(self, x, ratio=1, grad=True):
+    def forward(self, x):
         if hasattr(self, 'conv'):
-            if grad == False:
-                self.conv.weight.requires_grad = False
-            else:
-                self.conv.weight.requires_grad = True
             out = self.conv(x)
             out = self.bn(out)
             out = self.relu(out)
         else:
             out = x
 
-        return out
+        return out, 0
 
     def set_stage(self, stage):
         if hasattr(self, 'conv'):
@@ -485,30 +488,14 @@ class ShiftBlock(nn.Module):
         self.conv3 = Shiftlayer(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, groups=self.groups)
         self.bn3 = BatchNorm2d(C_out)
 
-        self.nl = nn.ReLU(inplace=True)
 
-        # initialization BN
-        init.constant_(self.bn1.bn.weight, 1)
-        init.constant_(self.bn1.bn.bias, 0)
-        init.constant_(self.bn2.bn.weight, 1)
-        init.constant_(self.bn2.bn.bias, 0)
-        init.constant_(self.bn3.bn.weight, 0)
-        init.constant_(self.bn3.bn.bias, 0)
+        self.nl = nn.ReLU(inplace=True)
 
 
     # beta, mode, act_num, beta_param are for bit-widths search
-    def forward(self, x, ratio=1, kernel=None, grad=True):
+    def forward(self, x, ratio=1, kernel=None):
         identity = x
         # print(x.size())
-        if grad == False:
-            self.conv1.weight.requires_grad = False
-            self.conv2.weight.requires_grad = False
-            self.conv3.weight.requires_grad = False
-        else:
-            self.conv1.weight.requires_grad = True
-            self.conv2.weight.requires_grad = True
-            self.conv3.weight.requires_grad = True
-
         x = self.nl(self.bn1(self.conv1(x,ratio_out=ratio),ratio))
         # print(self.kernel_size)
         # print(self.padding)
@@ -590,12 +577,32 @@ class ShiftBlock(nn.Module):
         return flops/8, (c_out, h_out, w_out)
 
 
+def mapping(shared_weight, stage, affine):
+    weight_shape = shared_weight.shape
+    weight = shared_weight.clone().detach().reshape(-1)
+    # weight = shared_weight.reshape(-1)
+    weight_min = weight.min()
+    weight_max = weight.max()
+    for i in range(stage):
+        # temp = weight.detach() * self.conv3_affine[i]
+        temp = weight * affine[i]
+        index = (weight >= (weight_min + i * (weight_max - weight_min) / stage)) & (weight < (weight_min + (i+1) * (weight_max - weight_min) / stage))
+        temp =  temp * index.detach()
+
+        if i == 0:
+            new_weight = temp
+        else:
+            new_weight = new_weight + temp
+            del temp
+
+        return new_weight.reshape(weight_shape)
+
 class AddBlock(nn.Module):
     '''
     conv => norm => activation
     use native Conv2d, not slimmable
     '''
-    def __init__(self, C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False):
+    def __init__(self, C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False, shared_weight=None):
         super(AddBlock, self).__init__()
         self.C_in = C_in
         self.C_out = C_out
@@ -618,50 +625,61 @@ class AddBlock(nn.Module):
         assert type(groups) == int
         self.groups = groups
         self.bias = bias
+        self.shared_weight = shared_weight
 
         if self.groups > 1:
             self.shuffle = ChannelShuffle(self.groups)
 
         self.conv1 = Addlayer(C_in, C_in*expansion, kernel_size=1, stride=1, padding=0, groups=self.groups)
+        del self.conv1.adder
         self.bn1 = BatchNorm2d(C_in*expansion)
 
         self.conv2 = Addlayer(C_in*expansion, C_in*expansion, kernel_size=self.kernel_size, stride=self.stride, padding=self.padding, groups=C_in*expansion)
         self.bn2 = BatchNorm2d(C_in*expansion)
+        del self.conv2.adder
+
         self.conv3 = Addlayer(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, groups=self.groups)
         self.bn3 = BatchNorm2d(C_out)
-
+        del self.conv3.adder
 
         self.nl = nn.ReLU(inplace=True)
 
-        # initialization BN
-        init.constant_(self.bn1.bn.weight, 1)
-        init.constant_(self.bn1.bn.bias, 0)
-        init.constant_(self.bn2.bn.weight, 1)
-        init.constant_(self.bn2.bn.bias, 0)
-        init.constant_(self.bn3.bn.weight, 0)
-        init.constant_(self.bn3.bn.bias, 0)
+        # piece-wise affine
+        self.stage = 100
+        self.conv1_affine = nn.Parameter(torch.randn(self.stage))
+        self.conv2_affine = nn.Parameter(torch.randn(self.stage))
+        self.conv3_affine = nn.Parameter(torch.randn(self.stage))
+
+        # TODO: 
+        self.laplace = Laplace(0, 2)
 
     # beta, mode, act_num, beta_param are for bit-widths search
     def forward(self, x, ratio=1, kernel=None):
         identity = x
         # print(x.size())
+        kl_loss = 0
+
+        self.conv1.adder = mapping(self.shared_weight.conv1, self.stage, self.conv1_affine)
         x = self.nl(self.bn1(self.conv1(x,ratio_out=ratio),ratio))
-        # print(self.kernel_size)
-        # print(self.padding)
-        # print(x.size())
+        kl_loss += F.kl_div(F.log_softmax(self.conv1.adder, 0), F.softmax(self.laplace.sample(self.conv1.adder.shape).cuda(), 0), reduction="none").mean()
 
         if self.groups > 1:
             x = self.shuffle(x)
-
+        
+        self.conv2.adder = mapping(self.shared_weight.conv2, self.stage, self.conv2_affine)
         x = self.nl(self.bn2(self.conv2(x,ratio_out=ratio,ratio_g=ratio,kernel=kernel),ratio))
-        # print(x.size())
+        # TODO:
+        kl_loss += F.kl_div(F.log_softmax(self.conv2.adder, 0), F.softmax(self.laplace.sample(self.conv2.adder.shape).cuda(), 0), reduction="none").mean()
 
+        self.conv3.adder = mapping(self.shared_weight.conv3, self.stage, self.conv3_affine)
         x = self.bn3(self.conv3(x,ratio_in=ratio))
+        kl_loss += F.kl_div(F.log_softmax(self.conv3.adder, 0), F.softmax(self.laplace.sample(self.conv3.adder.shape).cuda(), 0), reduction="none").mean()
+
         # print(x.size())
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
 
-        return x
+        return x, kl_loss
 
     def set_stage(self, stage):
         assert stage == 'update_weight' or stage == 'update_arch'
@@ -725,13 +743,12 @@ class AddBlock(nn.Module):
         # return flops*0.6, (c_out, h_out, w_out)
         return flops/5, (c_out, h_out, w_out)
 
-
 class AddBlock_nodpws(nn.Module):
     '''
     conv => norm => activation
     use native Conv2d, not slimmable
     '''
-    def __init__(self, C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False):
+    def __init__(self, C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=1, padding=None, dilation=1, groups=1, bias=False, shared_weight=None):
         super(AddBlock_nodpws, self).__init__()
         self.C_in = C_in
         self.C_out = C_out
@@ -754,43 +771,64 @@ class AddBlock_nodpws(nn.Module):
         assert type(groups) == int
         self.groups = groups
         self.bias = bias
+        self.shared_weight = shared_weight
 
         if self.groups > 1:
             self.shuffle = ChannelShuffle(self.groups)
 
         self.conv1 = Addlayer(C_in, C_in*expansion, kernel_size=1, stride=1, padding=0, groups=self.groups)
+        del self.conv1.adder
         self.bn1 = BatchNorm2d(C_in*expansion)
 
+        # self.conv2 = Addlayer(C_in*expansion, C_in*expansion, kernel_size=self.kernel_size, stride=self.stride, padding=self.padding, groups=C_in*expansion)
         self.conv2 = Conv2d(C_in*expansion, C_in*expansion, kernel_size=self.kernel_size, stride=self.stride, padding=self.padding, dilation=1, groups=C_in*expansion, bias=bias)
         self.bn2 = BatchNorm2d(C_in*expansion)
+        del self.conv2.weight
+
         self.conv3 = Addlayer(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, groups=self.groups)
         self.bn3 = BatchNorm2d(C_out)
-
+        del self.conv3.adder
 
         self.nl = nn.ReLU(inplace=True)
 
+        # piece-wise affine
+        self.stage = 100
+        self.conv1_affine = nn.Parameter(torch.randn(self.stage))
+        # self.conv2_affine = nn.Parameter(torch.randn(self.stage))
+        self.conv3_affine = nn.Parameter(torch.randn(self.stage))
+
+        # TODO: 
+        self.laplace = Laplace(0, 2)
+        self.normal = Normal(0, 1)
 
     # beta, mode, act_num, beta_param are for bit-widths search
     def forward(self, x, ratio=1, kernel=None):
         identity = x
         # print(x.size())
+        kl_loss = 0
+
+        self.conv1.adder = mapping(self.shared_weight.conv1, self.stage, self.conv1_affine)
         x = self.nl(self.bn1(self.conv1(x,ratio_out=ratio),ratio))
-        # print(self.kernel_size)
-        # print(self.padding)
-        # print(x.size())
+        kl_loss += F.kl_div(F.log_softmax(self.conv1.adder, 0), F.softmax(self.laplace.sample(self.conv1.adder.shape).cuda(), 0), reduction="none").mean()
 
         if self.groups > 1:
             x = self.shuffle(x)
-
+        
+        # self.conv2.adder = mapping(self.shared_weight.conv2, self.stage, self.conv2_affine)
+        self.conv2.weight = self.shared_weight.conv2
         x = self.nl(self.bn2(self.conv2(x,ratio_out=ratio,ratio_g=ratio,kernel=kernel),ratio))
-        # print(x.size())
+        # TODO:
+        kl_loss += F.kl_div(F.log_softmax(self.shared_weight.conv2.reshape(-1), 0), F.softmax(self.normal.sample(self.shared_weight.conv2.reshape(-1).shape).cuda(), 0), reduction="none").mean()
 
+        self.conv3.adder = mapping(self.shared_weight.conv3, self.stage, self.conv3_affine)
         x = self.bn3(self.conv3(x,ratio_in=ratio))
+        kl_loss += F.kl_div(F.log_softmax(self.conv3.adder, 0), F.softmax(self.laplace.sample(self.conv3.adder.shape).cuda(), 0), reduction="none").mean()
+
         # print(x.size())
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
 
-        return x
+        return x, kl_loss
 
     def set_stage(self, stage):
         assert stage == 'update_weight' or stage == 'update_arch'
@@ -1098,37 +1136,37 @@ class ConvNorm(nn.Module):
 
 
 OPS = {
-    'k3_e1' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1),
-    'k3_e1_g2' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2),
-    'k3_e3' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1),
-    'k3_e6' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1),
-    'k5_e1' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1),
-    'k5_e1_g2' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2),
-    'k5_e3' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1),
-    'k5_e6' : lambda C_in, C_out, layer_id, stride: ConvBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1),
-    'skip' : lambda C_in, C_out, layer_id, stride: Skip(C_in, C_out, layer_id, stride),
-    'add_k3_e1' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1),
-    'add_k3_e1_g2' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2),
-    'add_k3_e3' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1),
-    'add_k3_e6' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1),
-    'add_k5_e1' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1),
-    'add_k5_e1_g2' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2),
-    'add_k5_e3' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1),
-    'add_k5_e6' : lambda C_in, C_out, layer_id, stride: AddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1),
-    'shift_k3_e1' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1),
-    'shift_k3_e1_g2' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2),
-    'shift_k3_e3' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1),
-    'shift_k3_e6' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1),
-    'shift_k5_e1' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1),
-    'shift_k5_e1_g2' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2),
-    'shift_k5_e3' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1),
-    'shift_k5_e6' : lambda C_in, C_out, layer_id, stride: ShiftBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1),
-    'shiftadd_k3_e1' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1),
-    'shiftadd_k3_e1_g2' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2),
-    'shiftadd_k3_e3' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1),
-    'shiftadd_k3_e6' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1),
-    'shiftadd_k5_e1' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1),
-    'shiftadd_k5_e1_g2' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2),
-    'shiftadd_k5_e3' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1),
-    'shiftadd_k5_e6' : lambda C_in, C_out, layer_id, stride: ShiftAddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1),
+    'k3_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'k3_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2, shared_weight=shared_parameters),
+    'k3_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'k3_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'k5_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'k5_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2, shared_weight=shared_parameters),
+    'k5_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'k5_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ConvBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'skip' : lambda C_in, C_out, layer_id, stride, shared_parameters: Skip(C_in, C_out, layer_id, stride),
+    'add_k3_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'add_k3_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2, shared_weight=shared_parameters),
+    'add_k3_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'add_k3_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'add_k5_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'add_k5_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2, shared_weight=shared_parameters),
+    'add_k5_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'add_k5_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: AddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k3_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k3_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2, shared_weight=shared_parameters),
+    'shift_k3_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k3_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k5_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k5_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2, shared_weight=shared_parameters),
+    'shift_k5_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shift_k5_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k3_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k3_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=3, stride=stride, groups=2, shared_weight=shared_parameters),
+    'shiftadd_k3_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k3_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=3, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k5_e1' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k5_e1_g2' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=1, kernel_size=5, stride=stride, groups=2, shared_weight=shared_parameters),
+    'shiftadd_k5_e3' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=3, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
+    'shiftadd_k5_e6' : lambda C_in, C_out, layer_id, stride, shared_parameters: ShiftAddBlock(C_in, C_out, layer_id, expansion=6, kernel_size=5, stride=stride, groups=1, shared_weight=shared_parameters),
 }

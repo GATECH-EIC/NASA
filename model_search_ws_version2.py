@@ -5,14 +5,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 import random
 from torch.nn import init
-from operations_ws import *
-import operations_ws
+from operations_ws_version2 import *
+# import operations_ws
 from torch.autograd import Variable
 from genotypes import PRIMITIVES_OnlyConv, PRIMITIVES_AddAdd, PRIMITIVES_AddShift, PRIMITIVES_AddShiftAdd, PRIMITIVES_AddAll, PRIMITIVES_NoConv, PRIMITIVES_AddAdd_allconv
 import numpy as np
 from thop import profile
 from matplotlib import pyplot as plt
 from thop import profile
+import math
 
 def sample_gumbel(shape, eps=1e-20):
     U = torch.rand(shape)
@@ -47,6 +48,26 @@ def Activate(layer):
             param.requires_grad = True
 
 
+class shared_parameters(nn.Module):
+    def __init__(self, C_in, C_out, kernel, expansion=6):
+        super(shared_parameters, self).__init__()
+
+        self.conv1 = nn.Parameter(torch.randn(C_in*expansion, C_in, 1, 1))
+        self.conv2 = nn.Parameter(torch.randn(C_in*expansion, 1, kernel, kernel))
+        self.conv3 = nn.Parameter(torch.randn(C_out, C_in*expansion, 1, 1))
+
+        # ############## initialization ######################
+        init.kaiming_normal_(self.conv1, mode='fan_out')
+        init.kaiming_normal_(self.conv2, mode='fan_out')
+        init.kaiming_normal_(self.conv3, mode='fan_out')
+    
+    def forward(self, x):
+        # for key, item in self.shared_weight.items():
+        #     x = x * item
+        return x
+
+# FIXME: 3 places(2 in model_search; 1 in model_infer)
+
 class MixedOp(nn.Module):
 
     def __init__(self, C_in, C_out, layer_id, stride=1, mode='soft', act_num=1, search_space='OnlyConv'):
@@ -59,12 +80,12 @@ class MixedOp(nn.Module):
         if(self.search_space=='OnlyConv'):
             self.type = PRIMITIVES_OnlyConv
         if(self.search_space=='AddAdd'):
-            # self.type = PRIMITIVES_AddAdd
             # TODO:
-            if layer_id < 4 or layer_id > 19:
-                self.type = PRIMITIVES_AddAdd_allconv
-            else:
-                self.type = PRIMITIVES_AddAdd
+            self.type = PRIMITIVES_AddAdd
+            # if layer_id < 4 or layer_id > 19:
+            #     self.type = PRIMITIVES_AddAdd_allconv
+            # else:
+            #     self.type = PRIMITIVES_AddAdd
         if(self.search_space=='AddShift'):
             self.type = PRIMITIVES_AddShift
         if(self.search_space=='AddShiftAdd'):
@@ -81,7 +102,13 @@ class MixedOp(nn.Module):
             primitive=='skip'):
             # ########### both channel and kernel weight sharing #########
             # if (primitive=='k5_e6' or primitive=='add_k5_e6' or primitive=='shift_k5_e6' or primitive=='shiftadd_k5_e6' or primitive=='skip'):
-                op = OPS[primitive](C_in, C_out, layer_id, stride)
+                if 'k3' in primitive:
+                    shared_parameter = shared_parameters(C_in, C_out, kernel=3)
+                elif 'k5' in primitive:
+                    shared_parameter = shared_parameters(C_in, C_out, kernel=5)
+                else: 
+                    shared_parameter = None
+                op = OPS[primitive](C_in, C_out, layer_id, stride, shared_parameter)
                 self._ops.append(op)
         # print(self._ops)
         self.register_buffer('active_list', torch.tensor(list(range(len(self._ops)))))
@@ -92,6 +119,7 @@ class MixedOp(nn.Module):
         # print('ok')
         # int: force #channel; tensor: arch_ratio; float(<=1): force width
         result = 0
+        kl_loss =0
 
         if self.mode == 'soft':
             for i, (w, op) in enumerate(zip(alpha, self._ops)):
@@ -130,7 +158,8 @@ class MixedOp(nn.Module):
                     # print(self.type[rank[i]])
                     if full_channel==False:
                         if(rank[i]==(len(self.type)-1)):
-                            result = result + self._ops[-1](x) * alpha[i]
+                            result = result + self._ops[-1](x)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[-1](x)[1] * alpha[i]
                         else:
                             type = rank[i] // 3 
                             ratio = rank[i] % 3
@@ -141,14 +170,17 @@ class MixedOp(nn.Module):
                             if (ratio==2):
                                 ratio=1
                             # print(self._ops[type],ratio)
-                            result = result + self._ops[type](x,ratio) * alpha[i]
+                            result = result + self._ops[type](x,ratio)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[type](x,ratio)[1] * alpha[i]
                     else:
-                        result = result + self._ops[index[i]](x) * alpha[i]
+                        result = result + self._ops[index[i]](x)[0] * alpha[i]
+                        kl_loss =  kl_loss + self._ops[index[i]](x)[1] * alpha[i]
                     # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
             else:
                 self.set_active_list(cand)
                 if(cand==(len(self.type)-1)):
-                    result = result + self._ops[-1](x)
+                    result = result + self._ops[-1](x)[0]
+                    kl_loss =  kl_loss + self._ops[-1](x)[1] 
                 else:
                     type = cand // 3
                     ratio = cand % 3
@@ -158,13 +190,13 @@ class MixedOp(nn.Module):
                         ratio=2
                     if (ratio==2):
                         ratio=1
-                    result = result + self._ops[type](x,ratio)
-
+                    result = result + self._ops[type](x,ratio)[0]
+                    kl_loss =  kl_loss + self._ops[type](x,ratio)[1] 
         else:
             print('Wrong search mode:', self.mode)
             sys.exit()
 
-        return result
+        return result, kl_loss
     
     # ######## both channel and kernel weight sharing ############
     # def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, cand=None):
@@ -393,9 +425,12 @@ class FBNet(nn.Module):
     def init_params(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                init.kaiming_normal_(m.weight, mode='fan_out')
-                if m.bias is not None:
-                    init.constant_(m.bias, 0)
+                try:
+                    init.kaiming_normal_(m.weight, mode='fan_out')
+                    if m.bias is not None:
+                        init.constant_(m.bias, 0)
+                except:
+                    pass
             elif isinstance(m, nn.BatchNorm2d):
                 init.constant_(m.weight, 1)
                 init.constant_(m.bias, 0)
@@ -418,16 +453,16 @@ class FBNet(nn.Module):
             # print('ok')
             for i, cell in enumerate(self.cells):
                 # print(i)
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand)
+                out, kl_loss = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand)
         else:
             for i, cell in enumerate(self.cells):
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand[i])
+                out, kl_loss = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand[i])
         # print(out)
 
         
         # TODO:
         out = self.fc(self.avgpool(self.header(out)).view(out.size(0), -1))
-        return out
+        return out, kl_loss
         ###################################
 
 
@@ -462,12 +497,12 @@ class FBNet(nn.Module):
 
         for i, _ in enumerate(self.cells):
             # TODO:
-            if i < 3 or i > 18:
-                self.type = PRIMITIVES_AddAdd_allconv
-            else:
-                self.type = PRIMITIVES_AddAdd
+            # print(self.type[op_idx_list[i]], end=' ')
+            # if i < 3 or i > 18:
+            #     self.type = PRIMITIVES_AddAdd_allconv
+            # else:
+            #     self.type = PRIMITIVES_AddAdd
             print(self.type[op_idx_list[i]], end=' ')
-
 
     def forward_flops(self, size, temp=1):
         if self.sample_func == 'softmax':

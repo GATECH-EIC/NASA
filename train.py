@@ -39,7 +39,8 @@ from config_train import config
 import genotypes
 
 from model_search import FBNet as Network
-from model_infer import FBNet_Infer
+# TODO:
+from model_infer_v2 import FBNet_Infer
 
 from lr import LambdaLR
 
@@ -48,7 +49,7 @@ from thop import profile
 from resnet20_add import resnet20_add
 
 import argparse
-
+from autoaugment import CIFAR10Policy
 
 
 parser = argparse.ArgumentParser(description='DNA')
@@ -56,18 +57,24 @@ parser.add_argument('--dataset', type=str, default=None,
                     help='type of dataset')
 parser.add_argument('--dataset_path', type=str, default=None,
                     help='path to dataset')
+parser.add_argument('--lr_schedule', type=str, default=None,
+                    help='the lr_schedule')
 parser.add_argument('--pretrain', type=str, default=None,
                     help='path to searched arch')
 parser.add_argument('--search_space', type=str, default=None,
                     help='choice of search_space')
 parser.add_argument('--load_path', type=str, default=None,
                     help='path to trained models')
+parser.add_argument('--resume_path', type=str, default=None,
+                    help='path to resumed models')
 parser.add_argument('--batch_size', type=int, default=None,
                     help='batch size')
 parser.add_argument('--header_channel', type=int, default=1504,
                     help='header_channel')
 parser.add_argument('--lr', type=float, default=None,
                     help='the learning rate')
+parser.add_argument('--weight_decay', type=float, default=None,
+                    help='the weight_decay')
 parser.add_argument('--nepochs', type=int, default=None,
                     help='training epochs')
 parser.add_argument('--transfer_epoch', type=int, default=None,
@@ -121,6 +128,8 @@ def main():
         config.spos = args.spos
     if args.load_path is not None:
         config.load_path = args.load_path
+    if args.resume_path is not None:
+        config.resume_path = args.resume_path
     if args.pretrain is not None:
         config.pretrain = args.pretrain
     if args.distillation is not None:
@@ -131,6 +140,10 @@ def main():
         config.batch_size = args.batch_size
     if args.lr is not None:
         config.lr = args.lr
+    if args.weight_decay is not None:
+        config.weight_decay = args.weight_decay
+    if args.lr_schedule is not None:
+        config.lr_schedule = args.lr_schedule
     if args.num_workers is not None:
         config.num_workers = args.num_workers
     if args.world_size is not None:
@@ -235,37 +248,20 @@ def main_worker(gpu, ngpus_per_node, config):
         model = FBNet_Infer(alpha=None, config=config, cand=cands)
         Epoch = 0
     else:
-        state = torch.load(os.path.join(config.load_path, 'arch_%s.pth' %config.load_epoch))
-        alpha = state['alpha']
-        # alpha = torch.tensor([
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    #     [0.0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-    #     [0.0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-    # ])
+        # TODO:
+        # state = torch.load(os.path.join(config.load_path, 'arch_%s.pth' %config.load_epoch))
+        # alpha_end = state['alpha_end']
+        # alpha_middle = state['alpha_middle']
+        alpha = torch.tensor([
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+    ])
         
         # print(alpha)
         Epoch = state['epoch']
         print(Epoch)
+        # TODO:
         model = FBNet_Infer(alpha=alpha, config=config, cand=None)
+        # model = FBNet_Infer(alpha_end=alpha_end, alpha_middle=alpha_middle, config=config, cand=None)
         flops = model.forward_flops((3, config.image_height, config.image_width))
         print('FLOPs: ', flops)
         # model = resnet20_add(num_classes=100, quantize=False, weight_bits=8, quantize_v='sbm')
@@ -376,8 +372,8 @@ def main_worker(gpu, ngpus_per_node, config):
 
     # if use multi machines, the pretrained weight and arch need to be duplicated on all the machines
     # TODO:
-    if type(pretrain) == str and os.path.exists(pretrain + "/weights_best_%d.pth" %(config.load_epoch)):
-        pretrained_model = torch.load(pretrain + "/weights_best_%d.pth" %(config.load_epoch))
+    if type(config.resume_path) == str and os.path.exists(config.resume_path + "/weights_best_%d.pth" %(config.load_epoch)):
+        pretrained_model = torch.load(config.resume_path + "/weights_best_%d.pth" %(config.load_epoch))
         partial = pretrained_model['state_dict']
         # print("ckpt:",partial)
         state = model.state_dict()
@@ -436,6 +432,7 @@ def main_worker(gpu, ngpus_per_node, config):
         transform_train = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
+            CIFAR10Policy(),
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465),
                                  (0.2023, 0.1994, 0.2010)),
@@ -510,6 +507,7 @@ def main_worker(gpu, ngpus_per_node, config):
         else:
             train(train_loader, model, optimizer, lr_policy, logger, epoch, config)
             torch.cuda.empty_cache()
+            # if not (epoch < 160):
             lr_policy.step()
 
        

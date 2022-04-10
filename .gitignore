@@ -1,0 +1,16 @@
+baseline/
+# fbnet/
+hw/
+visualize/
+spos_search.sh
+__pycache__/
+# .gitignore
+fbnet/
+adder/__pycache__
+deepshift/__pycache__
+deepshift/kernels/__pycache__
+AddAdd/
+AddAll/
+addall_cifar10/
+ckpt/
+adder_log/

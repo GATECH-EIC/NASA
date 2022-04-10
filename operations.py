@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 from thop import profile
+from torch.nn import init
 # from thop.count_hooks import count_convNd
 
 import sys
@@ -37,7 +38,16 @@ if osp.isfile(latency_file_name):
     latency_lookup_table = np.load(latency_file_name, allow_pickle=True).item()
 
 # TODO:
-WEIGHT_BITS = 16
+WEIGHT_BITS = 8
+
+class Hardswish(nn.Module):
+    def __init__(self, inplace = False):
+        super(Hardswish, self).__init__()
+        self.inplace = inplace
+
+    def forward(self, input):
+        return input*F.relu6(input + 3, inplace=True) / 6
+
 
 class QConv2d(nn.Conv2d):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=False,
@@ -71,7 +81,7 @@ class QConv2d(nn.Conv2d):
                               self.padding, self.dilation, self.groups)
         
         # TODO:change to inference quantization
-        output = quantize_grad(output, num_bits=WEIGHT_BITS, flatten_dims=(1, -1))
+        # output = quantize_grad(output, num_bits=WEIGHT_BITS, flatten_dims=(1, -1))
         # output = self.quantize_input_fw(output, WEIGHT_BITS)
 
         # if self.bias is not False : 
@@ -81,8 +91,8 @@ class QConv2d(nn.Conv2d):
         return output
 
 # TODO:
-Conv2d = nn.Conv2d
-# Conv2d = QConv2d
+# Conv2d = nn.Conv2d
+Conv2d = QConv2d
 BatchNorm2d = nn.BatchNorm2d
 
 
@@ -147,32 +157,59 @@ class ConvBlock(nn.Module):
         self.conv3 = Conv2d(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, dilation=1, groups=self.groups, bias=bias)
         self.bn3 = BatchNorm2d(C_out)
 
-
         self.nl = nn.ReLU(inplace=True)
-
+        # self.nl = Hardswish()
+        
+        # initialization BN
+        # init.constant_(self.bn1.weight, 1)
+        # init.constant_(self.bn1.bias, 0)
+        # init.constant_(self.bn2.weight, 1)
+        # init.constant_(self.bn2.bias, 0)
+        # init.constant_(self.bn3.weight, 0)
+        # init.constant_(self.bn3.bias, 0)
 
     # beta, mode, act_num, beta_param are for bit-widths search
-    def forward(self, x):
-        identity = x
-        # print(x.size())
-        x = self.nl(self.bn1(self.conv1(x)))
-        # print(self.kernel_size)
-        # print(self.padding)
-        # print(x.size())
+    def forward(self, x, active, pro):
 
+        # if self.C_in == self.C_out and self.stride == 1:
+        #     identity = x
+        #     if self.training == True:
+        #         if active==1:
+        #             x = self.nl(self.bn1(self.conv1(x)))
+        #             if self.groups > 1:
+        #                 x = self.shuffle(x)
+        #             x = self.nl(self.bn2(self.conv2(x)))
+        #             x = self.bn3(self.conv3(x))
+        #             x += identity
+        #         else:
+        #             x = identity
+        #     else:
+        #         x = self.nl(self.bn1(self.conv1(x)))
+        #         if self.groups > 1:
+        #             x = self.shuffle(x)
+        #         x = self.nl(self.bn2(self.conv2(x)))
+        #         x = self.bn3(self.conv3(x))
+        #         x = x*pro + identity
+        
+        # else:
+        #     x = self.nl(self.bn1(self.conv1(x)))
+        #     if self.groups > 1:
+        #         x = self.shuffle(x)
+        #     x = self.nl(self.bn2(self.conv2(x)))
+        #     x = self.bn3(self.conv3(x))
+
+        # ################### original version ##################
+        identity = x
+        x = self.nl(self.bn1(self.conv1(x)))
         if self.groups > 1:
             x = self.shuffle(x)
-
         x = self.nl(self.bn2(self.conv2(x)))
-        # print(x.size())
-
         x = self.bn3(self.conv3(x))
-        # print(x.size())
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
 
-
         return x
+
 
     def set_stage(self, stage):
         assert stage == 'update_weight' or stage == 'update_arch'
@@ -306,6 +343,7 @@ class Skip(nn.Module):
             self.conv = Conv2d(C_in, C_out, 1, stride=stride, padding=0, bias=False)
             self.bn = BatchNorm2d(C_out)
             self.relu = nn.ReLU(inplace=True)
+            # self.relu = Hardswish()
 
     @staticmethod
     def _flops(h, w, C_in, C_out, stride=1):
@@ -379,8 +417,9 @@ class Skip(nn.Module):
         return flops, (c_out, h_out, w_out)
 
 
-    def forward(self, x):
+    def forward(self, x, active, pro):
         if hasattr(self, 'conv'):
+
             out = self.conv(x)
             out = self.bn(out)
             out = self.relu(out)
@@ -420,7 +459,7 @@ class Skip(nn.Module):
         return conv_info, (self.C_out, h_out, w_out)
 
 
-def Shiftlayer(in_planes, out_planes, kernel_size=1, stride=1, padding=1, groups=1, bias=False, freeze_sign = False, use_kernel=False, use_cuda=True, shift_type='Q',
+def Shiftlayer(in_planes, out_planes, kernel_size=1, stride=1, padding=1, groups=1, bias=True, freeze_sign = False, use_kernel=False, use_cuda=True, shift_type='Q',
     rounding='deterministic', weight_bits=6, sign_threshold_ps=None, quant_bits=16):
     # conversion_count = 0
 
@@ -444,7 +483,7 @@ def Shiftlayer(in_planes, out_planes, kernel_size=1, stride=1, padding=1, groups
     return shift_conv2d
 
 # TODO:
-def Addlayer(in_planes, out_planes, kernel_size=1, stride=1, padding=1, groups=1, quantize=False, weight_bits=WEIGHT_BITS, sparsity=0, quantize_v='sbm'):
+def Addlayer(in_planes, out_planes, kernel_size=1, stride=1, padding=1, groups=1, quantize=True, weight_bits=6, sparsity=0, quantize_v='sbm'):
     " 3x3 convolution with padding "
     return adder.Adder2D(in_planes, out_planes, kernel_size=kernel_size, stride=stride, padding=padding, groups=groups, bias=False,
                          quantize=quantize, weight_bits=weight_bits, sparsity=sparsity, quantize_v=quantize_v)
@@ -502,29 +541,60 @@ class ShiftBlock(nn.Module):
         self.conv3 = Shiftlayer(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, groups=self.groups)
         self.bn3 = BatchNorm2d(C_out)
 
-
         self.nl = nn.ReLU(inplace=True)
+        # self.nl = Hardswish()
 
+        # initialization BN
+        # init.constant_(self.bn1.weight, 1)
+        # init.constant_(self.bn1.bias, 0)
+        # init.constant_(self.bn2.weight, 1)
+        # init.constant_(self.bn2.bias, 0)
+        # init.constant_(self.bn3.weight, 0)
+        # init.constant_(self.bn3.bias, 0)
+        
 
     # beta, mode, act_num, beta_param are for bit-widths search
-    def forward(self, x):
-        identity = x
-        # print(x.size())
-        x = self.nl(self.bn1(self.conv1(x)))
-        # print(self.kernel_size)
-        # print(self.padding)
-        # print(x.size())
+    def forward(self, x, active, pro):
 
+        # if self.C_in == self.C_out and self.stride == 1:
+        #     identity = x
+        #     if self.training == True:
+        #         if active==1:
+        #             x = self.nl(self.bn1(self.conv1(x)))
+        #             if self.groups > 1:
+        #                 x = self.shuffle(x)
+        #             x = self.nl(self.bn2(self.conv2(x)))
+        #             x = self.bn3(self.conv3(x))
+        #             x += identity
+        #         else:
+        #             x = identity
+        #     else:
+        #         x = self.nl(self.bn1(self.conv1(x)))
+        #         if self.groups > 1:
+        #             x = self.shuffle(x)
+        #         x = self.nl(self.bn2(self.conv2(x)))
+        #         x = self.bn3(self.conv3(x))
+        #         x = x*pro + identity
+        
+        # else:
+        #     x = self.nl(self.bn1(self.conv1(x)))
+        #     if self.groups > 1:
+        #         x = self.shuffle(x)
+        #     x = self.nl(self.bn2(self.conv2(x)))
+        #     x = self.bn3(self.conv3(x))
+
+        # ################### original version ##################
+        identity = x
+        x = self.nl(self.bn1(self.conv1(x)))
         if self.groups > 1:
             x = self.shuffle(x)
-
         x = self.nl(self.bn2(self.conv2(x)))
-        # print(x.size())
-
         x = self.bn3(self.conv3(x))
-        # print(x.size())
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
+
+        return x
+
 
         return x
 
@@ -629,31 +699,60 @@ class AddBlock(nn.Module):
         self.conv3 = Addlayer(C_in*expansion, C_out, kernel_size=1, stride=1, padding=0, groups=self.groups)
         self.bn3 = BatchNorm2d(C_out)
 
-
         self.nl = nn.ReLU(inplace=True)
+        # self.nl = Hardswish()
+        
+        # # initialization BN
+        # init.constant_(self.bn1.weight, 1)
+        # init.constant_(self.bn1.bias, 0)
+        # init.constant_(self.bn2.weight, 1)
+        # init.constant_(self.bn2.bias, 0)
+        # init.constant_(self.bn3.weight, 0)
+        # init.constant_(self.bn3.bias, 0)
 
 
     # beta, mode, act_num, beta_param are for bit-widths search
-    def forward(self, x):
-        identity = x
-        # print(x.size())
-        x = self.nl(self.bn1(self.conv1(x)))
-        # print(self.kernel_size)
-        # print(self.padding)
-        # print(x.size())
+    def forward(self, x, active, pro):
 
+        # if self.C_in == self.C_out and self.stride == 1:
+        #     identity = x
+        #     if self.training == True:
+        #         if active==1:
+        #             x = self.nl(self.bn1(self.conv1(x)))
+        #             if self.groups > 1:
+        #                 x = self.shuffle(x)
+        #             x = self.nl(self.bn2(self.conv2(x)))
+        #             x = self.bn3(self.conv3(x))
+        #             x += identity
+        #         else:
+        #             x = identity
+        #     else:
+        #         x = self.nl(self.bn1(self.conv1(x)))
+        #         if self.groups > 1:
+        #             x = self.shuffle(x)
+        #         x = self.nl(self.bn2(self.conv2(x)))
+        #         x = self.bn3(self.conv3(x))
+        #         x = x*pro + identity
+        
+        # else:
+        #     x = self.nl(self.bn1(self.conv1(x)))
+        #     if self.groups > 1:
+        #         x = self.shuffle(x)
+        #     x = self.nl(self.bn2(self.conv2(x)))
+        #     x = self.bn3(self.conv3(x))
+        
+        # ################### original version ##################
+        identity = x
+        x = self.nl(self.bn1(self.conv1(x)))
         if self.groups > 1:
             x = self.shuffle(x)
-
         x = self.nl(self.bn2(self.conv2(x)))
-        # print(x.size())
-
         x = self.bn3(self.conv3(x))
-        # print(x.size())
         if self.C_in == self.C_out and self.stride == 1:
             x += identity
 
         return x
+
 
     def set_stage(self, stage):
         assert stage == 'update_weight' or stage == 'update_arch'
@@ -758,6 +857,7 @@ class ShiftAddBlock(nn.Module):
 
 
         self.nl = nn.ReLU(inplace=True)
+        # self.nl = Hardswish()
 
 
     # beta, mode, act_num, beta_param are for bit-widths search
@@ -896,7 +996,7 @@ class ConvNorm(nn.Module):
         self.bn = BatchNorm2d(C_out)
 
         self.relu = nn.ReLU(inplace=True)
-
+        # self.relu = Hardswish()
 
 
     def forward(self, x):

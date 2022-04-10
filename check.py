@@ -83,16 +83,16 @@ def check_forward():
     #                   padding, padding)
     output = adder(input)
     time_e = time.time()
-    print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     time_b = time.time()
     # out_ref = F.conv2d(input, weight, bias, padding=padding)
     # out_ref = adder2d_function(input, weight, stride, padding)
     out_ref = adder_ref(input)
     time_e = time.time()
-    print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
-    print("max error: {:.3e}".format(float((out_ref - output).abs().max())))
+    print("Max error of inference: {:.3e}".format(float((out_ref - output).abs().max())))
 
     time_b = time.time()
     # adder_cuda.forward(input,
@@ -104,16 +104,16 @@ def check_forward():
     #                   padding, padding)
     output = adder(input)
     time_e = time.time()
-    print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     time_b = time.time()
     # out_ref = F.conv2d(input, weight, bias, padding=padding)
     # out_ref = adder2d_function(input, weight, stride, padding)
     out_ref = adder_ref(input)
     time_e = time.time()
-    print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
-    print("max error: {:.3e}".format(float((out_ref - output).abs().max())))
+    # print("max error: {:.3e}".format(float((out_ref - output).abs().max())))
 
 
 def check_grad_in():
@@ -197,14 +197,14 @@ def check_grad_in():
     # print("grad_in our")
     # print(grad_input)
 
-    print(((grad_clone - grad_input)).abs().max())
+    print("Max error of grad_input: {:.3e}".format(((grad_clone - grad_input)).abs().max()))
 
 
 def check_grad_weight():
     batch_size = 1
     in_channels = 6
     out_channels = 6
-    in_size = 128
+    in_size = 5
     kernel_size = 3
     padding = 1
     stride = 1
@@ -279,7 +279,9 @@ def check_grad_weight():
     # print(grad_weight)
 
     eps = 1e-6
-    print(((grad_clone - grad_weight) / (grad_clone.abs() + eps)).abs().max())
+    print("Max error of grad_weight: {:.3e}".format(((grad_clone - grad_weight) / (grad_clone.abs() + eps)).abs().max()))
+    # print(grad_clone)
+    # print(grad_weight)
 
     import time
     time_b = time.time()
@@ -292,14 +294,14 @@ def check_grad_weight():
     #                            padding, padding)
     output.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     # outref = F.conv2d(input, weight, bias, padding=padding)
     # out_ref = adder2d_function(input, weight, stride, padding)
     time_b = time.time()
     out_ref.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     time_b = time.time()
     # adder_cuda.backward_weight(grad_output,
@@ -311,14 +313,14 @@ def check_grad_weight():
     #                            padding, padding)
     output.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     # outref = F.conv2d(input, weight, bias, padding=padding)
     # out_ref = adder2d_function(input, weight, stride, padding)
     time_b = time.time()
     out_ref.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     time_b = time.time()
     # adder_cuda.backward_weight(grad_output,
@@ -330,14 +332,14 @@ def check_grad_weight():
     #                            padding, padding)
     output.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("hand_written_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
     # outref = F.conv2d(input, weight, bias, padding=padding)
     # out_ref = adder2d_function(input, weight, stride, padding)
     time_b = time.time()
     out_ref.backward(grad_output, retain_graph=True)
     time_e = time.time()
-    print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
+    # print("builtin_conv: {:.4f}us".format((time_e - time_b) * 1e6))
 
 
 def check_naive_clone():

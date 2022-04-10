@@ -36,7 +36,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 from architect import Architect
-from model_search_ws import FBNet as Network
+from model_search_ws_mix_fix_conv import FBNet as Network
 from model_infer import FBNet_Infer
 
 from lr import LambdaLR
@@ -61,6 +61,7 @@ parser.add_argument('--pretrain', type=str, default=None,
                     help='path to save')
 parser.add_argument('--act_num', type=int, default=None,
                     help='path to activate')
+parser.add_argument('--arch_update_frec', type=int,default=None, help='the frec of update arch')
 parser.add_argument('--header_channel', type=int, default=1504,
                     help='number of the header_channel')
 parser.add_argument('--dataset_path', type=str, default=None,
@@ -83,8 +84,12 @@ parser.add_argument('--flops_max', type=float, default=None,
                     help='the max number of FLOPs')
 parser.add_argument('--flops_min', type=float, default=None,
                     help='the minimal number of FLOPs')
+parser.add_argument('--weight_decay', type=float, default=None,
+                    help='the weight decay')
 parser.add_argument('--lr', type=float, default=0.05,
                     help='weight of learning rate')
+parser.add_argument('--lr_schedule', type=str, default='cosine',
+                    help='the lr scheduler')
 parser.add_argument('--arch_learning_rate', type=float, default=3e-4,
                     help='weight of learning rate')
 parser.add_argument('--gpu', type=str, default='0', 
@@ -130,10 +135,16 @@ def main():
     if args.act_num is not None:
         config.act_num = args.act_num
         config.pretrain_act_num = args.act_num
+    if args.arch_update_frec is not None:
+        config.arch_update_frec = args.arch_update_frec
     if args.header_channel is not None:
         config.header_channel = args.header_channel
+    if args.weight_decay is not None:
+        config.weight_decay = args.weight_decay
     if args.lr is not None:
         config.lr = args.lr
+    if args.lr_schedule is not None:
+        config.lr_schedule = args.lr_schedule
     if args.arch_learning_rate is not None:
         config.arch_learning_rate = args.arch_learning_rate
     if args.running_mode is not None:
@@ -356,21 +367,22 @@ def main_worker(gpu, ngpus_per_node, config):
 
     # TODO:
     # if use multi machines, the pretrained weight and arch need to be duplicated on all the machines
-    # if type(pretrain) == str and os.path.exists("/Datadisk/shihh/NAS/hw/CIFAR100_AddAll_noshiftadd_ws_flops1e-10" + "/weights_pretrain_%d.pth" %(config.pretrain_epoch)):
+    if type(pretrain) == str and os.path.exists("/media/HD1/shh/NAS/ckpt/cifar10_AddAll_120_1.5_1_2" + "/weights_pretrain_%d.pth" %(config.pretrain_epoch)):
     # TODO:
-    if type(pretrain) == str and os.path.exists(pretrain + "/weights_pretrain_%d.pth" %(config.pretrain_epoch)):
-        # partial = torch.load("/Datadisk/shihh/NAS/hw/CIFAR100_AddAll_noshiftadd_ws_flops1e-10" + "/weights_pretrain_%d.pth" %(config.pretrain_epoch))
-        partial = torch.load(pretrain + "/weights_pretrain_%d.pth" %(config.pretrain_epoch))
+    # if type(pretrain) == str and os.path.exists(pretrain + "/weights_pretrain_%d.pth" %(config.load_epoch)):
+        partial = torch.load("/media/HD1/shh/NAS/ckpt/cifar10_AddAll_120_1.5_1_2" + "/weights_pretrain_%d.pth" %(config.pretrain_epoch))
+        # partial = torch.load(pretrain + "/weights_pretrain_%d.pth" %(config.load_epoch))
         state = model.state_dict()
         pretrained_dict = {k: v for k, v in partial.items() if k in state and state[k].size() == partial[k].size()}
         state.update(pretrained_dict)
         model.load_state_dict(state)
 
-        # pretrain_arch = torch.load("/Datadisk/shihh/NAS/hw/CIFAR100_AddAll_noshiftadd_ws_flops1e-10" + "/arch_pretrain_%d.pth" %(config.pretrain_epoch))
-        pretrain_arch = torch.load(pretrain + "/arch_pretrain_%d.pth" %(config.pretrain_epoch))
+        pretrain_arch = torch.load("/media/HD1/shh/NAS/ckpt/cifar10_AddAll_120_1.5_1_2" + "/arch_pretrain_%d.pth" %(config.pretrain_epoch))
+        # pretrain_arch = torch.load(pretrain + "/arch_pretrain_%d.pth" %(config.load_epoch))
         # pretrain_arch = torch.load(pretrain + "/arch_pretrain_90.pth")
         
-        model.module.alpha.data = pretrain_arch['alpha'].data
+        model.module.alpha_end.data = pretrain_arch['alpha_end'].data
+        model.module.alpha_middle.data = pretrain_arch['alpha_middle'].data
         # print(pretrain_arch['alpha'])
         start_epoch = pretrain_arch['epoch'] + 1
 
@@ -480,6 +492,7 @@ def main_worker(gpu, ngpus_per_node, config):
 
     # tbar = tqdm(range(config.nepochs), ncols=80)
     # TODO:
+    best_acc = 0
     for epoch in range(start_epoch, config.nepochs):
         # if config.distributed:
         #     train_loader_model.sampler.set_epoch(epoch)
@@ -498,7 +511,11 @@ def main_worker(gpu, ngpus_per_node, config):
 
         if epoch < config.pretrain_epoch:
             update_arch = False
-            full_channel = False
+            full_channel = True
+            stage = 0
+            all_conv = False
+            all_add = False
+            mix = False
             full_kernel = False
             model.module.set_search_mode(mode=config.pretrain_mode, act_num=config.pretrain_act_num)
 
@@ -513,16 +530,56 @@ def main_worker(gpu, ngpus_per_node, config):
             #     full_channel = False
             # TODO:
             # ###### channel-wise weight sharing #########
-            if epoch < 20:
-                full_channel = True
+            # if epoch < 50:
+            #     all_conv = True
+            #     if epoch < 25:
+            #         full_channel = True
+            #     else:
+            #         full_channel = False
+            # elif epoch < 100:
+            #     all_conv = False
+            #     all_add = True
+            #     if epoch < 75:
+            #         full_channel = True
+            #     else: 
+            #         full_channel = False
+            # else:
+            #     all_add = False
+            #     all_conv = False
+            #     full_channel = False
+            #     stage = 0
+            #     mix = True
+
+    
+            if epoch < 40:
+                all_conv = True
+                if epoch < 20:
+                    full_channel = True
+                else:
+                    full_channel = False
+            elif epoch < 80:
+                all_conv = False
+                all_add = True
+                if epoch < 60:
+                    full_channel = True
+                else: 
+                    full_channel = False
             else:
+                all_add = False
+                all_conv = False
                 full_channel = False
+                stage = 0
+                mix = True
 
         else:
             model.module.set_search_mode(mode=config.mode, act_num=config.act_num)
 
             update_arch = True
             full_channel = False
+            all_conv = False
+            all_add = False
+            mix = False
+            stage = 0
             full_kernel = False
 
         temp = config.temp_init * config.temp_decay ** epoch
@@ -533,8 +590,7 @@ def main_worker(gpu, ngpus_per_node, config):
             logging.info("update arch: " + str(update_arch))
 
         train_iterwise(train_loader_model, train_loader_arch, model, architect, optimizer, lr_policy, logger, epoch, 
-            update_arch=update_arch, full_channel=full_channel,
-            full_kernel=full_kernel, epsilon_alpha=epsilon_alpha, temp=temp, arch_update_frec=config.arch_update_frec)
+            update_arch=update_arch, full_channel=full_channel, stage=stage, full_kernel=full_kernel, all_conv=all_conv, all_add=all_add, mix=mix, epsilon_alpha=epsilon_alpha, temp=temp, arch_update_frec=config.arch_update_frec)
 
         lr_policy.step()
         torch.cuda.empty_cache()
@@ -548,15 +604,15 @@ def main_worker(gpu, ngpus_per_node, config):
                         # logging.info("Save Sucessfully in ",config.save)
                         # save(model, os.path.join(config.save, 'weights_latest.pth'))
             if ((epoch+1) == config.pretrain_epoch):
-                    # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
-                    if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
-                        save(model, os.path.join(config.save, 'weights_pretrain_%d.pth' %(config.pretrain_epoch)))
+                # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
+                if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
+                    save(model, os.path.join(config.save, 'weights_pretrain_%d.pth' %(config.pretrain_epoch)))
             # TODO:
-            if (config.pretrain_epoch == 150):
-                if ((epoch+1) == 60 or (epoch+1) == 90 or (epoch+1) == 100 or (epoch+1) == 110 or (epoch+1) == 130):
-                        # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
-                        if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
-                            save(model, os.path.join(config.save, 'weights_pretrain_%d.pth' %(epoch+1)))
+            # if (config.pretrain_epoch == 150):
+            #     if ((epoch+1) == 60 or (epoch+1) == 80 or (epoch+1) == 100 or (epoch+1) == 110 or (epoch+1) == 130):
+            #             # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
+            #             if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
+            #                 save(model, os.path.join(config.save, 'weights_pretrain_%d.pth' %(epoch+1)))
             # if ((epoch+1)%30 == 0):
             #     save(model, os.path.join(config.save, 'weights_%d.pth'%(epoch+1)))
 
@@ -573,8 +629,9 @@ def main_worker(gpu, ngpus_per_node, config):
                         logging.info("Epoch %d: acc %.3f"%(epoch, acc))
 
                         state = {}
-                        state['alpha'] = getattr(model.module, 'alpha')
-                        model.module.show_arch(alpha=state['alpha'])
+                        state['alpha_end'] = getattr(model.module, 'alpha_end')
+                        state['alpha_middle'] = getattr(model.module, 'alpha_middle')
+                        model.module.show_arch(alpha_end=state['alpha_end'],alpha_middle=state['alpha_middle'])
                         # print(state['alpha'])
                         state['acc'] = acc
                         state['epoch'] = epoch
@@ -588,11 +645,17 @@ def main_worker(gpu, ngpus_per_node, config):
                             if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
                                 torch.save(state, os.path.join(config.save, "arch_pretrain_%d.pth" %config.pretrain_epoch))
 
-                        if (config.pretrain_epoch == 150):
-                            if ((epoch+1) == 60 or (epoch+1) == 90 or (epoch+1) == 100 or (epoch+1) == 110 or (epoch+1) == 130):
-                                # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
-                                if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
-                                    torch.save(state, os.path.join(config.save, "arch_pretrain_%d.pth" %(epoch+1)))
+                        # if acc > best_acc:
+                        #     best_acc = acc
+                        #     if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
+                        #         torch.save(state, os.path.join(config.save, "arch_pretrain_%d.pth" %config.pretrain_epoch))
+
+
+                        # if (config.pretrain_epoch == 150):
+                        #     if ((epoch+1) == 60 or (epoch+1) == 90 or (epoch+1) == 100 or (epoch+1) == 110 or (epoch+1) == 130):
+                        #         # if not config.multiprocessing_distributed or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0):
+                        #         if not (config.multiprocessing_distributed or config.distributed) or (config.multiprocessing_distributed and config.rank % ngpus_per_node == 0) or (config.distributed and dist.get_rank() == 0):
+                        #             torch.save(state, os.path.join(config.save, "arch_pretrain_%d.pth" %(epoch+1)))
 
                 else:
                     # TODO:
@@ -621,8 +684,9 @@ def main_worker(gpu, ngpus_per_node, config):
                         #     logger.add_scalar('fps/val', metric, epoch)
                         #     logging.info("Epoch %d: FPS %.3f"%(epoch, metric))
                         #     state['fps'] = metric
-                        state['alpha'] = getattr(model.module, 'alpha')
-                        model.module.show_arch(alpha=state['alpha'])
+                        state['alpha_end'] = getattr(model.module, 'alpha_end')
+                        state['alpha_middle'] = getattr(model.module, 'alpha_middle')
+                        model.module.show_arch(alpha_end=state['alpha_end'],alpha_middle=state['alpha_middle'])
                         # print(state['alpha'])
                         state['acc'] = acc
                         state['epoch'] = epoch
@@ -702,7 +766,7 @@ def crossentropyloss(x,y):
     return nlloss_output
 
 
-def train_iterwise(train_loader_model, train_loader_arch, model, architect, optimizer, lr_policy, logger, epoch, update_arch=True, full_channel=False, full_kernel=False, epsilon_alpha=0, temp=1, arch_update_frec=1):
+def train_iterwise(train_loader_model, train_loader_arch, model, architect, optimizer, lr_policy, logger, epoch, update_arch=True, full_channel=False, stage=0, full_kernel=False, all_conv=False, all_add=False, mix=False, epsilon_alpha=0, temp=1, arch_update_frec=1):
     model.train()
 
     # bar_format = '{desc}[{elapsed}<{remaining},{rate_fmt}]'
@@ -748,13 +812,17 @@ def train_iterwise(train_loader_model, train_loader_arch, model, architect, opti
             Random_alpha(model, epsilon_alpha)
         # print("updata_arch",update_arch)
         model.cuda()
-        logit = model(input, temp, update_arch, full_channel, full_kernel)
-        # print("logit",logit)
         # TODO:
+        # logit, kl_loss = model(input, temp, update_arch, full_channel, full_kernel)
+        logit = model(input, temp, update_arch, full_channel, stage, full_kernel, all_conv, all_add, mix)
+        # print("logit",logit)
+        
         # loss = model.module._criterion(logit, target)
         # print("logit",logit)
         # print("target",target)
         loss = crossentropyloss(logit, target)
+        # TODO:
+        # loss += kl_loss
         # print("loss",loss)
         optimizer.zero_grad()
         loss.backward()
@@ -770,9 +838,11 @@ def train_iterwise(train_loader_model, train_loader_arch, model, architect, opti
                 logging.info("[Epoch %d/%d][Step %d/%d] Loss=%.3f Time=%.3f Data Time=%.3f" % 
                             (epoch + 1, config.nepochs, step + 1, len(train_loader_model), loss.item(), total_time, data_time))
                 logger.add_scalar('loss_weight/train', loss, epoch*len(train_loader_model)+step)
+                # print(getattr(model.module, 'alpha_middle'))
 
 
     torch.cuda.empty_cache()
+  
     del loss
     if update_arch: del loss_arch
 
@@ -786,6 +856,8 @@ def infer(epoch, model, test_loader, logger, temp=1, finalize=False):
             input_var = Variable(input).cuda()
             target_var = Variable(target).cuda()
 
+            # TODO:
+            # output, kl_loss = model(input_var)
             output = model(input_var)
             prec1, = accuracy(output.data, target_var, topk=(1,))
             prec1_list.append(prec1)
@@ -793,7 +865,7 @@ def infer(epoch, model, test_loader, logger, temp=1, finalize=False):
         acc = sum(prec1_list)/len(prec1_list)
 
     if finalize:
-        model_infer = FBNet_Infer(getattr(model.module, 'alpha'), config=config)
+        model_infer = FBNet_Infer(getattr(model.module, 'alpha_end'), getattr(model.module, 'alpha_middle'), config=config)
         # if config.efficiency_metric == 'flops':
         flops = model_infer.forward_flops((3, config.image_height, config.image_width))
         return acc, flops

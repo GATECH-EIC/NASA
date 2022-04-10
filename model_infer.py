@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.nn import init
 from operations import *
 from torch.autograd import Variable
-from genotypes import PRIMITIVES_OnlyConv, PRIMITIVES_AddAdd, PRIMITIVES_AddShift, PRIMITIVES_AddShiftAdd, PRIMITIVES_AddAll, PRIMITIVES_NoConv, PRIMITIVES_OnlyShiftAdd
+from genotypes import PRIMITIVES_OnlyConv, PRIMITIVES_AddAdd, PRIMITIVES_AddShift, PRIMITIVES_AddShiftAdd, PRIMITIVES_AddAll, PRIMITIVES_NoConv, PRIMITIVES_OnlyShiftAdd, PRIMITIVES_AddAdd_allconv, PRIMITIVES_AddAll_allconv
 import numpy as np
 from thop import profile
 from matplotlib import pyplot as plt
@@ -24,13 +24,21 @@ class MixedOp(nn.Module):
         if(self.search_space=='OnlyConv'):
             self.type = PRIMITIVES_OnlyConv
         if(self.search_space=='AddAdd'):
-            self.type = PRIMITIVES_AddAdd
+        # TODO:
+            if layer_id < 4 or layer_id > 19:
+                self.type = PRIMITIVES_AddAdd_allconv
+            else:
+                self.type = PRIMITIVES_AddAdd
+            # self.type = PRIMITIVES_AddAdd
         if(self.search_space=='AddShift'):
             self.type = PRIMITIVES_AddShift
         if(self.search_space=='AddShiftAdd'):
             self.type = PRIMITIVES_AddShiftAdd
         if(self.search_space=='AddAll'):
-            self.type = PRIMITIVES_AddAll
+            if layer_id < 4 or layer_id > 19:
+                self.type = PRIMITIVES_AddAll_allconv
+            else:
+                self.type = PRIMITIVES_AddAll
         if(self.search_space=='NoConv'):
             self.type = PRIMITIVES_NoConv
         if(self.search_space=='OnlyShiftAdd'):
@@ -53,8 +61,8 @@ class MixedOp(nn.Module):
     #    else:
     #        self.num_bits = num_bits_list
 
-    def forward(self, x):
-        return self._op(x)
+    def forward(self, x, active=1, pro=1):
+        return self._op(x, active, pro)
         # if(self.layer_id == 1):
         #     print(self.type[op_idx])
         #     print("input:":)
@@ -89,12 +97,14 @@ class MixedOp(nn.Module):
 
 
 class FBNet_Infer(nn.Module):
-    def __init__(self, alpha, config, flag=False, cand=None):
+    def __init__(self, alpha_end, alpha_middle, config, flag=False, cand=None):
         super(FBNet_Infer, self).__init__()
 
         if (cand == None):
-            self.op_idx_list = F.softmax(alpha, dim=-1).argmax(-1)
-            # self.quant_idx_list = F.softmax(beta, dim=-1).argmax(-1)
+            self.op_idx_list_end = F.softmax(alpha_end, dim=-1).argmax(-1)
+            self.op_idx_list_middle = F.softmax(alpha_middle, dim=-1).argmax(-1)
+
+            # self.op_idx_list = F.softmax(alpha, dim=-1).argmax(-1)
         else:
             self.op_idx_list = cand
 
@@ -121,18 +131,44 @@ class FBNet_Infer(nn.Module):
 
         layer_id = 1
 
+        count_end = 0
+        count_middle = 0
         for stage_id, num_layer in enumerate(self.num_layer_list):
             for i in range(num_layer):
-                if i == 0:
-                    if stage_id == 0:
-                        op = MixedOp(self.stem_channel, self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+                if layer_id < 4 or layer_id > 19:
+                    if i == 0:
+                        if stage_id == 0:
+                            op = MixedOp(self.stem_channel, self.num_channel_list[stage_id], self.op_idx_list_end[count_end], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+                        else:
+                            op = MixedOp(self.num_channel_list[stage_id-1], self.num_channel_list[stage_id], self.op_idx_list_end[count_end], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
                     else:
-                        op = MixedOp(self.num_channel_list[stage_id-1], self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+                        op = MixedOp(self.num_channel_list[stage_id], self.num_channel_list[stage_id], self.op_idx_list_end[count_end], layer_id, stride=1, search_space=self.search_space, flag=flag)
+                    count_end += 1
                 else:
-                    op = MixedOp(self.num_channel_list[stage_id], self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=1, search_space=self.search_space, flag=flag)
-                
+                    if i == 0:
+                        if stage_id == 0:
+                            op = MixedOp(self.stem_channel, self.num_channel_list[stage_id], self.op_idx_list_middle[count_middle], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+                        else:
+                            op = MixedOp(self.num_channel_list[stage_id-1], self.num_channel_list[stage_id], self.op_idx_list_middle[count_middle], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+                    else:
+                        op = MixedOp(self.num_channel_list[stage_id], self.num_channel_list[stage_id], self.op_idx_list_middle[count_middle], layer_id, stride=1, search_space=self.search_space, flag=flag)
+                    count_middle += 1
                 layer_id += 1
                 self.cells.append(op)
+
+
+        # for stage_id, num_layer in enumerate(self.num_layer_list):
+        #     for i in range(num_layer):
+        #         if i == 0:
+        #             if stage_id == 0:
+        #                 op = MixedOp(self.stem_channel, self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+        #             else:
+        #                 op = MixedOp(self.num_channel_list[stage_id-1], self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=self.stride_list[stage_id], search_space=self.search_space, flag=flag)
+        #         else:
+        #             op = MixedOp(self.num_channel_list[stage_id], self.num_channel_list[stage_id], self.op_idx_list[layer_id-1], layer_id, stride=1, search_space=self.search_space, flag=flag)
+                
+        #         layer_id += 1
+        #         self.cells.append(op)
 
         self.header = ConvNorm(self.num_channel_list[-1], self.header_channel, kernel_size=1)
 
@@ -150,9 +186,9 @@ class FBNet_Infer(nn.Module):
                 init.kaiming_normal_(m.weight, mode='fan_out')
                 if m.bias is not None:
                     init.constant_(m.bias, 0)
-            elif isinstance(m, nn.BatchNorm2d):
-                init.constant_(m.weight, 1)
-                init.constant_(m.bias, 0)
+            # elif isinstance(m, nn.BatchNorm2d):
+            #     init.constant_(m.weight, 1)
+            #     init.constant_(m.bias, 0)
             elif isinstance(m, nn.Linear):
                 init.normal_(m.weight, std=0.001)
                 if m.bias is not None:
@@ -165,11 +201,14 @@ class FBNet_Infer(nn.Module):
         middle_out = []
         feature = []
 
+        self.probabilities = torch.linspace(start=1, end=0.5, steps=22)
+        self.actives = torch.bernoulli(self.probabilities)
+        
         for i, cell in enumerate(self.cells):
-            out = cell(out)
+            out = cell(out, self.actives[i], self.probabilities[i])
             feature.append(out)
-            if i == 4 or i == 8 or i == 12 or i == 16 or i == 20:
-                middle_out.append(out)
+            # if i == 4 or i == 8 or i == 12 or i == 16 or i == 20:
+            #     middle_out.append(out)
 
         out = self.fc(self.avgpool(self.header(out)).view(out.size(0), -1))
 

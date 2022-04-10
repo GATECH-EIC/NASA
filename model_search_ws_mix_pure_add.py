@@ -1,5 +1,6 @@
 import sys
 import os
+from numpy.lib.twodim_base import triu_indices_from
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -79,8 +80,6 @@ class MixedOp(nn.Module):
             if (primitive=='k3_e6' or primitive=='k5_e6' or primitive=='add_k3_e6' or primitive=='add_k5_e6' or primitive=='shift_k3_e6' or primitive=='shift_k5_e6' or 
             primitive=='shiftadd_k3_e6' or primitive=='shiftadd_k5_e6' or 
             primitive=='skip'):
-            # ########### both channel and kernel weight sharing #########
-            # if (primitive=='k5_e6' or primitive=='add_k5_e6' or primitive=='shift_k5_e6' or primitive=='shiftadd_k5_e6' or primitive=='skip'):
                 op = OPS[primitive](C_in, C_out, layer_id, stride)
                 self._ops.append(op)
         # print(self._ops)
@@ -88,7 +87,98 @@ class MixedOp(nn.Module):
 
 
     # ############## chanell-wise weight sharing ##################
-    def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, cand=None):
+    # def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, all_conv=False, all_add=False, mix=False, cand=None):
+    #     # print('ok')
+    #     # int: force #channel; tensor: arch_ratio; float(<=1): force width
+    #     result = 0
+
+    #     if self.mode == 'soft':
+    #         for i, (w, op) in enumerate(zip(alpha, self._ops)):
+    #             result = result + op(x) * w 
+
+    #         self.set_active_list(list(range(len(self._ops))))
+
+    #     elif self.mode == 'proxy_hard':
+    #         # print('ok')
+    #         # print('cand',cand)
+    #         if (cand==None):
+    #             # print('ok')
+    #             assert alpha_param is not None
+                
+    #             rank = alpha.argsort(descending=True)
+    #             if (update_arch == False):
+    #                 if full_channel == True:
+    #                     if (mix==True) or (self.layer_id < 4 or self.layer_id > 19):
+    #                         index = []
+    #                         while len(index)!= self.act_num:
+    #                             id = np.random.randint(len(self._ops)) 
+    #                             if id not in index:
+    #                                 index.append(id)
+    #                     elif all_conv == True:
+    #                         index = []
+    #                         conv = [0,1,4]
+    #                         while len(index)!= self.act_num:
+    #                             id = random.choice(conv)
+    #                             if id not in index:
+    #                                 index.append(id)
+    #                             # print(index)
+    #                     elif all_add == True:
+    #                         index = []
+    #                         add = [2,3]
+    #                         while len(index)!= self.act_num:
+    #                             id = random.choice(add)
+    #                             if id not in index:
+    #                                 index.append(id) 
+    #                 else:
+    #                     np.random.shuffle(rank.cpu().detach().numpy())
+    #                 # print(rank)
+            
+    #             self.set_active_list(rank[:self.act_num])
+    #             # print('ok')
+    #             # print(self.active_list)
+
+    #             alpha = F.softmax(alpha_param[rank[:self.act_num]], dim=-1)
+        
+    #             for i in range(self.act_num):
+    #                 # print(i)
+                   
+    #                 # print(self.type[rank[i]])
+    #                 if full_channel == False:
+    #                     type = rank[i] // 3 
+    #                     ratio = rank[i] % 3
+    #                     if (ratio==0):
+    #                         ratio=6
+    #                     if (ratio==1):
+    #                         ratio=2
+    #                     if (ratio==2):
+    #                         ratio=1
+    #                     # print(self._ops[type],ratio)
+    #                     result = result + self._ops[type](x,ratio) * alpha[i]
+    #                 else:
+    #                     result = result + self._ops[index[i]](x) * alpha[i]
+    #                 # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
+    #         else:
+    #             self.set_active_list(cand)
+    #             if(cand==(len(self.type)-1)):
+    #                 result = result + self._ops[-1](x)
+    #             else:
+    #                 type = cand // 3
+    #                 ratio = cand % 3
+    #                 if (ratio==0):
+    #                     ratio=6
+    #                 if (ratio==1):
+    #                     ratio=2
+    #                 if (ratio==2):
+    #                     ratio=1
+    #                 result = result + self._ops[type](x,ratio)
+
+    #     else:
+    #         print('Wrong search mode:', self.mode)
+    #         sys.exit()
+
+    #     return result
+
+    def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, all_conv=False, all_add=False, mix=True, cand=None):
         # print('ok')
         # int: force #channel; tensor: arch_ratio; float(<=1): force width
         result = 0
@@ -107,15 +197,31 @@ class MixedOp(nn.Module):
                 assert alpha_param is not None
                 
                 rank = alpha.argsort(descending=True)
-                if (update_arch == False):
-                    if (full_channel == False):
-                        np.random.shuffle(rank.cpu().detach().numpy())
-                    else:
-                        index = []
-                        while len(index)!= self.act_num:
-                            id = np.random.randint(len(self._ops)) 
-                            if id not in index:
-                                index.append(id)
+                if mix==False:
+                    index = []
+                    # print()
+                    if (self.layer_id < 4 or self.layer_id > 19):
+                        if full_channel == True: 
+                            op = [0,1,2]
+                        else:
+                            op = [0,1,2,3,4,5,6]
+                    elif all_conv == True:
+                        if full_channel == True: 
+                            op = [0,1,4]
+                        else:
+                            op = [0,1,2,3,4,5,12]
+                    elif all_add == True:
+                        if full_channel == True: 
+                            op = [2,3]
+                        else:
+                            op = [3,7,8,9,10,11]
+                    while len(index)!= self.act_num:
+                        id = random.choice(op)
+                        if id not in index:
+                            index.append(id)
+                
+                else:
+                    np.random.shuffle(rank.cpu().detach().numpy())
                     # print(rank)
             
                 self.set_active_list(rank[:self.act_num])
@@ -128,23 +234,23 @@ class MixedOp(nn.Module):
                     # print(i)
                    
                     # print(self.type[rank[i]])
-                    if full_channel==False:
-                        if(rank[i]==(len(self.type)-1)):
-                            result = result + self._ops[-1](x) * alpha[i]
+                    if full_channel == True:
+                        result = result + self._ops[index[i]](x) * alpha[i]
+                    else:
+                        if mix == False:
+                            type = index[i] // 3 
+                            ratio = index[i] % 3
                         else:
                             type = rank[i] // 3 
                             ratio = rank[i] % 3
-                            if (ratio==0):
-                                ratio=6
-                            if (ratio==1):
-                                ratio=2
-                            if (ratio==2):
-                                ratio=1
-                            # print(self._ops[type],ratio)
-                            result = result + self._ops[type](x,ratio) * alpha[i]
-                    else:
-                        result = result + self._ops[index[i]](x) * alpha[i]
-                    # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
+                        if (ratio==0):
+                            ratio=6
+                        if (ratio==1):
+                            ratio=2
+                        if (ratio==2):
+                            ratio=1
+                        # print(self._ops[type],ratio)
+                        result = result + self._ops[type](x,ratio) * alpha[i]
             else:
                 self.set_active_list(cand)
                 if(cand==(len(self.type)-1)):
@@ -166,114 +272,6 @@ class MixedOp(nn.Module):
 
         return result
     
-    # ######## both channel and kernel weight sharing ############
-    # def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, cand=None):
-    #     # int: force #channel; tensor: arch_ratio; float(<=1): force width
-    #     result = 0
-
-    #     if self.mode == 'soft':
-    #         for i, (w, op) in enumerate(zip(alpha, self._ops)):
-    #             result = result + op(x) * w 
-
-    #         self.set_active_list(list(range(len(self._ops))))
-
-    #     elif self.mode == 'proxy_hard':
-    #         if (cand==None):
-    #             assert alpha_param is not None
-    #             rank = alpha.argsort(descending=True)
-    #             if (update_arch == False):
-    #                 if (full_channel == False and full_kernel==False):
-    #                     np.random.shuffle(rank.cpu().detach().numpy())
-    #                 else:
-    #                     index = []
-    #                     while len(index)!= self.act_num:
-    #                         id = np.random.randint(len(self._ops)) 
-    #                         if id not in index:
-    #                             index.append(id)
-            
-    #             self.set_active_list(rank[:self.act_num])
-
-    #             alpha = F.softmax(alpha_param[rank[:self.act_num]], dim=-1)
-        
-    #             for i in range(self.act_num):
-    #                 # print(i)
-                   
-    #                 # print(self.type[rank[i]])
-    #                 if (full_channel == False and full_kernel==False):
-    #                     if(rank[i]==(len(self.type)-1)):
-    #                         result = result + self._ops[-1](x) * alpha[i]
-    #                     else:
-    #                         # type = rank[i]//3
-    #                         # ratio = rank[i]%3
-    #                         # if (ratio==0):
-    #                         #     ratio=6
-    #                         # if (ratio==1):
-    #                         #     ratio=2
-    #                         # if (ratio==2):
-    #                         #     ratio=1
-    #                         type = rank[i]//6
-    #                         ratio = rank[i]%3
-    #                         kernel = rank[i]%2
-    #                         if (ratio==0):
-    #                             ratio=6
-    #                         if (ratio==1):
-    #                             ratio=2
-    #                         if (ratio==2):
-    #                             ratio=1
-    #                         if (kernel==0):
-    #                             kernel=3
-    #                         if (kernel==1):
-    #                             kernel=None
-    #                         result = result + self._ops[type](x,ratio,kernel) * alpha[i]
-    #                 else:
-    #                     if full_kernel == False:
-    #                         # print(index[i])
-    #                         if (index[i]==(len(self._ops)-1)):
-    #                             result = result + self._ops[index[i]](x) * alpha[i]
-    #                         else:
-    #                             kernel = np.random.randint(0,2)
-    #                             # print(kernel)
-    #                             if kernel==0:
-    #                                 kernel=None
-    #                             else:
-    #                                 kernel=3
-    #                             # print(self._ops[index[i]])
-    #                             result = result + self._ops[index[i]](x,kernel=kernel) * alpha[i]
-    #                     else:
-    #                         result = result + self._ops[index[i]](x) * alpha[i]
-    #                 # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
-    #         else:
-    #             self.set_active_list(cand)
-    #             if(cand==(len(self.type)-1)):
-    #                 result = result + self._ops[-1](x)
-    #             else:
-    #                 type = cand // 6
-    #                 ratio = cand % 3
-    #                 kernel = cand % 2
-    #                 if (ratio==0):
-    #                     ratio=6
-    #                 if (ratio==1):
-    #                     ratio=2
-    #                 if (ratio==2):
-    #                     ratio=1
-    #                 if (kernel==0):
-    #                     kernel=3
-    #                 if (kernel==1):
-    #                     kernel=None
-    #                 result = result + self._ops[type](x,ratio,kernel)
-
-    #     else:
-    #         print('Wrong search mode:', self.mode)
-    #         sys.exit()
-    #     # else:
-    #     #     rank = alpha.argsort(descending=True)
-    #     #     
-    #     #     result = result + self._ops[rank[0]](x) * alpha[0]
-    #     #     for i in range(1,self.act_num):
-    #     #         result = result + self._ops[rank[i]](x) * alpha[i]
-        
-    #     # print(result)
-    #     return result
 
         
     # set the active operator list for each block
@@ -341,7 +339,8 @@ class FBNet(nn.Module):
         if(self.search_space=='OnlyConv'):
             self.type = PRIMITIVES_OnlyConv
         if(self.search_space=='AddAdd'):
-            self.type = PRIMITIVES_AddAdd
+            self.type1 = PRIMITIVES_AddAdd_allconv
+            self.type2 = PRIMITIVES_AddAdd
         if(self.search_space=='AddShift'):
             self.type = PRIMITIVES_AddShift
         if(self.search_space=='AddShiftAdd'):
@@ -405,23 +404,30 @@ class FBNet(nn.Module):
                     init.constant_(m.bias, 0)
 
 
-    def forward(self, input, temp=1, update_arch=True, full_channel=False, full_kernel=False, cand=None):
+    def forward(self, input, temp=1, update_arch=True, full_channel=False, full_kernel=False, all_conv=False, all_add=False, mix=True, cand=None):
         # print('ok!')
         if self.sample_func == 'softmax':
-            alpha = F.softmax(getattr(self, "alpha"), dim=-1)
+            alpha_end = F.softmax(getattr(self, "alpha_end"), dim=-1)
+            alpha_middle = F.softmax(getattr(self, "alpha_middle"), dim=-1)
         else:
-            alpha = gumbel_softmax(getattr(self, "alpha"), temperature=temp, hard=self.hard)
+            alpha_end = gumbel_softmax(getattr(self, "alpha_end"), temperature=temp, hard=self.hard)
+            alpha_middle = gumbel_softmax(getattr(self, "alpha_middle"), temperature=temp, hard=self.hard)
     
         out = self.stem(input)
 
         if (cand==None):
-            # print('ok')
+            count_end = 0
+            count_middle = 0
             for i, cell in enumerate(self.cells):
-                # print(i)
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand)
+                if i < 3 or i > 18:
+                    out = cell(out, alpha_end[count_end], getattr(self, "alpha_end")[count_end], update_arch, full_kernel, full_channel, all_conv, all_add, mix, cand)
+                    count_end += 1
+                else:
+                    out = cell(out, alpha_middle[count_middle], getattr(self, "alpha_middle")[count_middle], update_arch, full_kernel, full_channel, all_conv, all_add, mix, cand)
+                    count_middle += 1
         else:
             for i, cell in enumerate(self.cells):
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand[i])
+                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, all_conv, all_add, mix, cand[i])
         # print(out)
 
         
@@ -450,38 +456,50 @@ class FBNet(nn.Module):
         for cell in self.cells:
             cell.set_stage(stage)
 
-    def show_arch(self, alpha=None, cands=None):
+    def show_arch(self, alpha_end=None, alpha_middle=None, cands=None):
         # if self.sample_func == 'softmax':
         #     alpha = F.softmax(getattr(self, "alpha"), dim=-1)
         # else:
         #     alpha = gumbel_softmax(getattr(self, "alpha"), temperature=temp, hard=self.hard)
-        if alpha != None:
-            op_idx_list = F.softmax(alpha, dim=-1).argmax(-1)
+        if alpha_end != None and alpha_middle != None:
+            op_idx_list_end = F.softmax(alpha_end, dim=-1).argmax(-1)
+            op_idx_list_middle = F.softmax(alpha_middle, dim=-1).argmax(-1)
         else:
             op_idx_list = cands
 
+        count_end = 0
+        count_middle = 0
         for i, _ in enumerate(self.cells):
             # TODO:
             if i < 3 or i > 18:
-                self.type = PRIMITIVES_AddAdd_allconv
+                print(self.type1[op_idx_list_end[count_end]], end=' ')
+                count_end += 1
             else:
-                self.type = PRIMITIVES_AddAdd
-            print(self.type[op_idx_list[i]], end=' ')
+                print(self.type2[op_idx_list_middle[count_middle]], end=' ')
+                count_middle += 1
 
 
     def forward_flops(self, size, temp=1):
         if self.sample_func == 'softmax':
             alpha = F.softmax(getattr(self, "alpha"), dim=-1)
         else:
-            alpha = gumbel_softmax(getattr(self, "alpha"), temperature=temp, hard=self.hard)
+            alpha_end = gumbel_softmax(getattr(self, "alpha_end"), temperature=temp, hard=self.hard)
+            alpha_middle = gumbel_softmax(getattr(self, "alpha_middle"), temperature=temp, hard=self.hard)
 
         flops_total = []
 
         flops, size = self.stem.forward_flops(size)
         flops_total.append(flops)
 
+        count_end = 0
+        count_middle = 0
         for i, cell in enumerate(self.cells):
-            flops, size = cell.forward_flops(size, alpha[i])
+            if i < 3 or i > 18:
+                flops, size = cell.forward_flops(size, alpha_end[count_end])
+                count_end += 1
+            else:
+                flops, size = cell.forward_flops(size, alpha_middle[count_middle])
+                count_middle += 1
             flops_total.append(flops)
 
         flops, size = self.header.forward_flops(size)
@@ -499,17 +517,22 @@ class FBNet(nn.Module):
 
 
     def _build_arch_parameters(self):
-        num_ops = len(self.type)
-        setattr(self, 'alpha', nn.Parameter(Variable(1e-3*torch.ones(sum(self.num_layer_list), num_ops).cuda(), requires_grad=True)))
+        num_ops1 = len(self.type1)
+        num_ops2 = len(self.type2)
 
+        setattr(self, 'alpha_end', nn.Parameter(Variable(1e-3*torch.ones(6, num_ops1).cuda(), requires_grad=True)))
+        setattr(self, 'alpha_middle', nn.Parameter(Variable(1e-3*torch.ones(sum(self.num_layer_list)-6, num_ops2).cuda(), requires_grad=True)))
 
-        return {"alpha": self.alpha}
+        return {"alpha_end": self.alpha_end, "alpha_middle": self.alpha_middle}
 
 
     def _reset_arch_parameters(self):
-        num_ops = len(self.type)
+        # num_ops = len(self.type)
+        num_ops1 = len(self.type1)
+        num_ops2 = len(self.type2)
 
-        getattr(self, "alpha").data = Variable(1e-3*torch.ones(sum(self.num_layer_list), num_ops).cuda(), requires_grad=True)
+        getattr(self, 'alpha_end', nn.Parameter(Variable(1e-3*torch.ones(6, num_ops1).cuda(), requires_grad=True)))
+        getattr(self, 'alpha_middle', nn.Parameter(Variable(1e-3*torch.ones(sum(self.num_layer_list)-6, num_ops2).cuda(), requires_grad=True)))
 
     def clip(self):
         for line in getattr(self, "alpha"):

@@ -5,14 +5,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 import random
 from torch.nn import init
-from operations_ws import *
-import operations_ws
+from operations_ws_version3 import *
+# import operations_ws
 from torch.autograd import Variable
 from genotypes import PRIMITIVES_OnlyConv, PRIMITIVES_AddAdd, PRIMITIVES_AddShift, PRIMITIVES_AddShiftAdd, PRIMITIVES_AddAll, PRIMITIVES_NoConv, PRIMITIVES_AddAdd_allconv
 import numpy as np
 from thop import profile
 from matplotlib import pyplot as plt
 from thop import profile
+import math
 
 def sample_gumbel(shape, eps=1e-20):
     U = torch.rand(shape)
@@ -47,6 +48,26 @@ def Activate(layer):
             param.requires_grad = True
 
 
+class shared_parameters(nn.Module):
+    def __init__(self, C_in, C_out, kernel, expansion=6):
+        super(shared_parameters, self).__init__()
+
+        self.conv1 = nn.Parameter(torch.randn(C_in*expansion, C_in, 1, 1))
+        self.conv2 = nn.Parameter(torch.randn(C_in*expansion, 1, kernel, kernel))
+        self.conv3 = nn.Parameter(torch.randn(C_out, C_in*expansion, 1, 1))
+
+        # ############## initialization ######################
+        init.kaiming_normal_(self.conv1, mode='fan_out')
+        init.kaiming_normal_(self.conv2, mode='fan_out')
+        init.kaiming_normal_(self.conv3, mode='fan_out')
+    
+    def forward(self, x):
+        # for key, item in self.shared_weight.items():
+        #     x = x * item
+        return x
+
+# FIXME: 3 places(2 in model_search; 1 in model_infer)
+
 class MixedOp(nn.Module):
 
     def __init__(self, C_in, C_out, layer_id, stride=1, mode='soft', act_num=1, search_space='OnlyConv'):
@@ -59,12 +80,12 @@ class MixedOp(nn.Module):
         if(self.search_space=='OnlyConv'):
             self.type = PRIMITIVES_OnlyConv
         if(self.search_space=='AddAdd'):
-            # self.type = PRIMITIVES_AddAdd
             # TODO:
-            if layer_id < 4 or layer_id > 19:
-                self.type = PRIMITIVES_AddAdd_allconv
-            else:
-                self.type = PRIMITIVES_AddAdd
+            self.type = PRIMITIVES_AddAdd
+            # if layer_id < 4 or layer_id > 19:
+            #     self.type = PRIMITIVES_AddAdd_allconv
+            # else:
+            #     self.type = PRIMITIVES_AddAdd
         if(self.search_space=='AddShift'):
             self.type = PRIMITIVES_AddShift
         if(self.search_space=='AddShiftAdd'):
@@ -81,17 +102,24 @@ class MixedOp(nn.Module):
             primitive=='skip'):
             # ########### both channel and kernel weight sharing #########
             # if (primitive=='k5_e6' or primitive=='add_k5_e6' or primitive=='shift_k5_e6' or primitive=='shiftadd_k5_e6' or primitive=='skip'):
-                op = OPS[primitive](C_in, C_out, layer_id, stride)
+                if 'k3' in primitive:
+                    shared_parameter = shared_parameters(C_in, C_out, kernel=3)
+                elif 'k5' in primitive:
+                    shared_parameter = shared_parameters(C_in, C_out, kernel=5)
+                else: 
+                    shared_parameter = None
+                op = OPS[primitive](C_in, C_out, layer_id, stride, shared_parameter)
                 self._ops.append(op)
         # print(self._ops)
         self.register_buffer('active_list', torch.tensor(list(range(len(self._ops)))))
 
 
     # ############## chanell-wise weight sharing ##################
-    def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, cand=None):
+    def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, all_conv=False, cand=None):
         # print('ok')
         # int: force #channel; tensor: arch_ratio; float(<=1): force width
         result = 0
+        kl_loss =0
 
         if self.mode == 'soft':
             for i, (w, op) in enumerate(zip(alpha, self._ops)):
@@ -108,29 +136,46 @@ class MixedOp(nn.Module):
                 
                 rank = alpha.argsort(descending=True)
                 if (update_arch == False):
-                    if (full_channel == False):
-                        np.random.shuffle(rank.cpu().detach().numpy())
-                    else:
+                    # if (full_channel == False):
+                    #     np.random.shuffle(rank.cpu().detach().numpy())
+                    # else:
+                    #     index = []
+                    #     while len(index)!= self.act_num:
+                    #         id = np.random.randint(len(self._ops)) 
+                    #         if id not in index:
+                    #             index.append(id)
+                    
+                    if all_conv == True and full_channel == True:
                         index = []
+                        conv = [0,1,4]
                         while len(index)!= self.act_num:
-                            id = np.random.randint(len(self._ops)) 
+                            id = random.choice(conv)
                             if id not in index:
                                 index.append(id)
-                    # print(rank)
-            
+                            # print(index)
+                    elif all_conv == True and full_channel == False:
+                        index = []
+                        conv = [0,1,2,3,4,5,12]
+                        while len(index)!= self.act_num:
+                            id = random.choice(conv)
+                            if id not in index:
+                                index.append(id)
+                    else:
+                        np.random.shuffle(rank.cpu().detach().numpy())
+                
                 self.set_active_list(rank[:self.act_num])
-                # print('ok')
-                # print(self.active_list)
 
                 alpha = F.softmax(alpha_param[rank[:self.act_num]], dim=-1)
         
+                
                 for i in range(self.act_num):
-                    # print(i)
-                   
-                    # print(self.type[rank[i]])
-                    if full_channel==False:
+        
+                    if all_conv==False:
                         if(rank[i]==(len(self.type)-1)):
-                            result = result + self._ops[-1](x) * alpha[i]
+                            result = result + self._ops[-1](x)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[-1](x)[1] * alpha[i]
+                            # result = result + self._ops[-1](x) * alpha[i]
+                            
                         else:
                             type = rank[i] // 3 
                             ratio = rank[i] % 3
@@ -141,14 +186,40 @@ class MixedOp(nn.Module):
                             if (ratio==2):
                                 ratio=1
                             # print(self._ops[type],ratio)
-                            result = result + self._ops[type](x,ratio) * alpha[i]
+                            result = result + self._ops[type](x,ratio)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[type](x,ratio)[1] * alpha[i]
+                            # result = result + self._ops[type](x,ratio) * alpha[i]
+                            
+                    elif full_channel == False:
+                        if(index[i]==(len(self.type)-1)):
+                            result = result + self._ops[-1](x)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[-1](x)[1] * alpha[i]
+                            # result = result + self._ops[-1](x) * alpha[i]
+                        else:
+                            type = index[i] // 3 
+                            ratio = index[i] % 3
+                            if (ratio==0):
+                                ratio=6
+                            if (ratio==1):
+                                ratio=2
+                            if (ratio==2):
+                                ratio=1
+                            # print(self._ops[type],ratio)
+                            result = result + self._ops[type](x,ratio)[0] * alpha[i]
+                            kl_loss =  kl_loss + self._ops[type](x,ratio)[1] * alpha[i]
+                            # result = result + self._ops[type](x,ratio) * alpha[i]
                     else:
-                        result = result + self._ops[index[i]](x) * alpha[i]
+                        # print('index',index)
+                        result = result + self._ops[index[i]](x)[0] * alpha[i]
+                        kl_loss =  kl_loss + self._ops[index[i]](x)[1] * alpha[i]
+                        # result = result + self._ops[index[i]](x) * alpha[i]
                     # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
             else:
                 self.set_active_list(cand)
                 if(cand==(len(self.type)-1)):
-                    result = result + self._ops[-1](x)
+                    # result = result + self._ops[-1](x)[0]
+                    kl_loss =  kl_loss + self._ops[-1](x)[1] 
+                    # result = result + self._ops[-1](x)
                 else:
                     type = cand // 3
                     ratio = cand % 3
@@ -158,122 +229,15 @@ class MixedOp(nn.Module):
                         ratio=2
                     if (ratio==2):
                         ratio=1
-                    result = result + self._ops[type](x,ratio)
-
+                    result = result + self._ops[type](x,ratio)[0]
+                    kl_loss =  kl_loss + self._ops[type](x,ratio)[1] 
+                    # result = result + self._ops[type](x,ratio)
         else:
             print('Wrong search mode:', self.mode)
             sys.exit()
 
-        return result
-    
-    # ######## both channel and kernel weight sharing ############
-    # def forward(self, x, alpha, alpha_param=None, update_arch=True, full_kernel=False, full_channel=False, cand=None):
-    #     # int: force #channel; tensor: arch_ratio; float(<=1): force width
-    #     result = 0
-
-    #     if self.mode == 'soft':
-    #         for i, (w, op) in enumerate(zip(alpha, self._ops)):
-    #             result = result + op(x) * w 
-
-    #         self.set_active_list(list(range(len(self._ops))))
-
-    #     elif self.mode == 'proxy_hard':
-    #         if (cand==None):
-    #             assert alpha_param is not None
-    #             rank = alpha.argsort(descending=True)
-    #             if (update_arch == False):
-    #                 if (full_channel == False and full_kernel==False):
-    #                     np.random.shuffle(rank.cpu().detach().numpy())
-    #                 else:
-    #                     index = []
-    #                     while len(index)!= self.act_num:
-    #                         id = np.random.randint(len(self._ops)) 
-    #                         if id not in index:
-    #                             index.append(id)
-            
-    #             self.set_active_list(rank[:self.act_num])
-
-    #             alpha = F.softmax(alpha_param[rank[:self.act_num]], dim=-1)
-        
-    #             for i in range(self.act_num):
-    #                 # print(i)
-                   
-    #                 # print(self.type[rank[i]])
-    #                 if (full_channel == False and full_kernel==False):
-    #                     if(rank[i]==(len(self.type)-1)):
-    #                         result = result + self._ops[-1](x) * alpha[i]
-    #                     else:
-    #                         # type = rank[i]//3
-    #                         # ratio = rank[i]%3
-    #                         # if (ratio==0):
-    #                         #     ratio=6
-    #                         # if (ratio==1):
-    #                         #     ratio=2
-    #                         # if (ratio==2):
-    #                         #     ratio=1
-    #                         type = rank[i]//6
-    #                         ratio = rank[i]%3
-    #                         kernel = rank[i]%2
-    #                         if (ratio==0):
-    #                             ratio=6
-    #                         if (ratio==1):
-    #                             ratio=2
-    #                         if (ratio==2):
-    #                             ratio=1
-    #                         if (kernel==0):
-    #                             kernel=3
-    #                         if (kernel==1):
-    #                             kernel=None
-    #                         result = result + self._ops[type](x,ratio,kernel) * alpha[i]
-    #                 else:
-    #                     if full_kernel == False:
-    #                         # print(index[i])
-    #                         if (index[i]==(len(self._ops)-1)):
-    #                             result = result + self._ops[index[i]](x) * alpha[i]
-    #                         else:
-    #                             kernel = np.random.randint(0,2)
-    #                             # print(kernel)
-    #                             if kernel==0:
-    #                                 kernel=None
-    #                             else:
-    #                                 kernel=3
-    #                             # print(self._ops[index[i]])
-    #                             result = result + self._ops[index[i]](x,kernel=kernel) * alpha[i]
-    #                     else:
-    #                         result = result + self._ops[index[i]](x) * alpha[i]
-    #                 # result = result + self._ops[rank[i]](x) * ((0-alpha[i]).detach() + alpha[i])
-    #         else:
-    #             self.set_active_list(cand)
-    #             if(cand==(len(self.type)-1)):
-    #                 result = result + self._ops[-1](x)
-    #             else:
-    #                 type = cand // 6
-    #                 ratio = cand % 3
-    #                 kernel = cand % 2
-    #                 if (ratio==0):
-    #                     ratio=6
-    #                 if (ratio==1):
-    #                     ratio=2
-    #                 if (ratio==2):
-    #                     ratio=1
-    #                 if (kernel==0):
-    #                     kernel=3
-    #                 if (kernel==1):
-    #                     kernel=None
-    #                 result = result + self._ops[type](x,ratio,kernel)
-
-    #     else:
-    #         print('Wrong search mode:', self.mode)
-    #         sys.exit()
-    #     # else:
-    #     #     rank = alpha.argsort(descending=True)
-    #     #     
-    #     #     result = result + self._ops[rank[0]](x) * alpha[0]
-    #     #     for i in range(1,self.act_num):
-    #     #         result = result + self._ops[rank[i]](x) * alpha[i]
-        
-    #     # print(result)
-    #     return result
+        return result, kl_loss
+        # return result
 
         
     # set the active operator list for each block
@@ -393,9 +357,12 @@ class FBNet(nn.Module):
     def init_params(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                init.kaiming_normal_(m.weight, mode='fan_out')
-                if m.bias is not None:
-                    init.constant_(m.bias, 0)
+                try:
+                    init.kaiming_normal_(m.weight, mode='fan_out')
+                    if m.bias is not None:
+                        init.constant_(m.bias, 0)
+                except:
+                    pass
             elif isinstance(m, nn.BatchNorm2d):
                 init.constant_(m.weight, 1)
                 init.constant_(m.bias, 0)
@@ -405,7 +372,7 @@ class FBNet(nn.Module):
                     init.constant_(m.bias, 0)
 
 
-    def forward(self, input, temp=1, update_arch=True, full_channel=False, full_kernel=False, cand=None):
+    def forward(self, input, temp=1, update_arch=True, full_channel=False, full_kernel=False, all_conv=False, cand=None):
         # print('ok!')
         if self.sample_func == 'softmax':
             alpha = F.softmax(getattr(self, "alpha"), dim=-1)
@@ -418,16 +385,19 @@ class FBNet(nn.Module):
             # print('ok')
             for i, cell in enumerate(self.cells):
                 # print(i)
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand)
+                out, kl_loss = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, all_conv, cand)
+                # out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, all_conv, cand)
         else:
             for i, cell in enumerate(self.cells):
-                out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, cand[i])
+                out, kl_loss = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, all_conv, cand[i])
+                # out = cell(out, alpha[i], getattr(self, "alpha")[i], update_arch, full_kernel, full_channel, all_conv, cand[i])
         # print(out)
 
         
         # TODO:
         out = self.fc(self.avgpool(self.header(out)).view(out.size(0), -1))
-        return out
+        return out, kl_loss
+        # return out
         ###################################
 
 
@@ -462,12 +432,12 @@ class FBNet(nn.Module):
 
         for i, _ in enumerate(self.cells):
             # TODO:
-            if i < 3 or i > 18:
-                self.type = PRIMITIVES_AddAdd_allconv
-            else:
-                self.type = PRIMITIVES_AddAdd
+            # print(self.type[op_idx_list[i]], end=' ')
+            # if i < 3 or i > 18:
+            #     self.type = PRIMITIVES_AddAdd_allconv
+            # else:
+            #     self.type = PRIMITIVES_AddAdd
             print(self.type[op_idx_list[i]], end=' ')
-
 
     def forward_flops(self, size, temp=1):
         if self.sample_func == 'softmax':

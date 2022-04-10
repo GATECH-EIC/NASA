@@ -30,6 +30,7 @@ def new_cdist(p, eta):
                 W_unsqueeze = torch.unsqueeze(W, 1).expand(W.shape[0], X.shape[0], W.shape[1])
                 grad_unsqueeze = torch.unsqueeze(grad_output, 2).expand(grad_output.shape[0], grad_output.shape[1], W.shape[1])
                 grad_W = ((X_unsqueeze - W_unsqueeze) * grad_unsqueeze).sum(1)
+                # print(eta)
                 grad_W = eta * np.sqrt(grad_W.numel()) / torch.norm(grad_W) * grad_W
             if ctx.needs_input_grad[1]:
                 grad_X = (torch.nn.functional.hardtanh((W_unsqueeze - X_unsqueeze), min_val=-1., max_val=1.) * grad_unsqueeze).sum(0)
